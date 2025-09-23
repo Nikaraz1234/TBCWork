@@ -9,7 +9,7 @@ class MathFunctions {
     fun lcm(num1: Int, num2: Int): Int{
         return (num1*num2) / gcd(num1, num2)
     }
-    
+
 
     //შეიცავს თუ არა '$'-ამ სიმბოლოს
     fun containSymbol(string: String): Boolean{

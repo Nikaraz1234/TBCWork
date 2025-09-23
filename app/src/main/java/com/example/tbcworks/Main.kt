@@ -1,18 +1,19 @@
 package com.example.tbcworks
 
-fun main(){
-    val mathFunctions: MathFunctions = MathFunctions()
+fun main() {
+    val mathFunctions = MathFunctions()
 
-    println(mathFunctions.gcd(18, 24))
-    println(mathFunctions.lcm(18, 24))
+    println("GCD of 18 and 24: ${mathFunctions.gcd(18, 24)}")
+    println("LCM of 18 and 24: ${mathFunctions.lcm(18, 24)}")
 
-    println(mathFunctions.sumOfEven())
+    println("Sum of even numbers to 100: ${mathFunctions.sumOfEven()}")
 
-    println(mathFunctions.isPolyndrom("Anana"))
+    println(mathFunctions.isPolyndrom("lalalal"))
+    println(mathFunctions.isPolyndrom("slalalal"))
 
-    println(mathFunctions.containSymbol("dsadda"))
     println(mathFunctions.containSymbol("dsadda$"))
+    println(mathFunctions.containSymbol("dsadda"))
 
-    println(mathFunctions.reverseNumber(10220))
-
+    val number = 10220
+    println("Reversed number of $number: ${mathFunctions.reverseNumber(number)}")
 }
