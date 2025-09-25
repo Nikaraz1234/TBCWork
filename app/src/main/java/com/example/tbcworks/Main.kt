@@ -18,7 +18,7 @@ fun main() {
         val x = readLine()
         println("Now enter second value:")
         val y = readLine()
-        println("Enter Operation Type:\n1./\n2.*\n3.%\n4.!")
+        println("Enter Operation Type:\n1. /\n2. *\n3. %\n4. !")
         val operation = readLine()
 
         val xNum = x?.filter { it.isDigit() }?.toIntOrNull() ?: Random.nextInt(-127, 129)
@@ -35,15 +35,24 @@ fun main() {
             }
             else -> throw IllegalArgumentException("Wrong Operation")
         }
-        println("Do you want to repeat?\ny - Yes\nn - No")
-        var answer = readLine()
-        if(answer.equals("n", ignoreCase = true)){
-            repeat = false
-        }else if(answer.equals("y", ignoreCase = true)){
-            repeat = true
-        }else{
-            throw IllegalArgumentException("Wrong Answer!")
+        var validAnswer = false
+        while (!validAnswer) {
+            println("Do you want to repeat?\ny - Yes\nn - No")
+            val answer = readLine()?.trim()?.lowercase()
+
+            when (answer) {
+                "n", "no" -> {
+                    repeat = false
+                    validAnswer = true
+                }
+                "y", "yes" -> {
+                    repeat = true
+                    validAnswer = true
+                }
+                else -> println("Wrong input! Please enter 'y' or 'n'")
+            }
         }
+
         println("End")
     }
 
