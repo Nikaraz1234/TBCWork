@@ -7,136 +7,88 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:orientation="vertical">
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/personal_info"
-        android:textSize="25sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:gravity="center"/>
+    android:orientation="vertical"
+    >
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/inputsForm">
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/emailInput"
-            android:layout_width="match_parent"
-            android:layout_marginHorizontal="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:inputType="textEmailAddress"
-            android:padding="10dp"
-            android:hint="@string/email"/>
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/usernameInput"
-            android:layout_width="match_parent"
-            android:layout_marginHorizontal="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:padding="10dp"
-            android:hint="@string/username"/>
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/firstNameInput"
-            android:layout_width="match_parent"
-            android:layout_marginHorizontal="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:padding="10dp"
-            android:hint="@string/first_name"/>
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/lastNameInput"
-            android:layout_width="match_parent"
-            android:layout_marginHorizontal="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:padding="10dp"
-            android:hint="@string/last_name"/>
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/ageInput"
-            android:layout_width="match_parent"
-            android:layout_marginHorizontal="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:inputType="number"
-            android:padding="10dp"
-            android:hint="@string/age"
-            android:maxLength="3" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        android:orientation="vertical">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:id="@+id/btnsForm">
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/fullNameAdd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_full_name"
+            android:padding="5dp"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="100dp"
+            android:layout_gravity="center_horizontal"/>
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/emailReg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_email"
+            android:padding="5dp"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"/>
+
+
+
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnSave"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:text="@string/save" />
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnClear"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="50dp"
-            android:text="@string/clear"/>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/hiddenLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_marginTop="100dp">
-
-        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/btnAddUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/infoEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp" />
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/infoUsername"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-             />
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/infoName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-               />
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/infoAge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-               />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnAgain"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:text="@string/again"
+            android:text="@string/add_user"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"/>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/userCounter"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/emailGet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_email"
+            android:padding="5dp"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnGetUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/get_user_info"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_marginTop="50dp"
+            android:id="@+id/userInfo"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"/>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
 
