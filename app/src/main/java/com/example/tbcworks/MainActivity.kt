@@ -17,7 +17,8 @@ import android.view.View
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    var userList = mutableListOf<User>()
+    var words: MutableList<String> = mutableListOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -28,90 +29,63 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        addUserSetUp()
-        getUserSetUp()
-        userCounterSetUp()
+        saveWords()
+        outputAnagrams()
+        setUpClear()
     }
-    data class User(val email: String, val fullName: String)
 
-    fun addUserSetUp(){
-        val btnAddUser = binding.btnAddUser
 
-        btnAddUser.setOnClickListener {
-            val email = binding.emailReg.text.toString().trim()
-            val fullName = binding.fullNameAdd.text.toString().trim()
 
-            var isValid = true
-            if(email.isEmpty()){
-                binding.emailReg.error = "Email is required"
-                isValid = false
+    private fun saveWords() {
+        val btnSave = binding.btnSave
 
-            }else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                binding.emailReg.error = "Enter valid email"
-                isValid = false
-            }
+        btnSave.setOnClickListener {
+            val input = binding.anagramEditText.text.toString().trim()
 
-            if(fullName.isEmpty()){
-                binding.fullNameAdd.error = "Enter full name"
-                isValid = false
-            }else if(!fullName.contains(" ")){
-                binding.fullNameAdd.error = "Enter name fully"
-                isValid = false
-            }
+            if (input.isEmpty()) {
+                binding.anagramEditText.error = "Enter word"
+            } else {
 
-            for(user in userList){
-                if(user.email == email){
-                    isValid = false
-                    binding.emailReg.error = "User with this email is already exists"
+                if (!words.contains(input)) {
+                    words.add(input)
+                    binding.anagramEditText.setText("")
+                } else {
+                    binding.anagramEditText.error = "Word already added"
                 }
             }
-
-                if(isValid){
-                    userList.add(User(email, fullName))
-                    binding.fullNameAdd.setText("")
-                    binding.emailReg.setText("")
-                    userCounterSetUp()
-                }
-
         }
     }
-    fun getUserSetUp(){
-        val btnGetUser = binding.btnGetUser
-        btnGetUser.setOnClickListener {
-            val email = binding.emailGet.text.toString().trim()
-            var userToFind: User? = null
-            var isValid = true
-            for(user in userList){
-                if(user.email == email){
-                    userToFind = user
-                }
-            }
-            if(email.isEmpty()){
-                binding.emailGet.error = "Email is required"
-                isValid = false
 
-            }else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                binding.emailGet.error = "Enter valid email"
-                isValid = false
-            }
-            if(isValid){
-                if(userToFind == null){
-                    binding.userInfo.text = "User not found"
-                }else{
-                    val str = "${userToFind.email} \n ${userToFind.fullName}"
-                    binding.userInfo.text = str
-                    binding.emailGet.setText("")
-                }
-            }
+    private fun outputAnagrams() {
+        val btnOutput = binding.btnOutput
 
+        btnOutput.setOnClickListener {
+            if (words.isNotEmpty()) {
+                val grouped = groupAnagrams(words)
+                binding.anagramTextView.text = grouped.joinToString("\n")
+            } else {
+                binding.anagramTextView.text = "No words added yet"
+            }
         }
-
-
     }
 
-    fun userCounterSetUp(){
-        val str =  "Users -> ${userList.size}"
-        binding.userCounter.text = str
+    private fun groupAnagrams(words: List<String>): List<List<String>> {
+        return words.groupBy { it.toCharArray().sorted().joinToString("") }
+            .values
+            .toList()
     }
 
+    private fun setUpClear() {
+        val btnClear = binding.btnClear
+
+        btnClear.setOnClickListener {
+            val inputEditText = binding.anagramEditText
+            val anagramTextView = binding.anagramTextView
+
+            inputEditText.setText("")
+            anagramTextView.setText("")
+
+            words.clear()
+        }
+    }
 }

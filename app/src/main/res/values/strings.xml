@@ -4,5 +4,10 @@
     <string name="enter_email">Enter Email</string>
     <string name="add_user">Add User</string>
     <string name="get_user_info">Get user info</string>
+    <string name="output">Output</string>
+    <string name="save">Save</string>
+    <string name="clear">Clear</string>
+    <string name="enter_word">Enter word</string>
+    <string name="connect">Connect</string>
 
 </resources>
