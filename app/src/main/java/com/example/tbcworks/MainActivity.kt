@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity() {
             if (input.isEmpty()) {
                 binding.anagramEditText.error = "Enter word"
             } else {
-
                 if (!words.contains(input)) {
                     words.add(input)
                     binding.anagramEditText.setText("")
@@ -70,9 +69,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun groupAnagrams(words: List<String>): List<List<String>> {
-        return words.groupBy { it.toCharArray().sorted().joinToString("") }
-            .values
-            .toList()
+        return words.groupBy { it.toList().sorted().joinToString("") }.values.toList()
     }
 
     private fun setUpClear() {
