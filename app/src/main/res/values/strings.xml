@@ -4,5 +4,17 @@
     <string name="enter_email">Enter Email</string>
     <string name="add_user">Add User</string>
     <string name="get_user_info">Get user info</string>
+    <string name="price">Price</string>
+    <string name="andes_mountain">Andes Mountain</string>
+    <string name="book_now">Book Now</string>
+    <string name="long_text">This vast mountain range is renowned for its remarkable diversity in terms of topography and climate. It features towering peaks, active volcanoes, deep canyons, expansive plateaus, and lush valleys. The Andes are also home to This vast mountain range is renowned for its remarkable diversity in terms of topography and climate. It features towering peaks, active volcanoes, deep canyons, expansive plateaus, and lush valleys. The Andes are also home to</string>
+    <string name="_4_5">4.5</string>
+    <string name="_16_u00b0c">16°C</string>
+    <string name="_8_hours">8 Hours</string>
+    <string name="details">Details</string>
+    <string name="overview">Overview</string>
+    <string name="_230">230</string>
+    <string name="dollar">$</string>
+    <string name="south_america">South, America</string>
 
 </resources>
