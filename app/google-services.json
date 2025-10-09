@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "178955747059",
+    "project_id": "tbchomework-687fc",
+    "storage_bucket": "tbchomework-687fc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:178955747059:android:85344eaf2b250ea9cfc186",
+        "android_client_info": {
+          "package_name": "com.example.tbcworks"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2Eyi9Q35JE00QEkrfTYMr5kiUWMLIkSg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
