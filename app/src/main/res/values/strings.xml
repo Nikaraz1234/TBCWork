@@ -20,4 +20,6 @@
     <string name="user_doesnt_exists">User does not exists</string>
     <string name="user_updated_successfully">User Updated Successfully:</string>
     <string name="fields_either_empty_or_same_value">Fields either empty or same value</string>
+    <string name="active_users_with_placeholder">Active Users: %1$d</string>
+    <string name="deleted_users_with_placeholder">Deleted Users: %1$d</string>
 </resources>

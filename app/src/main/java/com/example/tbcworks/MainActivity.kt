@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        setUpCounters()
         setUpButtons()
     }
 
@@ -48,6 +49,13 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun setUpCounters(){
+        with(binding){
+            tvActiveUsers.text = getString(R.string.active_users_with_placeholder, users.size)
+            tvDeletedUsers.text = getString(R.string.deleted_users_with_placeholder, deletedUsers)
+        }
+
+    }
     private fun updateUser(){
         with(binding){
 
@@ -110,8 +118,8 @@ class MainActivity : AppCompatActivity() {
                 deletedUsers++
                 tvStatus.text = getString(R.string.user_deleted_successfully)
                 tvStatus.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.success))
-                tvActiveUsers.text = "Active Users: ${users.size}"
-                tvDeletedUsers.text = "Deleted Users: $deletedUsers"
+                tvActiveUsers.text = getString(R.string.active_users_with_placeholder, users.size)
+                tvDeletedUsers.text = getString(R.string.deleted_users_with_placeholder, deletedUsers)
             }else{
                 tvStatus.text = getString(R.string.user_doesnt_exists)
                 tvStatus.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.fail))
@@ -158,7 +166,7 @@ class MainActivity : AppCompatActivity() {
             }
             if(!userExists){
                 users.add(User(firstName,lastName,age.toInt(), email))
-                tvActiveUsers.text = "Active users: ${users.size}"
+                tvActiveUsers.text = getString(R.string.active_users_with_placeholder, users.size)
                 tvStatus.text = getString(R.string.user_added_successfully)
                 tvStatus.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.success))
             }else{
