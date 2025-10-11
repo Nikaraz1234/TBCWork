@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">TBCWorks</string>
+    <string name="email">Email</string>
+    <string name="age">Age</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="add_user">Add User</string>
+    <string name="delete_user">Delete User</string>
+    <string name="update_user">Update User</string>
+    <string name="deleted_users">Deleted Users: 0</string>
+    <string name="active_users">Active Users: 0</string>
+    <string name="user_added_successfully">User Added Successfully</string>
+    <string name="user_already_exists">User Already Exists</string>
+    <string name="invalid_email">Invalid Email</string>
+    <string name="email_cant_be_empty">Email cannot be empty</string>
+    <string name="age_cant_be_empty">Age cannot be empty</string>
+    <string name="lastname_cant_be_empty">Lastname cannot be empty</string>
+    <string name="firstname_cant_be_empty">Firstname cannot be empty</string>
+    <string name="user_deleted_successfully">User Deleted Successfully</string>
+    <string name="user_doesnt_exists">User does not exists</string>
+    <string name="user_updated_successfully">User Updated Successfully:</string>
+    <string name="fields_either_empty_or_same_value">Fields either empty or same value</string>
 </resources>
