@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
     }
     private fun updateUser() = with(binding) {
         if(users.isEmpty()){
-            SnackbarHelper.show(root,"No active users")
+            SnackbarHelper.show(root,getString(R.string.no_active_users))
             return@with
         }
         val user = users.random()

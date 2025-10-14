@@ -42,10 +42,10 @@ class UserManagmentActivity : AppCompatActivity() {
         }
     }
     private fun checkUpdateOrAdd() = with(binding){
-        val operationMode = intent.getStringExtra("operation")
-        val currentUser = intent.getSerializableExtra("user") as? User
+        val operationMode = intent.getStringExtra(getString(R.string.operation))
+        val currentUser = intent.getSerializableExtra(getString(R.string.user)) as? User
 
-        if(operationMode == "update"){
+        if(operationMode == getString(R.string.update)){
             btnAddUser.visibility = View.GONE
             btnUpdateUser.visibility = View.VISIBLE
             btnDeleteUser.visibility = View.VISIBLE
@@ -111,11 +111,11 @@ class UserManagmentActivity : AppCompatActivity() {
 
     private fun validateInputs(firstName : String, lastName:String, age:String, email:String) : Boolean = with(binding){
         if(firstName.isEmpty() || lastName.isEmpty() || age.isEmpty() || email.isEmpty()){
-            SnackbarHelper.show(root, "Fill all info")
+            SnackbarHelper.show(root, getString(R.string.fill_all_info))
             return@with false
         }
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            etEmail.error = "Invalid email"
+            etEmail.error = getString(R.string.invalid_email)
             return@with false
         }
         return@with true
