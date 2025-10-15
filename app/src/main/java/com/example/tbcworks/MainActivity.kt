@@ -132,9 +132,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun convertMilliSecondsToDate(milliSeconds: String): String {
-        val date = Date(milliSeconds.toLong())
-        val format = SimpleDateFormat("MMMM dd", Locale.getDefault())
-        return format.format(date)
+        return try {
+            val mSeconds= milliSeconds.toLong()
+            val date = Date(mSeconds)
+            val format = SimpleDateFormat("MMMM dd", Locale.getDefault())
+            format.format(date)
+        } catch (e: NumberFormatException) {
+            milliSeconds
+        }
     }
 
     private fun addUser(){
