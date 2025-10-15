@@ -10,37 +10,68 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.widget.addTextChangedListener
 import com.example.tbcworks.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private var users: MutableList<User> = mutableListOf()
-    private var deletedUsers = 0
+
+    var users: MutableList<User> = mutableListOf(
+        User(
+            id = 1,
+            firstName = "გრიშა",
+            lastName = "ონიანი",
+            birthday = "1724647601641",
+            address = "სტალინის სახლმუზეუმი",
+            email = "grisha@mail.ru"
+        ),
+        User(
+            id = 2,
+            firstName = "Jemal",
+            lastName = "Kakauridze",
+            birthday = "1714647601641",
+            address = "თბილისი, ლილოს მიტოვებული ქარხანა",
+            email = "jemal@mail.ru"
+        ),
+        User(
+            id = 3,
+            firstName = "Omeg",
+            lastName = "Kakauridze",
+            birthday = "1724647701641",
+            address = "თბილისი, ასათიანი 18",
+            email = "omger@gmail.ru"
+        ),
+        User(
+            id = 32,
+            firstName = "ბორის",
+            lastName = "გარუჩავა",
+            birthday = "1714947601641",
+            address = "თბილისი, იაშვილი 14",
+            email = ""
+        ),
+        User(
+            id = 34,
+            firstName = "აბთო",
+            lastName = "სიხარულიძე",
+            birthday = "1711947601641",
+            address = "ფოთი",
+            email = "tebzi@gmail.ru"
+        )
+    )
 
     private val userReciever = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         result ->
         if (result.resultCode == RESULT_OK){
             result.data?.let { data ->
                 val user = data.getSerializableExtra("user") as? User
-                val operation = data.getStringExtra("operation")
-
-                user?.let {
-                    when (operation) {
-                        "add" ->
-                            users.add(it)
-
-                        "update" -> {
-                            val index = users.indexOfFirst { u -> u.email == it.email }
-                            if (index != -1) users[index] = it
-                        }
-                        "delete" -> {
-                            users.remove(user)
-                            deletedUsers++
-                        }
-                    }
-                    setUpCounters()
+                if(user != null){
+                    users.add(user)
                 }
             }
         }
@@ -58,52 +89,59 @@ class MainActivity : AppCompatActivity() {
         }
         setUp()
     }
+
     private fun setUp(){
-        setUpCounters()
-        setUpButtons()
+        setUpListeners()
     }
 
-    private fun setUpButtons(){
-        with(binding){
+
+    private fun setUpListeners() = with(binding){
+        btnAddUser.setOnClickListener {
+            addUser()
+        }
+        etFirstName.addTextChangedListener {
+            searchUser()
+        }
+    }
+
+    private fun searchUser() = with(binding){
+        val searchText = etFirstName.text.toString().trim().lowercase()
+
+        val user = users.firstOrNull(){ user ->
+            val fullName = "${user.firstName.lowercase()} ${user.lastName.lowercase()}"
+            user.desc = searchText
+            val birthdayDate = convertMilliSecondsToDate(user.birthday).lowercase()
+
+            fullName.contains(searchText) ||
+                    user.firstName.lowercase().contains(searchText) ||
+                    user.lastName.lowercase().contains(searchText) ||
+                    birthdayDate.contains(searchText) ||
+                    user.address.lowercase().contains(searchText) ||
+                    user.email.lowercase().contains(searchText)
+        }
 
 
-            btnAddUser.setOnClickListener {
-                addUser()
-            }
-            btnUpdateUser.setOnClickListener {
-                updateUser()
-            }
+        tvSearch.text = if(searchText.isEmpty()){
+            ""
+        }else if(user != null){
+            "ID: ${user.id}"
+        }else{
+            "User not found"
         }
 
     }
 
-    private fun setUpCounters(){
-        with(binding){
-            tvActiveUsers.text = getString(R.string.active_users_with_placeholder, users.size)
-            tvDeletedUsers.text = getString(R.string.deleted_users_with_placeholder, deletedUsers)
-        }
-
-    }
-    private fun updateUser() = with(binding) {
-        if(users.isEmpty()){
-            SnackbarHelper.show(root,getString(R.string.no_active_users))
-            return@with
-        }
-        val user = users.random()
-        val intent = Intent(this@MainActivity, UserManagmentActivity::class.java)
-        intent.apply {
-            putExtra("user", user)
-            putExtra("operation", "update")
-        }
-        userReciever.launch(intent)
+    private fun convertMilliSecondsToDate(milliSeconds: String): String {
+        val date = Date(milliSeconds.toLong())
+        val format = SimpleDateFormat("MMMM dd", Locale.getDefault())
+        return format.format(date)
     }
 
     private fun addUser(){
-        with(binding){
-           val intent = Intent(this@MainActivity, UserManagmentActivity::class.java)
-            intent.putExtra("operation", "add")
-            userReciever.launch(intent)
-        }
-
+        val intent = Intent(this, UserManagmentActivity::class.java)
+        val lastUserID = users.last().id
+        intent.putExtra("userId", lastUserID)
+        userReciever.launch(intent)
     }
+
 }

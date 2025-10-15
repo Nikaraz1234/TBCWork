@@ -28,89 +28,39 @@ class UserManagmentActivity : AppCompatActivity() {
 
     private fun setUp(){
         setUpListeners()
-        checkUpdateOrAdd()
     }
     private fun setUpListeners() = with(binding){
         btnAddUser.setOnClickListener{
             addUser()
         }
-        btnUpdateUser.setOnClickListener {
-            updateUser()
-        }
-        btnDeleteUser.setOnClickListener {
-            deleteUser()
-        }
-    }
-    private fun checkUpdateOrAdd() = with(binding){
-        val operationMode = intent.getStringExtra(getString(R.string.operation))
-        val currentUser = intent.getSerializableExtra(getString(R.string.user)) as? User
-
-        if(operationMode == getString(R.string.update)){
-            btnAddUser.visibility = View.GONE
-            btnUpdateUser.visibility = View.VISIBLE
-            btnDeleteUser.visibility = View.VISIBLE
-
-            if(currentUser != null){
-                etFirstName.setText(currentUser.firstName)
-                etLastName.setText(currentUser.lastName)
-                etAge.setText(currentUser.age.toString())
-                etEmail.setText(currentUser.email)
-                etEmail.isEnabled = false
-            }
-        }
     }
 
-    private fun deleteUser() = with(binding){
-        val user = intent.getSerializableExtra("user") as? User
-        val intent = Intent().apply {
-            putExtra("user", user)
-            putExtra("operation", "delete")
-        }
-        setResult(RESULT_OK, intent)
-        finish()
 
-    }
 
-    private fun updateUser() = with(binding){
-        val email = etEmail.text.toString().trim()
-        val firstName = etFirstName.text.toString().trim()
-        val lastName = etLastName.text.toString().trim()
-        val age = etAge.text.toString().trim()
-
-        if(validateInputs(firstName,lastName,age,email)){
-            val user = User(firstName, lastName, age.toInt(), email)
-            val intent = Intent().apply {
-                putExtra("user", user)
-                putExtra("operation", "update")
-            }
-            setResult(RESULT_OK, intent)
-            finish()
-        }
-
-    }
 
     private fun addUser()= with(binding){
         val firstName = etFirstName.text.toString().trim()
         val lastName = etLastName.text.toString().trim()
-        val age = etAge.text.toString().trim()
+        val birthday = etBirthday.text.toString().trim()
+        val address = etAddress.text.toString().trim()
         val email = etEmail.text.toString().trim()
 
-        if(validateInputs(firstName,lastName,age,email)){
-            val user = User(firstName, lastName, age.toInt(), email)
+        val lastUserId = intent.getIntExtra("userId", 0)
+        val index = lastUserId + 1
 
-            val intent = Intent().apply {
-                putExtra("user", user)
-                putExtra("operation", "add")
-            }
-            setResult(RESULT_OK,intent)
+        if(validateInputs(firstName,lastName,birthday,address,email)){
+            val user = User(index,firstName,lastName,birthday, address, email)
+            val intent = Intent().putExtra("user", user)
+            setResult(RESULT_OK, intent)
             finish()
+        }else{
+            SnackbarHelper.show(binding.root, getString(R.string.cant_create_user))
         }
-
 
     }
 
-    private fun validateInputs(firstName : String, lastName:String, age:String, email:String) : Boolean = with(binding){
-        if(firstName.isEmpty() || lastName.isEmpty() || age.isEmpty() || email.isEmpty()){
+    private fun validateInputs(firstName : String, lastName:String,birthday:String, address:String, email:String) : Boolean = with(binding){
+        if(firstName.isEmpty() || lastName.isEmpty() || birthday.isEmpty() || address.isEmpty() || email.isEmpty()){
             SnackbarHelper.show(root, getString(R.string.fill_all_info))
             return@with false
         }

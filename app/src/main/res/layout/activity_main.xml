@@ -1,81 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@drawable/background"
     tools:context=".MainActivity">
 
 
 
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etFirstName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="8dp"
+        android:hint="Search"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="50dp"
+        />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvActiveUsers"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvSearch"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:textColor="@color/black"
         android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/btnAddUser"
-        app:layout_constraintStart_toStartOf="parent"
         android:textSize="20sp"
-        android:text="@string/active_users"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDeletedUsers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/tvActiveUsers"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="@string/deleted_users"/>
-
+        android:text=""/>
     <androidx.appcompat.widget.AppCompatButton
         android:background="@drawable/rectangle_shape"
         android:textColor="@color/white"
         android:id="@+id/btnAddUser"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/add_user"
         android:layout_marginTop="10dp"
-        android:layout_marginStart="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnUpdateUser"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_chainStyle="spread"/>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:background="@drawable/rectangle_shape"
-        android:textColor="@color/white"
-        android:id="@+id/btnUpdateUser"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/update_user"
-        app:layout_constraintStart_toEndOf="@id/btnAddUser"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/btnAddUser"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:textSize="20sp"
-        android:text=""/>
+        android:layout_marginHorizontal="20dp"
+        />
 
 
 
@@ -84,4 +48,8 @@
 
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

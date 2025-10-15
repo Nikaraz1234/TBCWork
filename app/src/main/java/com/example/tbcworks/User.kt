@@ -2,5 +2,11 @@ package com.example.tbcworks
 
 import java.io.Serializable
 
-data class User(var firstName:String, var lastName:String, var age:Int, var email: String) : Serializable{
+data class User(val id: Int,
+                val firstName:String,
+                val lastName:String,
+                val birthday:String,
+                val address:String,
+                val email: String,
+                var desc: String = "") : Serializable{
 }

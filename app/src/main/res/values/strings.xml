@@ -28,5 +28,7 @@
     <string name="operation">operation</string>
     <string name="user">user</string>
     <string name="fill_all_info">Fill all info</string>
-    <string name="no_active_users">No active users</string>
+    <string name="address">address</string>
+    <string name="birthday">birthday</string>
+    <string name="cant_create_user">Can\'t create user</string>
 </resources>
