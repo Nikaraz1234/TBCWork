@@ -1,0 +1,20 @@
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\r\n    <string name=\"app_name\">TBCWorks</string>\r\n    <string name=\"email\">Email</string>\r\n    <string name=\"age\">Age</string>\r\n    <string name=\"last_name\">Last Name</string>\r\n    <string name=\"first_name\">First Name</string>\r\n    <string name=\"add_user\">Add User</string>\r\n    <string name=\"delete_user\">Delete User</string>\r\n    <string name=\"update_user\">Update User</string>\r\n    <string name=\"deleted_users\">Deleted Users: 0</string>\r\n    <string name=\"active_users\">Active Users: 0</string>\r\n    <string name=\"user_added_successfully\">User Added Successfully</string>\r\n    <string name=\"user_already_exists\">User Already Exists</string>\r\n    <string name=\"invalid_email\">Invalid Email</string>\r\n    <string name=\"email_cant_be_empty\">Email cannot be empty</string>\r\n    <string name=\"age_cant_be_empty\">Age cannot be empty</string>\r\n    <string name=\"lastname_cant_be_empty\">Lastname cannot be empty</string>\r\n    <string name=\"firstname_cant_be_empty\">Firstname cannot be empty</string>\r\n    <string name=\"user_deleted_successfully\">User Deleted Successfully</string>\r\n    <string name=\"user_doesnt_exists\">User does not exists</string>\r\n    <string name=\"user_updated_successfully\">User Updated Successfully:</string>\r\n    <string name=\"fields_either_empty_or_same_value\">Fields either empty or same value</string>\r\n    <string name=\"active_users_with_placeholder\">Active Users: %1$d</string>\r\n    <string name=\"deleted_users_with_placeholder\">Deleted Users: %1$d</string>\r\n    <string name=\"add\">add</string>\r\n    <string name=\"no_active_users\">No active users</string>\r\n    <string name=\"update\">update</string>\r\n    <string name=\"operation\">operation</string>\r\n    <string name=\"user\">user</string>\r\n    <string name=\"fill_all_info\">Fill all info</string>\r\n    <string name=\"no_active_users\">No active users</string>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/strings.xml b/app/src/main/res/values/strings.xml
+--- a/app/src/main/res/values/strings.xml	(revision 10ad3cd549dabffd6bc61de0137ef852ffc4bd77)
++++ b/app/src/main/res/values/strings.xml	(date 1760511283277)
+@@ -28,5 +28,7 @@
+     <string name="operation">operation</string>
+     <string name="user">user</string>
+     <string name="fill_all_info">Fill all info</string>
+-    <string name="no_active_users">No active users</string>
++    <string name="address">address</string>
++    <string name="birthday">birthday</string>
++    <string name="cant_create_user">Can\'t create user</string>
+ </resources>
+\ No newline at end of file

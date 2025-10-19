@@ -16,35 +16,8 @@ import com.google.android.material.snackbar.Snackbar
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private var users: MutableList<User> = mutableListOf()
-    private var deletedUsers = 0
+    val userManager: UserManager = UserManager()
 
-    private val userReciever = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        result ->
-        if (result.resultCode == RESULT_OK){
-            result.data?.let { data ->
-                val user = data.getSerializableExtra("user") as? User
-                val operation = data.getStringExtra("operation")
-
-                user?.let {
-                    when (operation) {
-                        "add" ->
-                            users.add(it)
-
-                        "update" -> {
-                            val index = users.indexOfFirst { u -> u.email == it.email }
-                            if (index != -1) users[index] = it
-                        }
-                        "delete" -> {
-                            users.remove(user)
-                            deletedUsers++
-                        }
-                    }
-                    setUpCounters()
-                }
-            }
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,54 +29,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        setUp()
-    }
-    private fun setUp(){
-        setUpCounters()
-        setUpButtons()
-    }
-
-    private fun setUpButtons(){
-        with(binding){
-
-
-            btnAddUser.setOnClickListener {
-                addUser()
-            }
-            btnUpdateUser.setOnClickListener {
-                updateUser()
-            }
-        }
 
     }
 
-    private fun setUpCounters(){
-        with(binding){
-            tvActiveUsers.text = getString(R.string.active_users_with_placeholder, users.size)
-            tvDeletedUsers.text = getString(R.string.deleted_users_with_placeholder, deletedUsers)
-        }
-
-    }
-    private fun updateUser() = with(binding) {
-        if(users.isEmpty()){
-            SnackbarHelper.show(root,getString(R.string.no_active_users))
-            return@with
-        }
-        val user = users.random()
-        val intent = Intent(this@MainActivity, UserManagmentActivity::class.java)
-        intent.apply {
-            putExtra("user", user)
-            putExtra("operation", "update")
-        }
-        userReciever.launch(intent)
-    }
-
-    private fun addUser(){
-        with(binding){
-           val intent = Intent(this@MainActivity, UserManagmentActivity::class.java)
-            intent.putExtra("operation", "add")
-            userReciever.launch(intent)
-        }
-
-    }
 }

@@ -1,0 +1,19 @@
+Index: app/src/main/java/com/example/tbcworks/UserManagmentActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.tbcworks\r\n\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.util.Patterns\r\nimport android.view.View\r\nimport androidx.activity.enableEdgeToEdge\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.core.view.ViewCompat\r\nimport androidx.core.view.WindowInsetsCompat\r\nimport com.example.tbcworks.databinding.ActivityMainBinding\r\nimport com.example.tbcworks.databinding.ActivityUserManagmentBinding\r\n\r\nclass UserManagmentActivity : AppCompatActivity() {\r\n    private lateinit var binding: ActivityUserManagmentBinding\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        binding = ActivityUserManagmentBinding.inflate(layoutInflater)\r\n        enableEdgeToEdge()\r\n        setContentView(binding.root)\r\n        ViewCompat.setOnApplyWindowInsetsListener (binding.root) { v, insets ->\r\n            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())\r\n            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)\r\n            insets\r\n        }\r\n        setUp()\r\n    }\r\n\r\n    private fun setUp(){\r\n        setUpListeners()\r\n    }\r\n    private fun setUpListeners() = with(binding){\r\n        btnAddUser.setOnClickListener{\r\n            addUser()\r\n        }\r\n    }\r\n\r\n\r\n\r\n\r\n    private fun addUser()= with(binding){\r\n        val firstName = etFirstName.text.toString().trim()\r\n        val lastName = etLastName.text.toString().trim()\r\n        val birthday = etBirthday.text.toString().trim()\r\n        val address = etAddress.text.toString().trim()\r\n        val email = etEmail.text.toString().trim()\r\n\r\n        val lastUserId = intent.getIntExtra(\"userId\", 0)\r\n        val index = lastUserId + 1\r\n\r\n        if(validateInputs(firstName,lastName,birthday,address,email)){\r\n            val user = User(index,firstName,lastName,birthday, address, email)\r\n            val intent = Intent().putExtra(\"user\", user)\r\n            setResult(RESULT_OK, intent)\r\n            finish()\r\n        }else{\r\n            SnackbarHelper.show(binding.root, getString(R.string.cant_create_user))\r\n        }\r\n\r\n    }\r\n\r\n    private fun validateInputs(firstName : String, lastName:String,birthday:String, address:String, email:String) : Boolean = with(binding){\r\n        if(firstName.isEmpty() || lastName.isEmpty() || birthday.isEmpty() || address.isEmpty() || email.isEmpty()){\r\n            SnackbarHelper.show(root, getString(R.string.fill_all_info))\r\n            return@with false\r\n        }\r\n        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){\r\n            etEmail.error = getString(R.string.invalid_email)\r\n            return@with false\r\n        }\r\n        return@with true\r\n    }\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/tbcworks/UserManagmentActivity.kt b/app/src/main/java/com/example/tbcworks/UserManagmentActivity.kt
+--- a/app/src/main/java/com/example/tbcworks/UserManagmentActivity.kt	(revision d85fefd932f6a71a13cb7ba29bb34eaa7a3b85c0)
++++ b/app/src/main/java/com/example/tbcworks/UserManagmentActivity.kt	(date 1760679840728)
+@@ -54,7 +54,7 @@
+             setResult(RESULT_OK, intent)
+             finish()
+         }else{
+-            SnackbarHelper.show(binding.root, getString(R.string.cant_create_user))
++            SnackbarHelper.show(binding.root, getString(R.string.))
+         }
+ 
+     }

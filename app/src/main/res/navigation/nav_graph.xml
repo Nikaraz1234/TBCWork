@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment2">
+
+    <fragment
+        android:id="@+id/addUserFragment"
+        android:name="com.example.tbcworks.fragments.AddUserFragment"
+        android:label="fragment_add_user"
+        tools:layout="@layout/fragment_add_user"/>
+    <fragment
+        android:id="@+id/mainFragment2"
+        android:name="com.example.tbcworks.fragments.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment2_to_addUserFragment"
+            app:destination="@id/addUserFragment" />
+        <action
+            android:id="@+id/action_mainFragment2_to_updateUserFragment2"
+            app:destination="@id/updateUserFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateUserFragment2"
+        android:name="com.example.tbcworks.fragments.UpdateUserFragment"
+        android:label="fragment_update_user"
+        tools:layout="@layout/fragment_update_user" />
+</navigation>

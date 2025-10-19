@@ -1,5 +1,4 @@
-package com.example.tbcworks
-
+package com.example.tbcworks.helpers
 
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
