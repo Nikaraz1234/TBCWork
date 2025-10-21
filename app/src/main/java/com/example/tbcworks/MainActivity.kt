@@ -11,12 +11,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.tbcworks.databinding.ActivityMainBinding
-import com.google.android.material.snackbar.Snackbar
+
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    val userManager: UserManager = UserManager()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

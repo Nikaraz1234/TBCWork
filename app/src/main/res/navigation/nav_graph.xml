@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/addUserFragment"
-        android:name="com.example.tbcworks.fragments.AddUserFragment"
+        android:name="com.example.tbcworks.screens.addUser.AddUserFragment"
         android:label="fragment_add_user"
         tools:layout="@layout/fragment_add_user"/>
     <fragment
         android:id="@+id/mainFragment2"
-        android:name="com.example.tbcworks.fragments.MainFragment"
+        android:name="com.example.tbcworks.screens.dashboard.DashboardFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
@@ -21,10 +21,25 @@
         <action
             android:id="@+id/action_mainFragment2_to_updateUserFragment2"
             app:destination="@id/updateUserFragment2" />
+        <action
+            android:id="@+id/action_mainFragment2_to_userListFragment"
+            app:destination="@id/userListFragment" />
     </fragment>
     <fragment
         android:id="@+id/updateUserFragment2"
-        android:name="com.example.tbcworks.fragments.UpdateUserFragment"
+        android:name="com.example.tbcworks.screens.updateUser.UpdateUserFragment"
         android:label="fragment_update_user"
-        tools:layout="@layout/fragment_update_user" />
+        tools:layout="@layout/fragment_update_user">
+
+
+    </fragment>
+    <fragment
+        android:id="@+id/userListFragment"
+        android:name="com.example.tbcworks.screens.userList.UserListFragment"
+        android:label="fragment_user_list"
+        tools:layout="@layout/fragment_user_list" >
+        <action
+            android:id="@+id/action_userListFragment_to_updateUserFragment2"
+            app:destination="@id/updateUserFragment2" />
+    </fragment>
 </navigation>
