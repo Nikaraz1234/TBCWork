@@ -1,0 +1,17 @@
+Index: app/src/main/java/com/example/tbcworks/BaseFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.tbcworks\r\n\r\nimport android.os.Bundle\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport androidx.fragment.app.Fragment\r\nimport androidx.fragment.app.activityViewModels\r\nimport androidx.viewbinding.ViewBinding\r\nimport com.example.tbcworks.viewModel.UserViewModel\r\n\r\nabstract class BaseFragment<VB : ViewBinding> : Fragment() {\r\n\r\n    private var _binding: VB? = null\r\n    protected val binding get() = _binding!!\r\n\r\n    protected val userViewModel: UserViewModel by activityViewModels()\r\n\r\n    // Each fragment must provide its own inflate method\r\n    abstract fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): VB\r\n\r\n    open fun listeners() {}\r\n    open fun bind() {}\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater,\r\n        container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View {\r\n        _binding = inflateBinding(inflater, container)\r\n        return binding.root\r\n    }\r\n\r\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\r\n        super.onViewCreated(view, savedInstanceState)\r\n        bind()\r\n    }\r\n\r\n    override fun onDestroyView() {\r\n        super.onDestroyView()\r\n        _binding = null\r\n    }\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/example/tbcworks/BaseFragment.kt b/app/src/main/java/com/example/tbcworks/BaseFragment.kt
+--- a/app/src/main/java/com/example/tbcworks/BaseFragment.kt	(revision b9fb9cfa5c36c1f516bf69951d72a2bb4f38ad27)
++++ b/app/src/main/java/com/example/tbcworks/BaseFragment.kt	(date 1761164066510)
+@@ -15,8 +15,6 @@
+     protected val binding get() = _binding!!
+ 
+     protected val userViewModel: UserViewModel by activityViewModels()
+-
+-    // Each fragment must provide its own inflate method
+     abstract fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): VB
+ 
+     open fun listeners() {}
