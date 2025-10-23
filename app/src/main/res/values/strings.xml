@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">TBCWorks</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="category_3">Category 3</string>
+    <string name="category_2">Category 2</string>
+    <string name="category_1">Category 1</string>
+    <string name="camping">Camping</string>
+    <string name="party">Party</string>
+    <string name="all">All</string>
 </resources>
