@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="addressTypes">
+        <item>Home</item>
+        <item>Office</item>
+    </string-array>
+</resources>

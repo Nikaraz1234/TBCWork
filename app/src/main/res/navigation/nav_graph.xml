@@ -7,7 +7,28 @@
 
     <fragment
         android:id="@+id/shopListFragment"
-        android:name="com.example.tbcworks.screens.ShopListFragment"
+        android:name="com.example.tbcworks.screens.addressList.AddressListFragment"
         android:label="fragment_shop_list"
-        tools:layout="@layout/fragment_shop_list" />
+        tools:layout="@layout/fragment_address_list" >
+        <argument
+            android:name="addressItem"
+            app:argType="com.example.tbcworks.items.AddressItem"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_shopListFragment_to_addressFormFragment"
+            app:destination="@id/addressFormFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addressFormFragment"
+        android:name="com.example.tbcworks.screens.addressForm.AddressFormFragment"
+        android:label="fragment_address_form"
+        tools:layout="@layout/fragment_address_form" >
+        <argument
+            android:name="addressItem"
+            app:argType="com.example.tbcworks.items.AddressItem"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_addressFormFragment_to_shopListFragment"
+            app:destination="@id/shopListFragment" />
+    </fragment>
 </navigation>

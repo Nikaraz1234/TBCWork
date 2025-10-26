@@ -8,4 +8,10 @@
     <string name="camping">Camping</string>
     <string name="party">Party</string>
     <string name="all">All</string>
+    <string name="edit"><u>Edit</u></string>
+    <string name="delivery_address">Delivery Address</string>
+    <string name="add_new_address">Add New Address</string>
+    <string name="description">Description</string>
+    <string name="name">Name</string>
+    <string name="delete"><u>Delete</u></string>
 </resources>
