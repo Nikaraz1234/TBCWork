@@ -1,0 +1,42 @@
+Index: app/src/main/res/navigation/nav_graph.xml
+===================================================================
+diff --git a/app/src/main/res/navigation/nav_graph.xml b/app/src/main/res/navigation/nav_graph.xml
+deleted file mode 100644
+--- a/app/src/main/res/navigation/nav_graph.xml	(revision 8e08ed28e1c5f6d61257eb2e095448b568c397a2)
++++ /dev/null	(revision 8e08ed28e1c5f6d61257eb2e095448b568c397a2)
+@@ -1,34 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:app="http://schemas.android.com/apk/res-auto"
+-    xmlns:tools="http://schemas.android.com/tools"
+-    android:id="@+id/nav_graph"
+-    app:startDestination="@id/shopListFragment">
+-
+-    <fragment
+-        android:id="@+id/shopListFragment"
+-        android:name="com.example.tbcworks.screens.addressList.AddressListFragment"
+-        android:label="fragment_shop_list"
+-        tools:layout="@layout/fragment_address_list" >
+-        <argument
+-            android:name="addressItem"
+-            app:argType="com.example.tbcworks.items.AddressItem"
+-            app:nullable="true" />
+-        <action
+-            android:id="@+id/action_shopListFragment_to_addressFormFragment"
+-            app:destination="@id/addressFormFragment" />
+-    </fragment>
+-    <fragment
+-        android:id="@+id/addressFormFragment"
+-        android:name="com.example.tbcworks.screens.addressForm.AddressFormFragment"
+-        android:label="fragment_address_form"
+-        tools:layout="@layout/fragment_address_form" >
+-        <argument
+-            android:name="addressItem"
+-            app:argType="com.example.tbcworks.items.AddressItem"
+-            app:nullable="true" />
+-        <action
+-            android:id="@+id/action_addressFormFragment_to_shopListFragment"
+-            app:destination="@id/shopListFragment" />
+-    </fragment>
+-</navigation>
+\ No newline at end of file

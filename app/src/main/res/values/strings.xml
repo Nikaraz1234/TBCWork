@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TBCWorks</string>
+
+    <string name="game_configuration">Game Configuration</string>
+    <string name="dimension">Dimension</string>
+    <string name="start">Start</string>
 </resources>
