@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true"
+    android:background="@color/order_item_bg">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvOrderNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTrackNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/track_number"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvOrderNumber"
+            android:layout_marginTop="4dp"
+            android:textSize="15sp"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTrackNumberValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/tvTrackNumber"
+            app:layout_constraintTop_toBottomOf="@id/tvOrderNumber"
+            android:layout_marginTop="4dp"
+            android:textSize="15sp"
+            android:layout_marginStart="10dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/quantity"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTrackNumber"
+            android:layout_marginTop="4dp"
+            android:textSize="15sp"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvQuantityValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/tvQuantity"
+            app:layout_constraintTop_toBottomOf="@id/tvTrackNumber"
+            android:layout_marginTop="4dp"
+            android:textSize="15sp"
+            android:layout_marginStart="5dp"
+            android:textStyle="bold"/>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="4dp"
+            android:textSize="15sp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="4dp"
+            android:textSize="15sp"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSubTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/subtotal"
+            app:layout_constraintEnd_toStartOf="@id/tvSubTotalValue"
+            app:layout_constraintTop_toBottomOf="@id/tvTrackNumber"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="5dp"
+            android:textSize="15sp"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSubTotalValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTrackNumber"
+            android:layout_marginTop="4dp"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSubTotal"
+            android:layout_marginTop="10dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="6dp"
+            android:text="@string/details"
+            android:textStyle="bold"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

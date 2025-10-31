@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="order_item_bg">#F9F9F9</color>
+    <color name="delivered">#009254</color>
+    <color name="pending">#CF6212</color>
+    <color name="canceled">#C50000</color>
+    <color name="status_btn_bg">#43484B</color>
 </resources>
