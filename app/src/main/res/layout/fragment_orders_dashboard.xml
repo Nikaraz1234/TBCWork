@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".screens.dashboard.orders.OrdersDashboardFragment"
+    android:padding="16dp"
+    android:background="@color/black_bg">
+
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnLeftNav"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/button_more"
+        android:background="@color/black_bg"
+        android:tint="@color/white"/>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/my_orders"
+        android:textStyle="bold"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/btnLeftNav"
+        app:layout_constraintTop_toTopOf="@id/btnLeftNav"
+        app:layout_constraintBottom_toBottomOf="@id/btnLeftNav"
+        android:textColor="@color/white"
+        android:textSize="30sp"/>
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnSearch"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintEnd_toStartOf="@+id/btnMore"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/icon_search"
+        android:backgroundTint="@color/dark_gray"
+        android:layout_marginEnd="10dp"/>
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnMore"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/icon_more"
+        android:backgroundTint="@color/dark_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/btnActiveContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnCompletedContainer"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnActive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/active"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:background="@android:color/transparent"
+            android:textSize="16sp"
+            android:paddingVertical="6dp"/>
+
+        <View
+            android:id="@+id/underlineActive"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/white"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btnCompletedContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toEndOf="@id/btnActiveContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCompleted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/completed"
+            android:textAllCaps="false"
+            android:textColor="@color/dark_gray"
+            android:background="@android:color/transparent"
+            android:textSize="16sp"
+            android:paddingVertical="6dp"/>
+
+        <View
+            android:id="@+id/underlineCompleted"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/dark_gray"/>
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvOrders"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnActiveContainer"
+        android:layout_marginTop="20dp"/>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

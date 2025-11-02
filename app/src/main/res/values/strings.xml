@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">TBCWorks</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="completed">Completed</string>
+    <string name="active">Active</string>
+    <string name="leave_a_review">Leave a Review</string>
+    <string name="very_good_product_and_fast_delivery">Very good product and fast delivery!</string>
+    <string name="stars">★★★★☆</string>
+    <string name="please_give_your_rating_and_also_your_review">Please give your rating and also your review...</string>
+    <string name="how_is_your_order">How is your order?</string>
+    <string name="cancel">Cancel</string>
+    <string name="submit">Submit</string>
+    <string name="my_orders">My Orders</string>
 </resources>

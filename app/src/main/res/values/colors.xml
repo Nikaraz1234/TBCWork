@@ -2,4 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="black_bg">#1B1B1B</color>
+    <color name="dark_gray">#B0B0B0</color>
+    <color name="bottom_stroke">#2E2E2E</color>
+    <color name="item_bg">#1A2A3A</color>
+    <color name="red_tshirt">#F44336</color>
+    <color name="blue_jeans">#2196F3</color>
+    <color name="black_sneakers">#212121</color>
+    <color name="white_cap">#FFFFFF</color>
 </resources>
