@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "cardNumber": "4336 1345 8932 8378",
+    "cardHolder": "John Doe",
+    "expires": "12/2026",
+    "cvv": 123,
+    "cardType": "Mastercard"
+  },
+  {
+    "id": 2,
+    "cardNumber": "4532 8765 1234 5678",
+    "cardHolder": "Jane Smith",
+    "expires": "11/2027",
+    "cvv": 412,
+    "cardType": "Visa"
+  },
+  {
+    "id": 3,
+    "cardNumber": "5284 1111 2222 3333",
+    "cardHolder": "Alice Johnson",
+    "expires": "07/2025",
+    "cvv": 987,
+    "cardType": "Mastercard"
+  }
+]

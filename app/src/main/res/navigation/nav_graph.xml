@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/cardDashboardFragment">
 
+    <fragment
+        android:id="@+id/cardDashboardFragment"
+        android:name="com.example.tbcworks.screens.cards.dashboard.CardDashboardFragment"
+        android:label="fragment_card_dashboard"
+        tools:layout="@layout/fragment_card_dashboard" >
+        <action
+            android:id="@+id/action_cardDashboardFragment_to_addCardFragment"
+            app:destination="@id/addCardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCardFragment"
+        android:name="com.example.tbcworks.screens.cards.addCard.AddCardFragment"
+        android:label="fragment_add_card"
+        tools:layout="@layout/fragment_add_card" />
 </navigation>

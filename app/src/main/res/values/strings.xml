@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">TBCWorks</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="or_check_out_with">or check out with</string>
+    <string name="payment">Payment</string>
+    <string name="card_managment">Card Managment</string>
+    <string name="add_new">Add new+</string>
+    <string name="cardholder">CARDHOLDER</string>
+    <string name="add_new_card">Add new card</string>
+    <string name="cardholder_name">Cardholder Name</string>
+    <string name="cvv">CVV</string>
+    <string name="expires">Expires</string>
+    <string name="mm_yy">MM/YY</string>
+    <string name="name">name</string>
+    <string name="holder_name">Holder Name</string>
+    <string name="card_number">Card Number</string>
+    <string name="add_card">Add card</string>
 </resources>
