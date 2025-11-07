@@ -35,14 +35,14 @@ class FieldsFormFragment : BaseFragment<FragmentFieldsFormBinding>() {
 
             viewModel.parseJson(json)
 
-            val adapter = OuterAdapter(viewModel)
+            outerAdapter = OuterAdapter(viewModel)
             rvForm.layoutManager = LinearLayoutManager(requireContext())
-            rvForm.adapter = adapter
+            rvForm.adapter = outerAdapter
 
             viewLifecycleOwner.lifecycleScope.launch {
                 viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                     viewModel.fieldGroups.collectLatest { groups ->
-                        adapter.submitList(groups)
+                        outerAdapter.submitList(groups)
                     }
                 }
             }
@@ -56,9 +56,8 @@ class FieldsFormFragment : BaseFragment<FragmentFieldsFormBinding>() {
                     Snackbar.make(binding.root, "Please fill: $missingFields", Snackbar.LENGTH_LONG).show()
                 }
             }
-
-
         }
+
     }
 
 
