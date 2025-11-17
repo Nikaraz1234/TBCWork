@@ -1,5 +1,8 @@
 package com.example.tbcworks.data.auth
 
+import com.example.tbcworks.data.auth.api.LoginApi
+import com.example.tbcworks.data.auth.api.RegisterApi
+import com.example.tbcworks.data.auth.api.UserApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
@@ -41,12 +44,17 @@ object ApiClient {
 
     private val contentType = "application/json".toMediaType()
 
-    val authApi: AuthApi by lazy {
+    private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(json.asConverterFactory(contentType))
             .build()
-            .create(AuthApi::class.java)
     }
+
+    val loginApi: LoginApi by lazy { retrofit.create(LoginApi::class.java) }
+
+    val registerApi: RegisterApi by lazy { retrofit.create(RegisterApi::class.java) }
+
+    val userApi : UserApi by lazy { retrofit.create(UserApi::class.java) }
 }

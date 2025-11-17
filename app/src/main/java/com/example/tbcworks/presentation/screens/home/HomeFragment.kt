@@ -5,13 +5,15 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.tbcworks.data.dataStore.removeToken
+import com.example.tbcworks.data.dataStore.TokenDataStore
 import com.example.tbcworks.databinding.FragmentHomeBinding
 import com.example.tbcworks.presentation.BaseFragment
 import kotlinx.coroutines.launch
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val args by navArgs<HomeFragmentArgs>()
+
+    private val tokenDataStore by lazy { TokenDataStore(requireContext()) }
 
     override fun inflateBinding(
         inflater: LayoutInflater,
@@ -32,14 +34,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         btnLogout.setOnClickListener {
             logout()
         }
-    }
-
-    private fun logout() = with(binding){
-        lifecycleScope.launch {
-            removeToken(requireContext())
+        btnUserList.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDashboardFragment())
         }
     }
 
-
+    private fun logout() = with(binding){
+        lifecycleScope.launch {
+            tokenDataStore.removeToken()
+            tokenDataStore.removeEmail()
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToLoginFragment()
+            )
+        }
+    }
 }

@@ -6,7 +6,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.tbcworks.data.auth.AuthUiState
-import com.example.tbcworks.data.dataStore.saveToken
 import com.example.tbcworks.presentation.BaseFragment
 import com.example.tbcworks.databinding.FragmentLoginBinding
 import com.example.tbcworks.presentation.screens.AuthViewModelFactory
@@ -15,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     private val viewModel: LoginViewModel by viewModels {
-        AuthViewModelFactory()
+        AuthViewModelFactory(requireContext())
     }
 
     override fun inflateBinding(
@@ -29,53 +28,80 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         btnLogin.setOnClickListener {
             login()
         }
+        btnRegister.setOnClickListener {
+            viewModel.navigateToRegister()
+        }
     }
 
     override fun bind() {
         observe()
+        setResultListener()
     }
 
     private fun login() = with(binding) {
-        val username = etUsername.text.toString().trim()
+        val email = etEmail.text.toString().trim()
         val password = etPassword.text.toString().trim()
+        val rememberMe = cbRememberMe.isChecked
 
-        if (validateLoginInputs(username, password)) {
+        if (validateLoginInputs(email, password)) {
             viewLifecycleOwner.lifecycleScope.launch {
-                val result = viewModel.login(username, password)
-                result.fold(
-                    onSuccess = { response ->
-                        saveToken(requireContext(), response.token!!)
-                        root.showSnackBar(LOGIN_SUCCESS_MESSAGE)
-                        findNavController().navigate(
-                            LoginFragmentDirections.actionLoginFragmentToHomeFragment(username)
-                        )
-                    },
-                    onFailure = {
-                        root.showSnackBar(LOGIN_FAILED_MESSAGE)
-                    }
-                )
+                viewModel.login(email, password, rememberMe)
             }
         }
     }
 
     private fun observe() = with(binding) {
+        observeUiState()
+        observeNavigation()
+    }
+
+    private fun observeUiState() = with(binding){
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiState.collect { state ->
                 when (state) {
                     is AuthUiState.ShowMessage -> root.showSnackBar(state.message)
-                    is AuthUiState.LoginSuccess -> {
-                        root.showSnackBar(LOGIN_SUCCESS_MESSAGE)
-                        findNavController().navigate(
-                            LoginFragmentDirections.actionLoginFragmentToHomeFragment(
-                                username = etUsername.text.toString()
-                            )
-                        )
-                    }
                     else -> {}
                 }
             }
         }
     }
+
+    private fun setResultListener() {
+        parentFragmentManager.setFragmentResultListener(
+            REGISTER_KEY,
+            viewLifecycleOwner
+        ) { requestKey, bundle ->
+            val username = bundle.getString(EMAIL)
+            val password = bundle.getString(PASSWORD)
+
+            username?.let { binding.etEmail.setText(it) }
+            password?.let { binding.etPassword.setText(it) }
+        }
+    }
+
+
+    private fun observeNavigation() = with(binding) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.navigationEvent.collect { event ->
+                when (event) {
+                    is LoginViewModel.NavigationEvent.ToHome -> {
+                        root.showSnackBar(LOGIN_SUCCESS_MESSAGE)
+                        findNavController().navigate(
+                            LoginFragmentDirections.actionLoginFragmentToHomeFragment(
+                                username = etEmail.text.toString()
+                            )
+                        )
+                    }
+                    is LoginViewModel.NavigationEvent.ToRegister -> {
+                        findNavController().navigate(
+                            LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
+                        )
+                    }
+                }
+            }
+        }
+    }
+
 
     private fun validateLoginInputs(username: String, password: String): Boolean {
         with(binding) {
@@ -92,5 +118,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         private const val LOGIN_SUCCESS_MESSAGE = "Login successful!"
         private const val LOGIN_FAILED_MESSAGE = "Login failed"
         private const val FILL_ALL_FIELDS_MESSAGE = "Please fill all the fields"
+        private const val EMAIL = "email"
+        private const val PASSWORD = "password"
+        private const val REGISTER_KEY = "register_key"
     }
 }

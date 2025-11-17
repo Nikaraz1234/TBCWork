@@ -1,58 +1,88 @@
 package com.example.tbcworks.presentation.screens.register
 
+import android.util.Patterns
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.tbcworks.data.auth.AuthRepository
 import com.example.tbcworks.data.auth.AuthUiState
+import com.example.tbcworks.data.dataStore.TokenDataStore
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class RegisterViewModel(private val repo: AuthRepository) : ViewModel() {
+class RegisterViewModel(
+    private val repo: AuthRepository,
+    private val tokenStore: TokenDataStore
+) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<AuthUiState>(AuthUiState.Idle)
-    val uiState: StateFlow<AuthUiState> = _uiState
+    private val _uiEvent = MutableSharedFlow<AuthUiState>()
+    val uiEvent = _uiEvent.asSharedFlow()
 
-    suspend fun register(username: String, password: String, email: String): Boolean {
-        val error = validateInputs(username, password, email)
+    private val _navigationEvent = MutableSharedFlow<NavigationEvent>()
+    val navigationEvent = _navigationEvent.asSharedFlow()
+
+    suspend fun register(email: String, password: String, repeatPassword: String): Boolean {
+        val error = validateInputs(email, password, repeatPassword)
         if (error != null) {
-            _uiState.value = AuthUiState.ShowMessage(error)
+            viewModelScope.launch {
+                _uiEvent.emit(AuthUiState.ShowMessage(error))
+            }
             return false
         }
 
-        _uiState.value = AuthUiState.Loading
+        viewModelScope.launch {
+            _uiEvent.emit(AuthUiState.Loading)
+        }
 
         return try {
             val response = withContext(Dispatchers.IO) {
                 repo.register(email, password)
             }
 
-            if (response.isSuccess) {
-                _uiState.value = AuthUiState.RegisterSuccess
-                true
-            } else {
-                val errorMessage = response.exceptionOrNull()?.message ?: UNKNOWN_ERROR
-                _uiState.value = AuthUiState.ShowMessage(errorMessage)
-                false
-            }
+            response.fold(
+                onSuccess = { _ ->
+                    viewModelScope.launch {
+                        _navigationEvent.emit(NavigationEvent.ToLogin(email, password))
+                    }
+                    true
+                },
+                onFailure = { exception ->
+                    viewModelScope.launch {
+                        _uiEvent.emit(AuthUiState.ShowMessage(exception.message ?: UNKNOWN_ERROR))
+                    }
+                    false
+                }
+            )
         } catch (e: Exception) {
-            _uiState.value = AuthUiState.ShowMessage(NETWORK_ERROR)
+            viewModelScope.launch { _uiEvent.emit(AuthUiState.ShowMessage(NETWORK_ERROR)) }
             false
         }
     }
 
-    private fun validateInputs(username: String, password: String, email: String): String? {
-        if (username.isBlank() || password.isBlank()) return ERROR_EMPTY_FIELDS
-        if (email.isBlank() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            return INVALID_EMAIL_FORMAT
+    private fun validateInputs(email: String, password: String, repeatPassword: String): String? {
+        return if (email.isBlank() || password.isBlank() || repeatPassword.isBlank()) {
+            ERROR_EMPTY_FIELDS
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            INVALID_EMAIL_FORMAT
+        } else if (password != repeatPassword) {
+            PASSWORDS_DONT_MATCH
+        } else {
+            null
         }
-        return null
     }
 
-    companion object{
+    sealed class NavigationEvent {
+        data class ToLogin(val username: String, val password: String) : NavigationEvent()
+    }
+
+    companion object {
         private const val ERROR_EMPTY_FIELDS = "Username and password cannot be empty"
         private const val INVALID_EMAIL_FORMAT = "Invalid email format"
         private const val NETWORK_ERROR = "Network Error"
         private const val UNKNOWN_ERROR = "Unknown Error"
+        private const val PASSWORDS_DONT_MATCH = "Passwords don’t match"
     }
 }
+

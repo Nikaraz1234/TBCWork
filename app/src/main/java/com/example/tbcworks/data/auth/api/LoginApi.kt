@@ -1,16 +1,12 @@
-package com.example.tbcworks.data.auth
-
+package com.example.tbcworks.data.auth.api
 
 import com.example.tbcworks.data.auth.dtos.LoginRequestDto
 import com.example.tbcworks.data.auth.dtos.LoginResponseDto
-import com.example.tbcworks.data.auth.dtos.RegisterRequestDto
-import com.example.tbcworks.data.auth.dtos.RegisterResponseDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-interface AuthApi {
-
-
-
+interface LoginApi {
+    @POST("login")
+    suspend fun login(@Body request: LoginRequestDto): Response<LoginResponseDto>
 }

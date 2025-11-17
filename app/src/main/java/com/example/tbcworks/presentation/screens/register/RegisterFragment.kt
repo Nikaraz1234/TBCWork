@@ -1,5 +1,6 @@
 package com.example.tbcworks.presentation.screens.register
 
+import android.os.Bundle
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -16,7 +17,7 @@ import kotlin.getValue
 
 class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
     private val viewModel: RegisterViewModel by viewModels {
-        AuthViewModelFactory()
+        AuthViewModelFactory(requireContext())
     }
 
     override fun inflateBinding(
@@ -37,55 +38,64 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
     }
 
     private fun register() = with(binding) {
-        btnRegister.setOnClickListener {
-            val username = etUsername.text.toString().trim()
-            val password = etPassword.text.toString().trim()
-            val email = etEmail.text.toString().trim()
-
-            if (validateInputs(username, password, email)) {
-                viewLifecycleOwner.lifecycleScope.launch {
-                    viewModel.register(username, password, email)
-                }
-
+        val password = etPassword.text.toString().trim()
+        val email = etEmail.text.toString().trim()
+        val repeatPassword = etRepeatPassword.text.toString().trim()
+        viewLifecycleOwner.lifecycleScope.launch {
+            val success = viewModel.register(email, password, repeatPassword)
+            if (success) {
+                onRegisterSuccess(email, password)
             }
         }
+
+    }
+
+    private fun onRegisterSuccess(email: String, password: String) {
+        val bundle = Bundle().apply {
+            putString("email", email)
+            putString("password", password)
+        }
+        parentFragmentManager.setFragmentResult("register_key", bundle)
+        findNavController().popBackStack()
     }
 
     private fun observe() = with(binding) {
+        observeUiState()
+        observeNavigation()
+    }
+    private fun observeUiState() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.uiState.collect { state ->
+            viewModel.uiEvent.collect { state ->
                 when (state) {
-                    is AuthUiState.ShowMessage -> root.showSnackBar(state.message)
-                    is AuthUiState.RegisterSuccess -> {
-                        root.showSnackBar(SUCCESS_MESSAGE)
-                        findNavController().navigate(
-                            RegisterFragmentDirections.actionRegisterFragmentToDashboardFragment()
-                        )
-                    }
-
+                    is AuthUiState.ShowMessage -> binding.root.showSnackBar(state.message)
                     else -> {}
                 }
             }
         }
     }
 
-    private fun validateInputs(username: String, password: String, email: String): Boolean {
-        with(binding) {
-            return if (username.isBlank() || password.isBlank() || email.isBlank()) {
-                root.showSnackBar(FILL_ALL_FIELDS_MESSAGE)
-                false
-            } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                root.showSnackBar(INVALID_EMAIL_MESSAGE)
-                false
-            } else {
-                true
+    private fun observeNavigation() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.navigationEvent.collect { event ->
+                when (event) {
+                    is RegisterViewModel.NavigationEvent.ToLogin -> {
+                        binding.root.showSnackBar(SUCCESS_MESSAGE)
+                        val bundle = Bundle().apply {
+                            putString(EMAIL, event.username)
+                            putString(PASSWORD, event.password)
+                        }
+                        parentFragmentManager.setFragmentResult(REGISTER_KEY, bundle)
+                        findNavController().popBackStack()
+                    }
+                }
             }
         }
     }
 
     companion object {
         private const val SUCCESS_MESSAGE = "Registration successful!"
-        private const val FILL_ALL_FIELDS_MESSAGE = "Please fill all the fields"
-        private const val INVALID_EMAIL_MESSAGE = "Invalid Email"
+        private const val EMAIL = "email"
+        private const val PASSWORD = "password"
+        private const val REGISTER_KEY = "register_key"
     }
 }

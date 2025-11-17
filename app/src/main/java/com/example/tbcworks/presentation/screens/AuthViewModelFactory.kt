@@ -1,24 +1,37 @@
 package com.example.tbcworks.presentation.screens
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.tbcworks.data.auth.ApiClient
 import com.example.tbcworks.data.auth.AuthRepository
+import com.example.tbcworks.data.dataStore.TokenDataStore
 import com.example.tbcworks.presentation.screens.login.LoginViewModel
 import com.example.tbcworks.presentation.screens.register.RegisterViewModel
 
-class AuthViewModelFactory : ViewModelProvider.Factory {
+class AuthViewModelFactory(
+    private val context: Context
+) : ViewModelProvider.Factory {
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        val repository = AuthRepository(ApiClient.authApi)
+
+        val repository = AuthRepository(
+            ApiClient.loginApi,
+            ApiClient.registerApi
+        )
+
+        val tokenDataStore = TokenDataStore(context.applicationContext)
 
         return when {
-            modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
-                LoginViewModel(repository) as T
-            }
-            modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
-                RegisterViewModel(repository) as T
-            }
+            modelClass.isAssignableFrom(LoginViewModel::class.java) ->
+                LoginViewModel(repository, tokenDataStore) as T
+
+            modelClass.isAssignableFrom(RegisterViewModel::class.java) ->
+                RegisterViewModel(repository, tokenDataStore) as T
+
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
     }
+
 }
+

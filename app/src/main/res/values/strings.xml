@@ -12,4 +12,8 @@
     <string name="name">Name:</string>
     <string name="log_out">Logout</string>
     <string name="email_">Email:</string>
+    <string name="rememer_me">Rememer me</string>
+    <string name="remember_me">Remember me</string>
+    <string name="users">Users</string>
+    <string name="users_list">Users List</string>
 </resources>

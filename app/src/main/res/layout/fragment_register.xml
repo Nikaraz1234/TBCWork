@@ -44,20 +44,6 @@
         android:background="@drawable/btn_shape_pink"
         android:inputType="textEmailAddress"/>
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etUsername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableStart="@drawable/icon_profile"
-        android:hint="@string/username"
-        android:drawablePadding="40dp"
-        android:paddingHorizontal="30dp"
-        android:layout_margin="30dp"
-        android:textSize="24sp"
-        app:layout_constraintTop_toBottomOf="@id/etEmail"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/btn_shape_pink"/>
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/etPassword"
@@ -70,7 +56,24 @@
         android:paddingHorizontal="30dp"
         android:layout_margin="30dp"
         android:textSize="24sp"
-        app:layout_constraintTop_toBottomOf="@id/etUsername"
+        app:layout_constraintTop_toBottomOf="@id/etEmail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/btn_shape_pink"
+        android:inputType="textPassword"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etRepeatPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/icon_lock"
+        android:drawableEnd="@drawable/icon_vision"
+        android:hint="Repeat"
+        android:drawablePadding="40dp"
+        android:paddingHorizontal="30dp"
+        android:layout_margin="30dp"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@id/etPassword"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/btn_shape_pink"
@@ -83,7 +86,7 @@
         android:text="@string/register"
         android:textAllCaps="false"
         android:background="@drawable/btn_shape_purple"
-        app:layout_constraintTop_toBottomOf="@id/etPassword"
+        app:layout_constraintTop_toBottomOf="@id/etRepeatPassword"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="30dp"

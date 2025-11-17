@@ -1,10 +1,17 @@
 package com.example.tbcworks.data.auth
 
-class AuthRepository(private val api: AuthApi) {
+import com.example.tbcworks.data.auth.api.LoginApi
+import com.example.tbcworks.data.auth.api.RegisterApi
+import com.example.tbcworks.data.auth.dtos.LoginRequestDto
+import com.example.tbcworks.data.auth.dtos.LoginResponseDto
+import com.example.tbcworks.data.auth.dtos.RegisterRequestDto
+import com.example.tbcworks.data.auth.dtos.RegisterResponseDto
 
-    suspend fun login(email: String, password: String): Result<LoginResponse> {
+class AuthRepository(private val loginApi: LoginApi, private val registerApi: RegisterApi) {
+
+    suspend fun login(email: String, password: String): Result<LoginResponseDto> {
         return try {
-            val response = api.login(LoginRequest(email, password))
+            val response = loginApi.login(LoginRequestDto(email, password))
             if (response.isSuccessful) {
                 val body = response.body()
                 if (body != null && body.token != null) {
@@ -22,9 +29,9 @@ class AuthRepository(private val api: AuthApi) {
     }
 
 
-    suspend fun register(email: String, password: String): Result<RegisterResponse> {
+    suspend fun register(email: String, password: String): Result<RegisterResponseDto> {
         return try {
-            val response = api.register(RegisterRequest(email, password))
+            val response = registerApi.register(RegisterRequestDto(email, password))
             if (response.isSuccessful && response.body()?.token != null) {
                 Result.success(response.body()!!)
             } else {
