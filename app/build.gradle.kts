@@ -1,13 +1,14 @@
 plugins {
+
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.navigation.safeargs)
+
 }
 android {
     namespace = "com.example.tbcworks"
     compileSdk = 36
-
 
     defaultConfig {
         applicationId = "com.example.tbcworks"
@@ -45,7 +46,7 @@ android {
 }
 
 dependencies {
-    // Core & UI (using version catalog)
+    // Core & UI
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -54,21 +55,16 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.7.0")
 
     // Navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:${libs.versions.navigation.get()}")
-    implementation("androidx.navigation:navigation-ui-ktx:${libs.versions.navigation.get()}")
-
-    // DateTime
-    implementation("com.jakewharton.threetenabp:threetenabp:1.4.4")
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 
     // Lifecycle
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-common-java8:2.7.0")
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
 
-    // Desugaring
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
 
     // Networking
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -77,15 +73,18 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
 
-    // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
+    // DateTime
+    implementation("com.jakewharton.threetenabp:threetenabp:1.4.4")
 
+    // Datastore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    // Desugaring
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
+    
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
-
-
 }
+

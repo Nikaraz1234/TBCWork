@@ -1,6 +1,8 @@
 package com.example.tbcworks.domain.splash
 
+import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -28,7 +30,6 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
     override fun bind() {
         observe()
-        viewModel.onEvent(SplashEvent.CheckToken)
     }
 
     private fun observe() {
@@ -47,6 +48,16 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
             }
         }
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.onEvent(SplashEvent.StartSplash)
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.onEvent(SplashEvent.StopSplash)
+    }
+
 
 
 

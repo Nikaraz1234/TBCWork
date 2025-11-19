@@ -3,6 +3,7 @@ package com.example.tbcworks.domain.splash
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tbcworks.data.dataStore.TokenDataStore
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -17,12 +18,14 @@ class SplashViewModel(
 
     fun onEvent(event: SplashEvent){
         when (event) {
-            is SplashEvent.CheckToken -> checkToken()
+            is SplashEvent.StartSplash -> onStartSplash()
+            is SplashEvent.StopSplash -> onStopSplash()
         }
     }
+    private var splashJob: Job? = null
 
-    private fun checkToken() {
-        viewModelScope.launch {
+    private fun onStartSplash() {
+        splashJob = viewModelScope.launch {
             delay(DELAY_DURATION)
 
             val token = tokenDataStore.getToken().first()
@@ -34,6 +37,11 @@ class SplashViewModel(
             }
         }
     }
+
+    private fun onStopSplash() {
+        splashJob?.cancel()
+    }
+
     companion object{
         private const val DELAY_DURATION = 2000L
     }

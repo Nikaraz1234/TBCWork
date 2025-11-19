@@ -12,9 +12,12 @@ class RegisterRepository(private val api: RegisterApi) : BaseRepository() {
             val response = api.register(RegisterRequestDto(email, password))
 
             if (!response.isSuccessful) {
-                throw Exception(response.errorBody()?.string() ?: "Registration failed")
+                throw Exception(response.errorBody()?.string() ?: REGISTRATION_FAILED)
             }
-            response.body() ?: throw Exception("Registration failed")
+            response.body() ?: throw Exception(REGISTRATION_FAILED)
         }
+    }
+    companion object {
+        private const val REGISTRATION_FAILED = "Registration failed"
     }
 }
