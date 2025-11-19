@@ -22,18 +22,18 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         return FragmentDashboardBinding.inflate(inflater, container, false)
     }
     override fun bind() {
-        setupRecyclerView()
-        observeUsers()
-        viewModel.fetchUsers()
+        setupRv()
+        observe()
+        viewModel.onEvent(DashboardEvent.FetchUsers)
     }
 
-    private fun setupRecyclerView() = with(binding) {
+    private fun setupRv() = with(binding) {
         adapter = DashboardAdapter()
         rvUsers.layoutManager = LinearLayoutManager(requireContext())
         rvUsers.adapter = adapter
     }
 
-    private fun observeUsers() {
+    private fun observe() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.users.collect { users ->
                 adapter.submitList(users)

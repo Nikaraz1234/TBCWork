@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.navigation.safeargs)
 }
-
 android {
     namespace = "com.example.tbcworks"
     compileSdk = 36
@@ -87,4 +86,6 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+
 }

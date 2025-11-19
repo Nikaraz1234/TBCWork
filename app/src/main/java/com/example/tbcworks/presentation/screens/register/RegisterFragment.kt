@@ -1,19 +1,16 @@
 package com.example.tbcworks.presentation.screens.register
 
 import android.os.Bundle
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.tbcworks.data.auth.AuthUiState
-import com.example.tbcworks.presentation.BaseFragment
 import com.example.tbcworks.databinding.FragmentRegisterBinding
-import com.example.tbcworks.presentation.screens.AuthViewModelFactory
+import com.example.tbcworks.presentation.BaseFragment
 import com.example.tbcworks.presentation.common.extensions.SnackBarHelper.showSnackBar
+import com.example.tbcworks.presentation.screens.AuthViewModelFactory
 import kotlinx.coroutines.launch
-import kotlin.getValue
 
 class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
     private val viewModel: RegisterViewModel by viewModels {
@@ -42,43 +39,18 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
         val email = etEmail.text.toString().trim()
         val repeatPassword = etRepeatPassword.text.toString().trim()
         viewLifecycleOwner.lifecycleScope.launch {
-            val success = viewModel.register(email, password, repeatPassword)
-            if (success) {
-                onRegisterSuccess(email, password)
-            }
+            viewModel.onEvent(RegisterEvent.OnRegister(email, password, repeatPassword))
         }
 
     }
 
-    private fun onRegisterSuccess(email: String, password: String) {
-        val bundle = Bundle().apply {
-            putString("email", email)
-            putString("password", password)
-        }
-        parentFragmentManager.setFragmentResult("register_key", bundle)
-        findNavController().popBackStack()
-    }
 
-    private fun observe() = with(binding) {
-        observeUiState()
-        observeNavigation()
-    }
-    private fun observeUiState() {
+    private fun observe() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.uiEvent.collect { state ->
-                when (state) {
-                    is AuthUiState.ShowMessage -> binding.root.showSnackBar(state.message)
-                    else -> {}
-                }
-            }
-        }
-    }
-
-    private fun observeNavigation() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.navigationEvent.collect { event ->
+            viewModel.sideEffect.collect { event ->
                 when (event) {
-                    is RegisterViewModel.NavigationEvent.ToLogin -> {
+                    is RegisterSideEffect.ToLogin -> {
+
                         binding.root.showSnackBar(SUCCESS_MESSAGE)
                         val bundle = Bundle().apply {
                             putString(EMAIL, event.username)
@@ -87,6 +59,8 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
                         parentFragmentManager.setFragmentResult(REGISTER_KEY, bundle)
                         findNavController().popBackStack()
                     }
+
+                    is RegisterSideEffect.ShowMessage -> binding.root.showSnackBar(event.message)
                 }
             }
         }

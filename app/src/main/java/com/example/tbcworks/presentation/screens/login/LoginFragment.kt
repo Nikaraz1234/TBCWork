@@ -3,9 +3,10 @@ package com.example.tbcworks.presentation.screens.login
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.tbcworks.data.auth.AuthUiState
 import com.example.tbcworks.presentation.BaseFragment
 import com.example.tbcworks.databinding.FragmentLoginBinding
 import com.example.tbcworks.presentation.screens.AuthViewModelFactory
@@ -29,7 +30,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             login()
         }
         btnRegister.setOnClickListener {
-            viewModel.navigateToRegister()
+            viewModel.onEvent(LoginEvent.OnRegister)
         }
     }
 
@@ -43,28 +44,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         val password = etPassword.text.toString().trim()
         val rememberMe = cbRememberMe.isChecked
 
-        if (validateLoginInputs(email, password)) {
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.login(email, password, rememberMe)
-            }
-        }
+        viewModel.onEvent(LoginEvent.OnLogin(email, password, rememberMe))
     }
 
-    private fun observe() = with(binding) {
-        observeUiState()
-        observeNavigation()
-    }
-
-    private fun observeUiState() = with(binding){
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.uiState.collect { state ->
-                when (state) {
-                    is AuthUiState.ShowMessage -> root.showSnackBar(state.message)
-                    else -> {}
-                }
-            }
-        }
-    }
 
     private fun setResultListener() {
         parentFragmentManager.setFragmentResultListener(
@@ -80,37 +62,31 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     }
 
 
-    private fun observeNavigation() = with(binding) {
+    private fun observe() = with(binding) {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.navigationEvent.collect { event ->
-                when (event) {
-                    is LoginViewModel.NavigationEvent.ToHome -> {
-                        root.showSnackBar(LOGIN_SUCCESS_MESSAGE)
-                        findNavController().navigate(
-                            LoginFragmentDirections.actionLoginFragmentToHomeFragment(
-                                username = etEmail.text.toString()
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.sideEffect.collect { event ->
+                    when (event) {
+                        is LoginSideEffect.ToHome -> {
+                            root.showSnackBar(LOGIN_SUCCESS_MESSAGE)
+                            findNavController().navigate(
+                                LoginFragmentDirections.actionLoginFragmentToHomeFragment(
+                                    username = etEmail.text.toString()
+                                )
                             )
-                        )
-                    }
-                    is LoginViewModel.NavigationEvent.ToRegister -> {
-                        findNavController().navigate(
-                            LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
-                        )
+                        }
+                        is LoginSideEffect.ToRegister -> {
+                            findNavController().navigate(
+                                LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
+                            )
+                        }
+                        is LoginSideEffect.ShowMessage -> {
+                            root.showSnackBar(event.message)
+                        }
                     }
                 }
             }
-        }
-    }
 
-
-    private fun validateLoginInputs(username: String, password: String): Boolean {
-        with(binding) {
-            return if (username.isBlank() || password.isBlank()) {
-                root.showSnackBar(FILL_ALL_FIELDS_MESSAGE)
-                false
-            } else {
-                true
-            }
         }
     }
 

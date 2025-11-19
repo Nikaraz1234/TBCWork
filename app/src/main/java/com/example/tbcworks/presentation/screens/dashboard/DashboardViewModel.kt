@@ -12,7 +12,15 @@ class DashboardViewModel : ViewModel() {
     private val _users = MutableStateFlow<List<User>>(emptyList())
     val users: StateFlow<List<User>> = _users
 
-    fun fetchUsers() {
+
+    fun onEvent(event: DashboardEvent){
+        when (event){
+            is DashboardEvent.FetchUsers ->
+                fetchUsers()
+        }
+    }
+
+    private fun fetchUsers() {
         viewModelScope.launch {
             try {
                 val response = ApiClient.userApi.getUsers()

@@ -2,73 +2,60 @@ package com.example.tbcworks.presentation.screens.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.tbcworks.data.auth.AuthRepository
-import com.example.tbcworks.data.auth.AuthUiState
+import com.example.tbcworks.data.auth.repository.LoginRepository
+import com.example.tbcworks.data.auth.repository.ResultWrapper
 import com.example.tbcworks.data.dataStore.TokenDataStore
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class LoginViewModel(
-    private val repo: AuthRepository,
+    private val repo: LoginRepository,
     private val tokenStore: TokenDataStore
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<AuthUiState>(AuthUiState.Idle)
-    val uiState: StateFlow<AuthUiState> = _uiState
 
-    private val _navigationEvent = MutableSharedFlow<NavigationEvent>()
-    val navigationEvent = _navigationEvent.asSharedFlow()
+    private val _sideEffect = MutableSharedFlow<LoginSideEffect>()
+    val sideEffect = _sideEffect.asSharedFlow()
 
 
-    suspend fun login(email: String, password: String, rememberMe: Boolean): Boolean {
-        val error = validateInputs(email, password)
-        if (error != null) {
-            _uiState.value = AuthUiState.ShowMessage(error)
-            return false
-        }
-
-        _uiState.value = AuthUiState.Loading
-
-        return try {
-            val response = withContext(Dispatchers.IO) {
-                repo.login(email, password)
-            }
-
-            response.fold(
-                onSuccess = { response ->
-                    if (rememberMe) {
-                        response.token?.let { token ->
-                            tokenStore.saveToken(token)
-                            tokenStore.saveEmail(email)
-
-                        }
-                    }
-
-                    viewModelScope.launch {
-                        _navigationEvent.emit(NavigationEvent.ToHome)
-                    }
-                    true
-                },
-                onFailure = { exception ->
-                    _uiState.value = AuthUiState.ShowMessage(
-                        exception.message ?: UNKNOWN_ERROR
-                    )
-                    false
+    fun onEvent(event: LoginEvent){
+        when (event) {
+            is LoginEvent.OnLogin ->
+                viewModelScope.launch {
+                    login(event.email, event.password, event.rememberMe)
                 }
-            )
-        } catch (e: Exception) {
-            _uiState.value = AuthUiState.ShowMessage(NETWORK_ERROR)
-            false
+            LoginEvent.OnRegister -> navigateToRegister()
         }
     }
-    fun navigateToRegister(){
+
+
+    private suspend fun login(email: String, password: String, rememberMe: Boolean) {
+        val error = validateInputs(email, password)
+        if (error != null) {
+            _sideEffect.emit(LoginSideEffect.ShowMessage(error))
+        }
+
+        when (val result = repo.login(email, password)) {
+            is ResultWrapper.Success -> {
+                if (rememberMe) {
+                    result.data.token?.let { token ->
+                        tokenStore.saveToken(token)
+                        tokenStore.saveEmail(email)
+                    }
+                }
+                _sideEffect.emit(LoginSideEffect.ToHome)
+            }
+
+            is ResultWrapper.Error -> {
+                _sideEffect.emit(LoginSideEffect.ShowMessage(result.message))
+            }
+        }
+    }
+
+    private fun navigateToRegister(){
         viewModelScope.launch {
-            _navigationEvent.emit(NavigationEvent.ToRegister)
+            _sideEffect.emit(LoginSideEffect.ToRegister)
         }
     }
 
@@ -82,8 +69,4 @@ class LoginViewModel(
         private const val NETWORK_ERROR = "NETWORK_ERROR"
     }
 
-    sealed class NavigationEvent {
-        object ToHome : NavigationEvent()
-        object ToRegister : NavigationEvent()
-    }
 }
