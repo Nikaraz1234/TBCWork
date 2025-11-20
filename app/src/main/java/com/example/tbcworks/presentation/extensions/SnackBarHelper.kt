@@ -1,4 +1,4 @@
-package com.example.tbcworks.presentation.common.extensions
+package com.example.tbcworks.presentation.extensions
 
 import android.view.View
 import com.google.android.material.snackbar.Snackbar

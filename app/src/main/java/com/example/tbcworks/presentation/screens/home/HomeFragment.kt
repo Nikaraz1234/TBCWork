@@ -2,18 +2,20 @@ package com.example.tbcworks.presentation.screens.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.tbcworks.data.dataStore.TokenDataStore
 import com.example.tbcworks.databinding.FragmentHomeBinding
-import com.example.tbcworks.presentation.BaseFragment
+import com.example.tbcworks.presentation.common.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
-    private val args by navArgs<HomeFragmentArgs>()
 
-    private val tokenDataStore by lazy { TokenDataStore(requireContext()) }
+    private val viewModel: HomeViewModel by viewModels()
+    private val args by navArgs<HomeFragmentArgs>()
 
     override fun inflateBinding(
         inflater: LayoutInflater,
@@ -22,30 +24,36 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         return FragmentHomeBinding.inflate(inflater, container, false)
     }
 
-    override fun bind() {
-        setUpUsername()
-    }
-
-    private fun setUpUsername() = with(binding){
+    override fun bind() = with(binding){
+        observeSideEffects()
         tvUsername.text = args.username
     }
 
     override fun listeners() = with(binding) {
         btnLogout.setOnClickListener {
-            logout()
+            viewModel.onEvent(HomeEvent.LogoutClicked)
         }
         btnUserList.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDashboardFragment())
+            viewModel.onEvent(HomeEvent.UserListClicked)
         }
     }
 
-    private fun logout() = with(binding){
+    private fun observeSideEffects() {
         lifecycleScope.launch {
-            tokenDataStore.removeToken()
-            tokenDataStore.removeEmail()
-            findNavController().navigate(
-                HomeFragmentDirections.actionHomeFragmentToLoginFragment()
-            )
+            viewModel.sideEffect.collect { sideEffect ->
+                when (sideEffect) {
+                    HomeSideEffect.NavigateToLogin -> {
+                        findNavController().navigate(
+                            HomeFragmentDirections.actionHomeFragmentToLoginFragment()
+                        )
+                    }
+                    HomeSideEffect.NavigateToDashboard -> {
+                        findNavController().navigate(
+                            HomeFragmentDirections.actionHomeFragmentToDashboardFragment()
+                        )
+                    }
+                }
+            }
         }
     }
 }

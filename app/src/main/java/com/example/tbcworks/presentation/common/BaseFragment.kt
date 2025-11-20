@@ -1,4 +1,4 @@
-package com.example.tbcworks.presentation
+package com.example.tbcworks.presentation.common
 
 import android.os.Bundle
 import android.view.LayoutInflater

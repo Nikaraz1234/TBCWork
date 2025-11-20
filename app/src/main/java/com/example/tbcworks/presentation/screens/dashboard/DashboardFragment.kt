@@ -6,11 +6,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.tbcworks.presentation.BaseFragment
+import com.example.tbcworks.presentation.common.BaseFragment
 import com.example.tbcworks.databinding.FragmentDashboardBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     private val viewModel: DashboardViewModel by viewModels()
     private lateinit var adapter: DashboardAdapter

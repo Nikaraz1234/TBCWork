@@ -3,12 +3,17 @@ package com.example.tbcworks.data.auth.repository
 import com.example.tbcworks.data.auth.api.RegisterApi
 import com.example.tbcworks.data.auth.dtos.RegisterRequestDto
 import com.example.tbcworks.data.auth.dtos.RegisterResponseDto
+import com.example.tbcworks.data.common.resource.HandleResponse
+import javax.inject.Inject
 
 
-class RegisterRepository(private val api: RegisterApi) : BaseRepository() {
+class RegisterRepository @Inject constructor(
+    private val api: RegisterApi,
+    private val handleResponse: HandleResponse
+) {
 
-    suspend fun register(email: String, password: String): ResultWrapper<RegisterResponseDto> {
-        return safeApiCall {
+    suspend fun register(email: String, password: String) =
+        handleResponse.safeApiCall {
             val response = api.register(RegisterRequestDto(email, password))
 
             if (!response.isSuccessful) {
@@ -16,7 +21,7 @@ class RegisterRepository(private val api: RegisterApi) : BaseRepository() {
             }
             response.body() ?: throw Exception(REGISTRATION_FAILED)
         }
-    }
+
     companion object {
         private const val REGISTRATION_FAILED = "Registration failed"
     }

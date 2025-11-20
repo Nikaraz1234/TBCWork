@@ -9,16 +9,17 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.tbcworks.data.dataStore.TokenDataStore
+import com.example.tbcworks.data.common.dataStore.TokenDataStore
 import com.example.tbcworks.databinding.FragmentSplashBinding
-import com.example.tbcworks.presentation.BaseFragment
+import com.example.tbcworks.presentation.common.BaseFragment
+import com.example.tbcworks.presentation.screens.splash.SplashViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+
+@AndroidEntryPoint
 class SplashFragment : BaseFragment<FragmentSplashBinding>() {
-    private val tokenDataStore by lazy { TokenDataStore(requireContext()) }
-    private val viewModel: SplashViewModel by viewModels {
-        SplashViewModelFactory(tokenDataStore)
-    }
+    private val viewModel: SplashViewModel by viewModels()
 
 
     override fun inflateBinding(

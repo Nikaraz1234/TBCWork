@@ -1,15 +1,22 @@
-package com.example.tbcworks.domain.splash
+package com.example.tbcworks.presentation.screens.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.tbcworks.data.dataStore.TokenDataStore
+import com.example.tbcworks.data.common.dataStore.TokenDataStore
+import com.example.tbcworks.domain.splash.SplashEvent
+import com.example.tbcworks.domain.splash.SplashSideEffect
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.first
-class SplashViewModel(
+import javax.inject.Inject
+
+
+@HiltViewModel
+class SplashViewModel @Inject constructor(
     private val tokenDataStore: TokenDataStore
 ) : ViewModel() {
 

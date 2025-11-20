@@ -7,16 +7,16 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.tbcworks.presentation.BaseFragment
+import com.example.tbcworks.presentation.common.BaseFragment
 import com.example.tbcworks.databinding.FragmentLoginBinding
-import com.example.tbcworks.presentation.screens.AuthViewModelFactory
-import com.example.tbcworks.presentation.common.extensions.SnackBarHelper.showSnackBar
+import com.example.tbcworks.presentation.extensions.SnackBarHelper.showSnackBar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+
+@AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
-    private val viewModel: LoginViewModel by viewModels {
-        AuthViewModelFactory(requireContext())
-    }
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun inflateBinding(
         inflater: LayoutInflater,

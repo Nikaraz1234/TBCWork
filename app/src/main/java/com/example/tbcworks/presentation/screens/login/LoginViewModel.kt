@@ -3,15 +3,18 @@ package com.example.tbcworks.presentation.screens.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tbcworks.data.auth.repository.LoginRepository
-import com.example.tbcworks.data.auth.repository.ResultWrapper
-import com.example.tbcworks.data.dataStore.TokenDataStore
+import com.example.tbcworks.data.common.dataStore.TokenDataStore
+import com.example.tbcworks.data.common.resource.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel(
+@HiltViewModel
+class LoginViewModel @Inject constructor(
     private val repo: LoginRepository,
-    private val tokenStore: TokenDataStore
+    private val tokenDataStore: TokenDataStore
 ) : ViewModel() {
 
 
@@ -37,19 +40,20 @@ class LoginViewModel(
         }
 
         when (val result = repo.login(email, password)) {
-            is ResultWrapper.Success -> {
+            is Resource.Success -> {
                 if (rememberMe) {
                     result.data.token?.let { token ->
-                        tokenStore.saveToken(token)
-                        tokenStore.saveEmail(email)
+                        tokenDataStore.saveToken(token)
+                        tokenDataStore.saveEmail(email)
                     }
                 }
                 _sideEffect.emit(LoginSideEffect.ToHome)
             }
 
-            is ResultWrapper.Error -> {
+            is Resource.Error -> {
                 _sideEffect.emit(LoginSideEffect.ShowMessage(result.message))
             }
+            else -> {}
         }
     }
 

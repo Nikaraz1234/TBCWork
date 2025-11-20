@@ -4,13 +4,17 @@ import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tbcworks.data.auth.repository.RegisterRepository
-import com.example.tbcworks.data.auth.repository.ResultWrapper
-import com.example.tbcworks.data.dataStore.TokenDataStore
+import com.example.tbcworks.data.common.dataStore.TokenDataStore
+import com.example.tbcworks.data.common.resource.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RegisterViewModel(
+
+@HiltViewModel
+class RegisterViewModel @Inject constructor(
     private val repo: RegisterRepository,
     private val tokenStore: TokenDataStore
 ) : ViewModel() {
@@ -36,12 +40,13 @@ class RegisterViewModel(
 
 
         when (val result = repo.register(email, password)) {
-            is ResultWrapper.Success -> {
+            is Resource.Success -> {
                 _sideEffect.emit(RegisterSideEffect.ToLogin(email, password))
             }
-            is ResultWrapper.Error -> {
+            is Resource.Error -> {
                 _sideEffect.emit(RegisterSideEffect.ShowMessage(result.message))
             }
+            else -> {}
         }
     }
 
