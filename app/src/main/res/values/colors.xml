@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="app_bg">#22343C</color>
+    <color name="filter_bg">#40DF9F</color>
+    <color name="search_bg">#1A282F</color>
+    <color name="search_text_color">#96A7AF</color>
 </resources>
