@@ -3,7 +3,9 @@ package com.example.tbcworks.presentation.screens.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.tbcworks.databinding.FragmentHomeBinding
@@ -39,18 +41,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun observeSideEffects() {
-        lifecycleScope.launch {
-            viewModel.sideEffect.collect { sideEffect ->
-                when (sideEffect) {
-                    HomeSideEffect.NavigateToLogin -> {
-                        findNavController().navigate(
-                            HomeFragmentDirections.actionHomeFragmentToLoginFragment()
-                        )
-                    }
-                    HomeSideEffect.NavigateToDashboard -> {
-                        findNavController().navigate(
-                            HomeFragmentDirections.actionHomeFragmentToDashboardFragment()
-                        )
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.sideEffect.collect { sideEffect ->
+                    when (sideEffect) {
+                        HomeSideEffect.NavigateToLogin -> {
+                            findNavController().navigate(
+                                HomeFragmentDirections.actionHomeFragmentToLoginFragment()
+                            )
+                        }
+                        HomeSideEffect.NavigateToDashboard -> {
+                            findNavController().navigate(
+                                HomeFragmentDirections.actionHomeFragmentToDashboardFragment()
+                            )
+                        }
                     }
                 }
             }

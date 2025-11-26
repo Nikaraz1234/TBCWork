@@ -35,7 +35,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
     private fun observe() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.sideEffect.collect { event ->
                     when (event) {
                         is SplashSideEffect.ToHome -> findNavController().navigate(

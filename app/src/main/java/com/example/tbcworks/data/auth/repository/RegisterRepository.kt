@@ -12,7 +12,7 @@ class RegisterRepository @Inject constructor(
     private val handleResponse: HandleResponse
 ) {
 
-    suspend fun register(email: String, password: String) =
+    fun register(email: String, password: String) =
         handleResponse.safeApiCall {
             val response = api.register(RegisterRequestDto(email, password))
 

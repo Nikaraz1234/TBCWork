@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.tbcworks.databinding.FragmentRegisterBinding
 import com.example.tbcworks.presentation.common.BaseFragment
@@ -47,20 +49,22 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
 
     private fun observe() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.sideEffect.collect { event ->
-                when (event) {
-                    is RegisterSideEffect.ToLogin -> {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.sideEffect.collect { event ->
+                    when (event) {
+                        is RegisterSideEffect.ToLogin -> {
 
-                        binding.root.showSnackBar(SUCCESS_MESSAGE)
-                        val bundle = Bundle().apply {
-                            putString(EMAIL, event.username)
-                            putString(PASSWORD, event.password)
+                            binding.root.showSnackBar(SUCCESS_MESSAGE)
+                            val bundle = Bundle().apply {
+                                putString(EMAIL, event.username)
+                                putString(PASSWORD, event.password)
+                            }
+                            parentFragmentManager.setFragmentResult(REGISTER_KEY, bundle)
+                            findNavController().popBackStack()
                         }
-                        parentFragmentManager.setFragmentResult(REGISTER_KEY, bundle)
-                        findNavController().popBackStack()
-                    }
 
-                    is RegisterSideEffect.ShowMessage -> binding.root.showSnackBar(event.message)
+                        is RegisterSideEffect.ShowMessage -> binding.root.showSnackBar(event.message)
+                    }
                 }
             }
         }

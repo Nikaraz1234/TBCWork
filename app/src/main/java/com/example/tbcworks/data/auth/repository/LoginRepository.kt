@@ -12,7 +12,7 @@ class LoginRepository @Inject constructor(
     private val handleResponse: HandleResponse
 ) {
 
-    suspend fun login(email: String, password: String) =
+    fun login(email: String, password: String) =
         handleResponse.safeApiCall {
             val response = api.login(LoginRequestDto(email, password))
 

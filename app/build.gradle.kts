@@ -94,5 +94,7 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
 
+    implementation("androidx.paging:paging-runtime:3.2.1")
+
 
 }

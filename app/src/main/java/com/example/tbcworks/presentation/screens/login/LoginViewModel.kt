@@ -37,23 +37,27 @@ class LoginViewModel @Inject constructor(
         val error = validateInputs(email, password)
         if (error != null) {
             _sideEffect.emit(LoginSideEffect.ShowMessage(error))
+            return
         }
 
-        when (val result = repo.login(email, password)) {
-            is Resource.Success -> {
-                if (rememberMe) {
-                    result.data.token?.let { token ->
-                        tokenDataStore.saveToken(token)
-                        tokenDataStore.saveEmail(email)
-                    }
-                }
-                _sideEffect.emit(LoginSideEffect.ToHome)
-            }
+        repo.login(email, password).collect { result ->
+            when (result) {
+                is Resource.Loading -> {}
 
-            is Resource.Error -> {
-                _sideEffect.emit(LoginSideEffect.ShowMessage(result.message))
+                is Resource.Success -> {
+                    if (rememberMe) {
+                        result.data.token?.let { token ->
+                            tokenDataStore.saveToken(token)
+                            tokenDataStore.saveEmail(email)
+                        }
+                    }
+                    _sideEffect.emit(LoginSideEffect.ToHome)
+                }
+
+                is Resource.Error -> {
+                    _sideEffect.emit(LoginSideEffect.ShowMessage(result.message))
+                }
             }
-            else -> {}
         }
     }
 

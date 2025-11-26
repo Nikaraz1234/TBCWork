@@ -16,7 +16,6 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val repo: RegisterRepository,
-    private val tokenStore: TokenDataStore
 ) : ViewModel() {
 
     private val _sideEffect = MutableSharedFlow<RegisterSideEffect>()
@@ -31,25 +30,30 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    private suspend fun register(email: String, password: String, repeatPassword: String) {
+    fun register(email: String, password: String, repeatPassword: String) {
         val error = validateInputs(email, password, repeatPassword)
         if (error != null) {
-            _sideEffect.emit(RegisterSideEffect.ShowMessage(error))
+            viewModelScope.launch {
+                _sideEffect.emit(RegisterSideEffect.ShowMessage(error))
+            }
             return
         }
 
-
-        when (val result = repo.register(email, password)) {
-            is Resource.Success -> {
-                _sideEffect.emit(RegisterSideEffect.ToLogin(email, password))
-            }
-            is Resource.Error -> {
-                _sideEffect.emit(RegisterSideEffect.ShowMessage(result.message))
-            }
-            else -> {}
+        viewModelScope.launch {
+            repo.register(email, password)
+                .collect { result ->
+                    when (result) {
+                        is Resource.Success -> {
+                            _sideEffect.emit(RegisterSideEffect.ToLogin(email, password))
+                        }
+                        is Resource.Error -> {
+                            _sideEffect.emit(RegisterSideEffect.ShowMessage(result.message))
+                        }
+                        is Resource.Loading -> {}
+                    }
+                }
         }
     }
-
 
     private fun validateInputs(email: String, password: String, repeatPassword: String): String? {
         return if (email.isBlank() || password.isBlank() || repeatPassword.isBlank()) {
