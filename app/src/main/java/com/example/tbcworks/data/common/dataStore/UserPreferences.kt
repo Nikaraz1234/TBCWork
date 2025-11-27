@@ -1,52 +1,39 @@
 package com.example.tbcworks.data.common.dataStore
 
 import android.content.Context
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlin.collections.get
+
+
 
 private val Context.dataStore by preferencesDataStore(name = "user_prefs")
 
 class TokenDataStore(private val context: Context) {
 
     companion object {
-        private val TOKEN_KEY = stringPreferencesKey("auth_token")
-        private val EMAIL_KEY = stringPreferencesKey("email_key")
+        val TOKEN_KEY = stringPreferencesKey("auth_token")
+        val EMAIL_KEY = stringPreferencesKey("email_key")
     }
 
-    suspend fun saveToken(token: String) {
-        context.dataStore.edit { preferences ->
-            preferences[TOKEN_KEY] = token
+    suspend fun <T> saveValue(key: Preferences.Key<T>, value: T) {
+        context.dataStore.edit { prefs ->
+            prefs[key] = value
         }
     }
 
-    fun getToken(): Flow<String?> {
-        return context.dataStore.data.map { preferences ->
-            preferences[TOKEN_KEY]
+    fun <T> getValue(key: Preferences.Key<T>): Flow<T?> {
+        return context.dataStore.data.map { prefs ->
+            prefs[key]
         }
     }
 
-    suspend fun removeToken() {
-        context.dataStore.edit { preferences ->
-            preferences.remove(TOKEN_KEY)
-        }
-    }
-    suspend fun saveEmail(username: String) {
-        context.dataStore.edit { preferences ->
-            preferences[EMAIL_KEY] = username
-        }
-    }
-
-    fun getEmail(): Flow<String?> =
-        context.dataStore.data.map { it[EMAIL_KEY]
-        }
-
-    suspend fun removeEmail() {
-        context.dataStore.edit { preferences ->
-            preferences.remove(EMAIL_KEY)
+    suspend fun <T> removeValue(key: Preferences.Key<T>) {
+        context.dataStore.edit { prefs ->
+            prefs.remove(key)
         }
     }
 }

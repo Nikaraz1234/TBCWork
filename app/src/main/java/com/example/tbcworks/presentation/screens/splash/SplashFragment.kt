@@ -1,4 +1,4 @@
-package com.example.tbcworks.domain.splash
+package com.example.tbcworks.presentation.screens.splash
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,10 +9,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.tbcworks.data.common.dataStore.TokenDataStore
 import com.example.tbcworks.databinding.FragmentSplashBinding
 import com.example.tbcworks.presentation.common.BaseFragment
-import com.example.tbcworks.presentation.screens.splash.SplashViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

@@ -3,8 +3,7 @@ package com.example.tbcworks.presentation.screens.splash
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tbcworks.data.common.dataStore.TokenDataStore
-import com.example.tbcworks.domain.splash.SplashEvent
-import com.example.tbcworks.domain.splash.SplashSideEffect
+
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -35,8 +34,8 @@ class SplashViewModel @Inject constructor(
         splashJob = viewModelScope.launch {
             delay(DELAY_DURATION)
 
-            val token = tokenDataStore.getToken().first()
-            val email = tokenDataStore.getEmail().first() ?: ""
+            val token = tokenDataStore.getValue(TokenDataStore.TOKEN_KEY).first()
+            val email = tokenDataStore.getValue(TokenDataStore.EMAIL_KEY).first() ?: ""
             if (!token.isNullOrEmpty()) {
                 _sideEffect.emit(SplashSideEffect.ToHome(email))
             } else {

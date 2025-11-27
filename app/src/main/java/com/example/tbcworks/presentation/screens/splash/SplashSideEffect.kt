@@ -1,6 +1,6 @@
-package com.example.tbcworks.domain.splash
+package com.example.tbcworks.presentation.screens.splash
 
-sealed class SplashSideEffect {
-    data class ToHome(val email: String) : SplashSideEffect()
-    data object ToLogin : SplashSideEffect()
+sealed interface SplashSideEffect {
+    data class ToHome(val email: String) : SplashSideEffect
+    data object ToLogin : SplashSideEffect
 }

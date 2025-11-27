@@ -69,11 +69,14 @@
             android:id="@+id/action_homeFragment_to_loginFragment"
             app:destination="@id/loginFragment"
              />
+        <action
+            android:id="@+id/action_homeFragment_to_userInfoFragment"
+            app:destination="@id/userInfoFragment" />
 
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.example.tbcworks.domain.splash.SplashFragment"
+        android:name="com.example.tbcworks.presentation.screens.splash.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -87,4 +90,9 @@
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true"/>
     </fragment>
+    <fragment
+        android:id="@+id/userInfoFragment"
+        android:name="com.example.tbcworks.presentation.screens.userInfo.UserInfoFragment"
+        android:label="fragment_user_info"
+        tools:layout="@layout/fragment_user_info" />
 </navigation>

@@ -47,8 +47,8 @@ class LoginViewModel @Inject constructor(
                 is Resource.Success -> {
                     if (rememberMe) {
                         result.data.token?.let { token ->
-                            tokenDataStore.saveToken(token)
-                            tokenDataStore.saveEmail(email)
+                            tokenDataStore.saveValue(TokenDataStore.TOKEN_KEY, token)
+                            tokenDataStore.saveValue(TokenDataStore.EMAIL_KEY, email)
                         }
                     }
                     _sideEffect.emit(LoginSideEffect.ToHome)

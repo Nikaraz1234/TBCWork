@@ -23,13 +23,14 @@ class HomeViewModel @Inject constructor(
         when (event) {
             HomeEvent.LogoutClicked -> logout()
             HomeEvent.UserListClicked -> navigateToDashboard()
+            HomeEvent.UserInfoClicked -> navigateToUserInfo()
         }
     }
 
     private fun logout() {
         viewModelScope.launch {
-            tokenDataStore.removeToken()
-            tokenDataStore.removeEmail()
+            tokenDataStore.removeValue(TokenDataStore.TOKEN_KEY)
+            tokenDataStore.removeValue(TokenDataStore.EMAIL_KEY)
             _sideEffect.emit(HomeSideEffect.NavigateToLogin)
         }
     }
@@ -37,6 +38,11 @@ class HomeViewModel @Inject constructor(
     private fun navigateToDashboard() {
         viewModelScope.launch {
             _sideEffect.emit(HomeSideEffect.NavigateToDashboard)
+        }
+    }
+    private fun navigateToUserInfo(){
+        viewModelScope.launch {
+            _sideEffect.emit(HomeSideEffect.NavigateToUserInfo)
         }
     }
 }

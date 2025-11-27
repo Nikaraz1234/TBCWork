@@ -38,6 +38,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         btnUserList.setOnClickListener {
             viewModel.onEvent(HomeEvent.UserListClicked)
         }
+        btnUserInfo.setOnClickListener {
+            viewModel.onEvent(HomeEvent.UserInfoClicked)
+        }
     }
 
     private fun observeSideEffects() {
@@ -54,6 +57,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                             findNavController().navigate(
                                 HomeFragmentDirections.actionHomeFragmentToDashboardFragment()
                             )
+                        }
+                        HomeSideEffect.NavigateToUserInfo -> {
+                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToUserInfoFragment())
+
                         }
                     }
                 }

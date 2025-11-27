@@ -28,7 +28,7 @@ class DashboardViewModel @Inject constructor(
     private fun fetchUsers() {
         viewModelScope.launch {
             _usersPaging = userRepository.getPagedUsers()
-                .cachedIn(viewModelScope) // Important for performance
+                .cachedIn(viewModelScope)
         }
     }
 }

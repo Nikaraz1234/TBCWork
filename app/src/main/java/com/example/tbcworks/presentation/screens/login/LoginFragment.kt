@@ -92,8 +92,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     companion object {
         private const val LOGIN_SUCCESS_MESSAGE = "Login successful!"
-        private const val LOGIN_FAILED_MESSAGE = "Login failed"
-        private const val FILL_ALL_FIELDS_MESSAGE = "Please fill all the fields"
         private const val EMAIL = "email"
         private const val PASSWORD = "password"
         private const val REGISTER_KEY = "register_key"

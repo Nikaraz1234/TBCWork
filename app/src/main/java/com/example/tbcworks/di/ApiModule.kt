@@ -1,4 +1,4 @@
-package com.example.tbcworks.data.common.di
+package com.example.tbcworks.di
 
 import com.example.tbcworks.data.auth.api.LoginApi
 import com.example.tbcworks.data.auth.api.RegisterApi

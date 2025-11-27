@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import com.google.protobuf.gradle.*
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -6,6 +7,7 @@ plugins {
     alias(libs.plugins.navigation.safeargs)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
+    id("com.google.protobuf") version "0.9.4"
 }
 android {
     namespace = "com.example.tbcworks"
@@ -96,5 +98,25 @@ dependencies {
 
     implementation("androidx.paging:paging-runtime:3.2.1")
 
-
+    implementation("androidx.datastore:datastore-core:1.1.1")
+    implementation("com.google.protobuf:protobuf-javalite:3.18.0")
 }
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.18.0"
+    }
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                create("java") {
+                    option("lite")
+                }
+            }
+        }
+    }
+}
+
+
+
+

@@ -20,7 +20,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     private val viewModel: DashboardViewModel by viewModels()
-    private lateinit var adapter: DashboardAdapter
+    private val adapter: DashboardAdapter by lazy { DashboardAdapter() }
     @Inject
     lateinit var networkListener: NetworkListener
 
@@ -55,7 +55,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         }
     }
     private fun setupRv() = with(binding) {
-        adapter = DashboardAdapter()
         rvUsers.layoutManager = LinearLayoutManager(requireContext())
         rvUsers.adapter = adapter
     }
