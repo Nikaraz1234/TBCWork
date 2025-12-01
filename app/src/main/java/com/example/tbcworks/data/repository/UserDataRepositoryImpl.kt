@@ -1,4 +1,4 @@
-package com.example.tbcworks.data.auth.repository
+package com.example.tbcworks.data.repository
 
 import com.example.tbcworks.data.common.dataStore.UserData
 import androidx.datastore.core.DataStore

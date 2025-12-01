@@ -1,8 +1,7 @@
-package com.example.tbcworks.data.auth.repository
+package com.example.tbcworks.data.repository
 
-import com.example.tbcworks.data.auth.api.LoginApi
-import com.example.tbcworks.data.auth.dtos.LoginRequestDto
-import com.example.tbcworks.data.auth.dtos.LoginResponseDto
+import com.example.tbcworks.data.api.LoginApi
+import com.example.tbcworks.data.dtos.LoginRequestDto
 import com.example.tbcworks.data.common.resource.HandleResponse
 import javax.inject.Inject
 

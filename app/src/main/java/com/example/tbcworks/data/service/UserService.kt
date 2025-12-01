@@ -1,12 +1,11 @@
-package com.example.tbcworks.data.auth.api
+package com.example.tbcworks.data.api
 
-import com.example.tbcworks.data.auth.dtos.UserResponseDto
+import com.example.tbcworks.data.dtos.UserResponseDto
 import retrofit2.Response
-import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface UserApi {
+interface UserService {
     @GET("users")
     suspend fun getUsers(
         @Query("page") page: Int,
