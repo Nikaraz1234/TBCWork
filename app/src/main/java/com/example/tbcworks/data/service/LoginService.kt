@@ -1,4 +1,4 @@
-package com.example.tbcworks.data.api
+package com.example.tbcworks.data.service
 
 import com.example.tbcworks.data.dtos.LoginRequestDto
 import com.example.tbcworks.data.dtos.LoginResponseDto

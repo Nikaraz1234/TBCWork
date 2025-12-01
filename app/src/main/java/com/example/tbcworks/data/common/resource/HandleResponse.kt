@@ -1,5 +1,6 @@
 package com.example.tbcworks.data.common.resource
 
+import com.example.tbcworks.domain.Resource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.TimeoutCancellationException

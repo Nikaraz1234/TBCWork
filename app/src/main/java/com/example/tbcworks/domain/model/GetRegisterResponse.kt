@@ -1,9 +1,10 @@
-package com.example.tbcworks.data.dtos
+package com.example.tbcworks.domain.model
 
 import kotlinx.serialization.Serializable
 
+
 @Serializable
-data class RegisterResponseDto(
+data class GetRegisterResponse(
     val id: Int,
     val token: String
 )

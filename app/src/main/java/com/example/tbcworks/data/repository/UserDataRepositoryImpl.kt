@@ -1,14 +1,18 @@
 package com.example.tbcworks.data.repository
 
-import com.example.tbcworks.data.common.dataStore.UserData
 import androidx.datastore.core.DataStore
+import com.example.tbcworks.data.common.dataStore.UserData
+import com.example.tbcworks.domain.model.GetUserData
+import com.example.tbcworks.domain.repository.UserDataRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class UserDataRepository @Inject constructor(
+class UserDataRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<UserData>
-) {
-    suspend fun saveUser(first: String, last: String, email: String) {
+) : UserDataRepository {
+
+    override suspend fun saveUser(first: String, last: String, email: String) {
         dataStore.updateData { currentData ->
             currentData.toBuilder()
                 .setFirstName(first)
@@ -18,5 +22,14 @@ class UserDataRepository @Inject constructor(
         }
     }
 
-    fun readUser(): Flow<UserData> = dataStore.data
+    override fun readUser(): Flow<GetUserData> =
+        dataStore.data.map { proto ->
+            GetUserData(
+                firstName = proto.firstName,
+                lastName = proto.lastName,
+                email = proto.email
+            )
+        }
+
 }
+

@@ -5,15 +5,15 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tbcworks.data.auth.models.User
 import com.example.tbcworks.databinding.ItemUserLayoutBinding
 
 class DashboardAdapter :
-    PagingDataAdapter<User, DashboardAdapter.DashboardViewHolder>(DIFFUTIL) {
+    PagingDataAdapter<UserModel, DashboardAdapter.DashboardViewHolder>(DIFFUTIL) {
 
     inner class DashboardViewHolder(private val binding: ItemUserLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(user: User) {
+
+        fun bind(user: UserModel) {
             binding.tvId.text = user.id.toString()
             binding.tvEmail.text = user.email
         }
@@ -31,11 +31,13 @@ class DashboardAdapter :
     override fun onBindViewHolder(holder: DashboardViewHolder, position: Int) {
         getItem(position)?.let { holder.bind(it) }
     }
-
     companion object {
-        val DIFFUTIL = object : DiffUtil.ItemCallback<User>() {
-            override fun areItemsTheSame(oldItem: User, newItem: User) = oldItem.id == newItem.id
-            override fun areContentsTheSame(oldItem: User, newItem: User) = oldItem == newItem
+        private val DIFFUTIL = object : DiffUtil.ItemCallback<UserModel>() {
+            override fun areItemsTheSame(oldItem: UserModel, newItem: UserModel) =
+                oldItem.id == newItem.id
+
+            override fun areContentsTheSame(oldItem: UserModel, newItem: UserModel) =
+                oldItem == newItem
         }
     }
 }

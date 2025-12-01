@@ -1,4 +1,4 @@
-package com.example.tbcworks.data.auth.dtos
+package com.example.tbcworks.data.dtos
 
 import kotlinx.serialization.Serializable
 

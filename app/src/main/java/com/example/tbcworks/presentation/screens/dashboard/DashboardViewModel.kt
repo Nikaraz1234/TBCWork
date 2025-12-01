@@ -4,20 +4,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.tbcworks.data.auth.models.User
-import com.example.tbcworks.data.auth.repository.UserRepository
+import androidx.paging.map
+import com.example.tbcworks.domain.usecase.paged_users.GetPagedUsersUseCase
+import com.example.tbcworks.presentation.screens.dashboard.mapper.toPresentation
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val getPagedUsersUseCase: GetPagedUsersUseCase
 ) : ViewModel() {
 
-    private lateinit var _usersPaging: Flow<PagingData<User>>
-    val usersPaging: Flow<PagingData<User>> get() = _usersPaging
+    private val _usersPaging = MutableStateFlow<PagingData<UserModel>>(PagingData.empty())
+    val usersPaging: StateFlow<PagingData<UserModel>> = _usersPaging
 
     fun onEvent(event: DashboardEvent) {
         when (event) {
@@ -27,8 +31,14 @@ class DashboardViewModel @Inject constructor(
 
     private fun fetchUsers() {
         viewModelScope.launch {
-            _usersPaging = userRepository.getPagedUsers()
+            getPagedUsersUseCase()
+                .map { pagingData ->
+                    pagingData.map { it.toPresentation() }
+                }
                 .cachedIn(viewModelScope)
+                .collectLatest { pagingData ->
+                    _usersPaging.value = pagingData
+                }
         }
     }
 }

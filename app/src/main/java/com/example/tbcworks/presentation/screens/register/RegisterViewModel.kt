@@ -3,9 +3,9 @@ package com.example.tbcworks.presentation.screens.register
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.tbcworks.data.auth.repository.RegisterRepository
-import com.example.tbcworks.data.common.dataStore.TokenDataStore
-import com.example.tbcworks.data.common.resource.Resource
+import com.example.tbcworks.domain.Resource
+import com.example.tbcworks.domain.usecase.register.RegisterUseCase
+import com.example.tbcworks.presentation.screens.register.mapper.toPresentation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val repo: RegisterRepository,
+    private val registerUseCase: RegisterUseCase
 ) : ViewModel() {
 
     private val _sideEffect = MutableSharedFlow<RegisterSideEffect>()
@@ -30,7 +30,7 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    fun register(email: String, password: String, repeatPassword: String) {
+    private suspend fun register(email: String, password: String, repeatPassword: String) {
         val error = validateInputs(email, password, repeatPassword)
         if (error != null) {
             viewModelScope.launch {
@@ -39,20 +39,17 @@ class RegisterViewModel @Inject constructor(
             return
         }
 
-        viewModelScope.launch {
-            repo.register(email, password)
-                .collect { result ->
-                    when (result) {
-                        is Resource.Success -> {
-                            _sideEffect.emit(RegisterSideEffect.ToLogin(email, password))
-                        }
-                        is Resource.Error -> {
-                            _sideEffect.emit(RegisterSideEffect.ShowMessage(result.message))
-                        }
-                        is Resource.Loading -> {}
-                    }
+        registerUseCase(email, password).collect { resource ->
+            when (resource) {
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    val model = resource.data.toPresentation()
+                    _sideEffect.emit(RegisterSideEffect.ToLogin(email, password))
                 }
+                is Resource.Error -> _sideEffect.emit(RegisterSideEffect.ShowMessage(resource.message))
+            }
         }
+
     }
 
     private fun validateInputs(email: String, password: String, repeatPassword: String): String? {

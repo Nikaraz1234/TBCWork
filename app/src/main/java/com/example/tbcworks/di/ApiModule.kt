@@ -1,8 +1,8 @@
 package com.example.tbcworks.di
 
-import com.example.tbcworks.data.auth.api.LoginApi
-import com.example.tbcworks.data.auth.api.RegisterApi
-import com.example.tbcworks.data.auth.api.UserApi
+import com.example.tbcworks.data.service.LoginService
+import com.example.tbcworks.data.service.RegisterService
+import com.example.tbcworks.data.service.UserService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -80,17 +80,17 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun provideLoginApi(retrofit: Retrofit): LoginApi =
-        retrofit.create(LoginApi::class.java)
+    fun provideLoginApi(retrofit: Retrofit): LoginService =
+        retrofit.create(LoginService::class.java)
 
     @Provides
     @Singleton
-    fun provideRegisterApi(retrofit: Retrofit): RegisterApi =
-        retrofit.create(RegisterApi::class.java)
+    fun provideRegisterApi(retrofit: Retrofit): RegisterService =
+        retrofit.create(RegisterService::class.java)
 
 
     @Provides
     @Singleton
-    fun provideUserApi(retrofit: Retrofit): UserApi =
-        retrofit.create(UserApi::class.java)
+    fun provideUserApi(retrofit: Retrofit): UserService =
+        retrofit.create(UserService::class.java)
 }

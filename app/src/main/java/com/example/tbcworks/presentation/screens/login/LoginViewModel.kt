@@ -2,9 +2,11 @@ package com.example.tbcworks.presentation.screens.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.tbcworks.data.auth.repository.LoginRepository
 import com.example.tbcworks.data.common.dataStore.TokenDataStore
-import com.example.tbcworks.data.common.resource.Resource
+import com.example.tbcworks.domain.Resource
+import com.example.tbcworks.domain.usecase.datastore_pref.SaveUserSessionUseCase
+import com.example.tbcworks.domain.usecase.login.LoginUseCase
+import com.example.tbcworks.presentation.screens.login.mapper.toPresentation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -13,8 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val repo: LoginRepository,
-    private val tokenDataStore: TokenDataStore
+    private val loginUseCase: LoginUseCase,
+    private val saveUserSessionUseCase: SaveUserSessionUseCase
 ) : ViewModel() {
 
 
@@ -40,25 +42,27 @@ class LoginViewModel @Inject constructor(
             return
         }
 
-        repo.login(email, password).collect { result ->
+        loginUseCase(email, password).collect { result ->
             when (result) {
                 is Resource.Loading -> {}
-
                 is Resource.Success -> {
+                    val loginModel = result.data.toPresentation()
+
                     if (rememberMe) {
-                        result.data.token?.let { token ->
-                            tokenDataStore.saveValue(TokenDataStore.TOKEN_KEY, token)
-                            tokenDataStore.saveValue(TokenDataStore.EMAIL_KEY, email)
-                        }
+                        saveUserSessionUseCase(
+                            token = loginModel.token,
+                            email = email
+                        )
                     }
+
                     _sideEffect.emit(LoginSideEffect.ToHome)
                 }
-
                 is Resource.Error -> {
                     _sideEffect.emit(LoginSideEffect.ShowMessage(result.message))
                 }
             }
         }
+
     }
 
     private fun navigateToRegister(){

@@ -2,21 +2,22 @@ package com.example.tbcworks.data.common.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.tbcworks.data.auth.api.UserApi
-import com.example.tbcworks.data.auth.models.User
+import com.example.tbcworks.data.service.UserService
+import com.example.tbcworks.data.dtos.UserResponseDto
+import javax.inject.Inject
 
-class UserPagingSource(
-    private val api: UserApi
-) : PagingSource<Int, User>() {
+class UserPagingSource @Inject constructor(
+    private val api: UserService
+) : PagingSource<Int, UserResponseDto.UserDto>() {
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, User> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, UserResponseDto.UserDto> {
         val nextPage = params.key ?: 1
         return try {
             val response = api.getUsers(nextPage, params.loadSize)
 
             if (response.isSuccessful) {
                 val users = response.body()?.data ?: emptyList()
-                val totalPages = response.body()?.total_pages ?: nextPage
+                val totalPages = response.body()?.totalPages ?: nextPage
 
                 LoadResult.Page(
                     data = users,
@@ -33,5 +34,5 @@ class UserPagingSource(
 
 
 
-    override fun getRefreshKey(state: PagingState<Int, User>): Int? = null
+    override fun getRefreshKey(state: PagingState<Int, UserResponseDto.UserDto>): Int? = null
 }
