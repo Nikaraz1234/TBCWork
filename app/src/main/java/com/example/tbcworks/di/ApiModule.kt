@@ -1,6 +1,7 @@
 package com.example.tbcworks.di
 
 
+import com.example.tbcworks.data.service.LocationService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -19,7 +20,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object ApiModule {
 
-    private const val BASE_URL = " 'https://mocki.io/"
+    private const val BASE_URL = "https://mocki.io/"
 
     @Provides
     @Singleton
@@ -75,5 +76,10 @@ object ApiModule {
             .build()
     }
 
+    @Provides
+    @Singleton
+    fun provideLocationService(retrofit: Retrofit): LocationService {
+        return retrofit.create(LocationService::class.java)
+    }
 
 }

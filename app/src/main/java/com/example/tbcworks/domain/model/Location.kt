@@ -1,12 +1,10 @@
-package com.example.tbcworks.data.model
+package com.example.tbcworks.domain.model
 
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LocationDto(
+data class Location(
     val location: String,
-    @SerialName("altitude_m")
     val altitude: Int,
     val title: String,
     val image: String,
