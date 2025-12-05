@@ -21,7 +21,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         setUpPager()
         observeState()
 
-        viewModel.loadLocations()
+        viewModel.onEvent(HomeEvent.LoadLocations)
     }
     private fun setUpPager() = with(binding){
         viewPager.adapter = adapter
