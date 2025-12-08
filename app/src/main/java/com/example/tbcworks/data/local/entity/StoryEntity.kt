@@ -1,0 +1,12 @@
+package com.example.tbcworks.data.local.entity
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "stories")
+data class StoryEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,   // Room primary key
+    val title: String,
+    val cover: String
+)
