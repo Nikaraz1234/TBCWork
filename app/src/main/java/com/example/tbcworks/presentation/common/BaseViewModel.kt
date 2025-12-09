@@ -17,8 +17,8 @@ abstract class BaseViewModel<State : Any, SideEffect : Any, Intent : Any>(
     private val _sideEffect = Channel<SideEffect>(Channel.BUFFERED)
     val sideEffect: Flow<SideEffect> = _sideEffect.receiveAsFlow()
 
-    protected fun setState(reducer: State.() -> State) {
-        _state.update { it.reducer() }
+    protected fun setState(state: State.() -> State) {
+        _state.update { it.state() }
     }
 
     protected fun sendSideEffect(effect: SideEffect) {

@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "stories")
 data class StoryEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,   // Room primary key
+    val id: Int = 0,
     val title: String,
     val cover: String
 )
