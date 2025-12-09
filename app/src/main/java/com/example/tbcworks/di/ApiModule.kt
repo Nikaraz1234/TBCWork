@@ -14,6 +14,8 @@ import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import com.example.tbcworks.BuildConfig
+import com.example.tbcworks.data.service.PostService
+import com.example.tbcworks.data.service.StoryService
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -74,5 +76,15 @@ object ApiModule {
             .addConverterFactory(json.asConverterFactory(contentType))
             .build()
     }
+
+    @Provides
+    @Singleton
+    fun providePostService(retrofit: Retrofit): PostService =
+        retrofit.create(PostService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideStoryService(retrofit: Retrofit): StoryService =
+        retrofit.create(StoryService::class.java)
 
 }

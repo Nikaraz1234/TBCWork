@@ -1,5 +1,5 @@
 package com.example.tbcworks.presentation.screens
 
-sealed interface HomeSideEffect {
-    object ShowError : HomeSideEffect
+sealed class HomeSideEffect {
+    data class ShowMessage(val message: String) : HomeSideEffect()
 }

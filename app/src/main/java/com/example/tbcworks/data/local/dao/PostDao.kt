@@ -18,4 +18,7 @@ interface PostDao {
 
     @Query("DELETE FROM posts")
     suspend fun clearPosts()
+
+    @Query("SELECT * FROM posts")
+    fun getAllPostsFlow(): Flow<List<PostEntity>>
 }

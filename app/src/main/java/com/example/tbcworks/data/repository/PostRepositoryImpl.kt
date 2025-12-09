@@ -9,6 +9,8 @@ import com.example.tbcworks.domain.Resource
 import com.example.tbcworks.domain.model.GetPost
 import com.example.tbcworks.domain.repository.PostRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -17,15 +19,22 @@ class PostRepositoryImpl @Inject constructor(
     private val handleResponse: HandleResponse,
     private val postDao: PostDao
 ) : PostRepository{
-    override fun getPosts(): Flow<Resource<List<GetPost>>> {
-        val api = handleResponse.safeApiCall {
+    override fun getPosts(): Flow<Resource<List<GetPost>>> = flow {
+        emit(Resource.Loading)
+
+        handleResponse.safeApiCall {
             val posts = postService.getPosts()
-            val entities = posts.map { it.toEntity() }
             postDao.clearPosts()
-            postDao.insertPosts(entities)
+            postDao.insertPosts(posts.map { it.toEntity() })
+        }.collect { resource ->
+            if (resource is Resource.Error) {
+                emit(resource)
+            }
         }
-        return postDao.getAllPosts().map { entities ->
-            Resource.Success(entities.map { it.toDomain() })
-        }
+        emitAll(
+            postDao.getAllPostsFlow().map { list ->
+                Resource.Success(list.map { it.toDomain() })
+            }
+        )
     }
 }

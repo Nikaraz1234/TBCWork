@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    android:layout_marginHorizontal="30dp"
     app:cardCornerRadius="16dp"
-    app:cardElevation="8dp"
-    android:layout_marginHorizontal="30dp">
+    app:cardElevation="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/bg_post"
         android:paddingHorizontal="20dp"
         android:paddingTop="20dp">
@@ -20,119 +20,174 @@
             android:id="@+id/ivProfilePicture"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:scaleType="centerCrop"
             android:background="@drawable/shape_circle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            android:clipToOutline="true"/>
+
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Alice Smith"
-            app:layout_constraintStart_toEndOf="@id/ivProfilePicture"
-            app:layout_constraintTop_toTopOf="parent"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="@color/white"
+            app:layout_constraintStart_toEndOf="@id/ivProfilePicture"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="15dp"/>
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/gray"
             app:layout_constraintTop_toBottomOf="@id/tvName"
             app:layout_constraintStart_toEndOf="@id/ivProfilePicture"
             android:layout_marginStart="15dp"
-            android:textSize="14sp"
-            android:textColor="@color/gray"
-            android:layout_marginTop="5dp"
-            android:text="20 April at 4:20 PM"/>
+            android:layout_marginTop="5dp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvDescription"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tvDate"
-            app:layout_constraintStart_toStartOf="parent"
             android:textColor="@color/white"
-            android:layout_marginTop="10dp"
-            android:text="We’re interested in your ideas and would be glad to build something bigger out of it. "
-            />
+            app:layout_constraintTop_toBottomOf="@id/ivProfilePicture"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="12dp"/>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/imageContainer"
+            android:layout_width="0dp"
+            android:layout_height="154dp"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDescription">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivLeft"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_image"
+                android:backgroundTint="@color/white"
+                android:scaleType="centerCrop"
+                android:clipToOutline="true"/>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivTopRight"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="13dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_image"
+                    android:backgroundTint="@color/white"
+                    android:scaleType="centerCrop"
+                    tools:ignore="NestedWeights"
+                    android:clipToOutline="true"/>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivBottomRight"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="13dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_image"
+                    android:backgroundTint="@color/white"
+                    android:scaleType="centerCrop"
+                    android:clipToOutline="true"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
 
         <View
             android:id="@+id/line1"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="1dp"
             android:background="@color/gray"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginVertical="10dp"
-            app:layout_constraintTop_toBottomOf="@id/tvDescription"/>
+            app:layout_constraintTop_toBottomOf="@id/imageContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginVertical="10dp"/>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/llReach"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
             android:weightSum="3"
+            app:layout_constraintTop_toBottomOf="@id/line1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/line1">
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginVertical="8dp">
 
             <TextView
                 android:id="@+id/tvComments"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="3 Comments"
-                android:textSize="14sp"
-                android:drawablePadding="4dp"
+                android:textSize="12sp"
                 android:gravity="center"
                 android:textColor="@color/gray"
-                app:drawableStartCompat="@drawable/ic_comment" />
+                app:drawableStartCompat="@drawable/ic_comment"
+                android:drawablePadding="4dp"/>
 
             <TextView
                 android:id="@+id/tvLikes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="17 Likes"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:gravity="center"
                 android:textColor="@color/gray"
-                app:drawableStartCompat="@drawable/ic_like" />
+                app:drawableStartCompat="@drawable/ic_like"/>
 
             <TextView
                 android:id="@+id/tvShare"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Share"
-                android:textSize="14sp"
-                android:drawablePadding="4dp"
+                android:textSize="12sp"
                 android:gravity="center"
+                android:text="@string/share"
                 android:textColor="@color/gray"
-                app:drawableStartCompat="@drawable/ic_share" />
-
+                app:drawableStartCompat="@drawable/ic_share"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <View
             android:id="@+id/line2"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="1dp"
             android:background="@color/gray"
-            android:layout_marginVertical="10dp"
-            app:layout_constraintTop_toBottomOf="@id/llReach"/>
-
+            app:layout_constraintTop_toBottomOf="@id/llReach"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginVertical="10dp"/>
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="8dp"
+            app:layout_constraintTop_toBottomOf="@id/line2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/line2">
+            app:layout_constraintEnd_toEndOf="parent">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivUserProfile"
@@ -140,7 +195,8 @@
                 android:layout_height="36dp"
                 android:layout_marginEnd="8dp"
                 android:scaleType="centerCrop"
-                android:background="@drawable/shape_circle"/>
+                android:background="@drawable/shape_circle"
+                android:clipToOutline="true" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etComment"
@@ -148,18 +204,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="Write a comment..."
+                android:textColorHint="@color/gray"
                 android:background="@drawable/bg_edit_text"
                 android:padding="8dp"
                 android:paddingEnd="20dp"
                 android:textSize="14sp"
                 android:inputType="text"
-                android:drawableEnd="@drawable/ic_attach" />
-
+                android:drawableEnd="@drawable/ic_attach"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 </androidx.cardview.widget.CardView>
