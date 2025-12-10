@@ -1,18 +1,14 @@
-package com.example.tbcworks.presentation.screens
+package com.example.tbcworks.presentation.screens.home
 
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tbcworks.databinding.FragmentHomeBinding
-import com.example.tbcworks.domain.Resource
 import com.example.tbcworks.presentation.common.BaseFragment
 import com.example.tbcworks.presentation.extension.SnackBarHelper.showSnackBar
 import com.example.tbcworks.presentation.extension.collectFlow
 import com.example.tbcworks.presentation.extension.collectStateFlow
-import com.example.tbcworks.presentation.screens.adapter.PostAdapter
-import com.example.tbcworks.presentation.screens.adapter.StoryAdapter
-import com.example.tbcworks.presentation.screens.mapper.toPresentation
-import com.example.tbcworks.presentation.screens.model.PostModel
-import com.example.tbcworks.presentation.screens.model.StoryModel
+import com.example.tbcworks.presentation.screens.home.adapter.PostAdapter
+import com.example.tbcworks.presentation.screens.home.adapter.StoryAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -1,4 +1,4 @@
-package com.example.tbcworks.presentation.screens
+package com.example.tbcworks.presentation.screens.home
 
 sealed class HomeEvent {
     object LoadPosts : HomeEvent()

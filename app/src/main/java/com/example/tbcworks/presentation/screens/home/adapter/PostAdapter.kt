@@ -1,4 +1,4 @@
-package com.example.tbcworks.presentation.screens.adapter
+package com.example.tbcworks.presentation.screens.home.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.tbcworks.R
 import com.example.tbcworks.databinding.ItemPostLayoutBinding
-import com.example.tbcworks.presentation.screens.model.PostModel
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import com.example.tbcworks.presentation.extension.toDateString
+import com.example.tbcworks.presentation.screens.home.model.PostModel
+
 
 class PostAdapter :
     ListAdapter<PostModel, PostAdapter.PostViewHolder>(DIFF_CALLBACK) {
@@ -27,8 +26,8 @@ class PostAdapter :
             tvName.text = item.firstName.plus(SPACE).plus(item.lastName)
             tvDescription.text = item.postDesc
 
-            val dateFormat = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
-            tvDate.text = dateFormat.format(Date(item.postDate)).lowercase()
+
+            tvDate.text = item.postDate.toDateString()
 
             tvComments.text = item.commentsCount.toString().plus(COMMENTS)
             tvLikes.text = item.likesCount.toString().plus(LIKES)
@@ -45,7 +44,7 @@ class PostAdapter :
             val images = item.images
             val imageViews = listOf(ivLeft, ivTopRight, ivBottomRight)
 
-            if (images.isNullOrEmpty()) {
+            if (images.isEmpty()) {
                 imageContainer.visibility = View.GONE
             } else {
                 when (images.size) {

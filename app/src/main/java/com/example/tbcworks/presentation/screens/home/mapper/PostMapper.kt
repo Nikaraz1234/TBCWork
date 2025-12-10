@@ -1,9 +1,9 @@
-package com.example.tbcworks.presentation.screens.mapper
+package com.example.tbcworks.presentation.screens.home.mapper
 
 import com.example.tbcworks.domain.model.GetPost
-import com.example.tbcworks.presentation.screens.model.PostModel
+import com.example.tbcworks.presentation.screens.home.model.PostModel
 
-fun GetPost.toPresentation() : PostModel{
+fun GetPost.toPresentation() : PostModel {
     return PostModel(
         avatar = avatar,
         postDate = postDate,

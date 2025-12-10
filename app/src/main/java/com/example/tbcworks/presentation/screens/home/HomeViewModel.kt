@@ -1,4 +1,4 @@
-package com.example.tbcworks.presentation.screens
+package com.example.tbcworks.presentation.screens.home
 
 import androidx.lifecycle.viewModelScope
 import com.example.tbcworks.domain.Resource
@@ -6,7 +6,7 @@ import com.example.tbcworks.domain.usecase.GetPostsUseCase
 import com.example.tbcworks.domain.usecase.GetStoriesUseCase
 import com.example.tbcworks.domain.usecase.NetworkCheckUseCase
 import com.example.tbcworks.presentation.common.BaseViewModel
-import com.example.tbcworks.presentation.screens.mapper.toPresentation
+import com.example.tbcworks.presentation.screens.home.mapper.toPresentation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

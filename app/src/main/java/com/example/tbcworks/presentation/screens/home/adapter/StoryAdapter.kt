@@ -1,4 +1,4 @@
-package com.example.tbcworks.presentation.screens.adapter
+package com.example.tbcworks.presentation.screens.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.tbcworks.R
 import com.example.tbcworks.databinding.ItemStoryLayoutBinding
-import com.example.tbcworks.presentation.screens.model.StoryModel
+import com.example.tbcworks.presentation.screens.home.model.StoryModel
 
 class StoryAdapter :
     ListAdapter<StoryModel, StoryAdapter.StoryViewHolder>(DIFF_CALLBACK) {

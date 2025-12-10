@@ -1,8 +1,8 @@
-package com.example.tbcworks.presentation.screens
+package com.example.tbcworks.presentation.screens.home
 
 
-import com.example.tbcworks.presentation.screens.model.PostModel
-import com.example.tbcworks.presentation.screens.model.StoryModel
+import com.example.tbcworks.presentation.screens.home.model.PostModel
+import com.example.tbcworks.presentation.screens.home.model.StoryModel
 
 data class HomeState(
     val posts : List<PostModel> = emptyList(),

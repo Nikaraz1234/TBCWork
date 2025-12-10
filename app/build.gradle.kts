@@ -61,6 +61,8 @@ kotlin {
     }
 }
 
+val workVersion = "2.9.2"
+
 dependencies {
     // Core & UI
     implementation(libs.androidx.core.ktx)
@@ -94,6 +96,7 @@ dependencies {
 
     // Datastore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation(libs.androidx.work.runtime.ktx)
 
     // Desugaring
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
@@ -115,5 +118,8 @@ dependencies {
     // Coil
     implementation("io.coil-kt:coil:2.6.0")
 
+    implementation("androidx.work:work-runtime-ktx:${workVersion}")
+    testImplementation("androidx.work:work-testing:${workVersion}")
 
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
 }
