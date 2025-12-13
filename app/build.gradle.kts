@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.navigation.safeargs)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -61,6 +62,8 @@ kotlin {
     }
 }
 
+val workVersion = "2.9.2"
+
 dependencies {
     // Core & UI
     implementation(libs.androidx.core.ktx)
@@ -106,4 +109,25 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Room
+    implementation("androidx.room:room-runtime:2.8.4")
+    implementation("androidx.room:room-ktx:2.8.4")
+    ksp("androidx.room:room-compiler:2.8.4")
+
+    // Coil
+    implementation("io.coil-kt:coil:2.6.0")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
+
+    implementation(platform("com.google.firebase:firebase-bom:32.2.2"))
+
+    // Firebase libraries you need
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-analytics-ktx")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
+
+
 }

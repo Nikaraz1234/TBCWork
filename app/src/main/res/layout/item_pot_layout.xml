@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="8dp"
+    android:padding="16dp"
+    android:background="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <View
+            android:id="@+id/dotView"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/shape_circle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:backgroundTint="@color/green"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/titleText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Savings"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/dotView"
+            app:layout_constraintTop_toTopOf="@id/dotView"
+            app:layout_constraintEnd_toStartOf="@id/optionsIcon"
+            android:layout_marginStart="8dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delete"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/red"
+            android:clickable="true"
+            android:focusable="true"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvDelete"
+            android:layout_marginEnd="10dp"
+            android:clickable="true"
+            android:focusable="true"/>
+        <ImageView
+            android:id="@+id/optionsIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_arrow"
+            android:contentDescription="Options"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/titleText"
+            android:visibility="gone"/>
+
+        <!-- Subtitle: Total Saved -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/subtitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/total_saved"
+            android:textSize="14sp"
+            android:textColor="@color/grey_500"
+            app:layout_constraintStart_toStartOf="@id/titleText"
+            app:layout_constraintTop_toBottomOf="@id/titleText"
+            android:layout_marginTop="4dp"/>
+
+        <!-- Amount -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/amountText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$159.00"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleText"
+
+            android:layout_marginTop="4dp"/>
+
+        <!-- Progress Bar -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="8dp"
+            android:progress="8"
+            android:max="100"
+            android:progressTint="@color/grey_900"
+            android:backgroundTint="@color/grey_100"
+            android:indeterminate="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/amountText"
+            android:layout_marginTop="12dp"/>
+
+        <!-- Progress Labels -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/progressPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7.95%"
+            android:textSize="12sp"
+            android:textColor="@color/grey_500"
+            app:layout_constraintStart_toStartOf="@id/progressBar"
+            app:layout_constraintTop_toBottomOf="@id/progressBar"
+            android:layout_marginTop="4dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/progressTarget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Target of $2,000"
+            android:textSize="12sp"
+            android:textColor="@color/grey_500"
+            app:layout_constraintEnd_toEndOf="@id/progressBar"
+            app:layout_constraintTop_toBottomOf="@id/progressBar"
+            android:layout_marginTop="4dp"/>
+        <Button
+            android:id="@+id/addMoneyButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:text="@string/add_money"
+            android:backgroundTint="@color/beige_100"
+            android:textColor="@color/black"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/withdrawButton"
+            app:layout_constraintTop_toBottomOf="@id/progressPercent"
+            android:layout_marginTop="16dp"/>
+
+        <Button
+            android:id="@+id/withdrawButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:text="@string/withdraw"
+            android:backgroundTint="@color/beige_100"
+            android:textColor="@color/black"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@id/addMoneyButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/addMoneyButton"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

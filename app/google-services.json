@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "682004969180",
+    "project_id": "midterm1-37bcf",
+    "storage_bucket": "midterm1-37bcf.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682004969180:android:f2c207bcd01b829129e619",
+        "android_client_info": {
+          "package_name": "com.example.tbcworks"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4lgmBTwZlxzF2Z6-5kpI7VLmAdjyb-rY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
