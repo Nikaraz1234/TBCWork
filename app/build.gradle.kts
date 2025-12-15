@@ -106,4 +106,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    val work_version = "2.11.0"
+    implementation("androidx.work:work-runtime-ktx:${work_version}")
+
 }
