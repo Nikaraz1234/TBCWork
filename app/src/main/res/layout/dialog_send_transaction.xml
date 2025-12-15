@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/white"
+    >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etReceiverEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Receiver Email"
+        android:inputType="textEmailAddress"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Amount"
+        android:inputType="numberDecimal"
+        android:layout_marginTop="8dp"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etPurpose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Purpose"
+        android:layout_marginTop="8dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_btn"
+        android:textColor="@color/white"
+        android:text="Send"
+        android:layout_marginTop="16dp"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,4 +1,15 @@
 package com.example.tbcworks.domain.usecase.pots
 
-class EditPotUseCase {
+import com.example.tbcworks.domain.Resource
+import com.example.tbcworks.domain.model.Pot
+import com.example.tbcworks.domain.repository.PotRepository
+import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
+
+class EditPotUseCase @Inject constructor(
+    private val repository: PotRepository
+) {
+    suspend operator fun invoke(userId: String, pot: Pot): Flow<Resource<Unit>> {
+        return repository.editPot(userId, pot)
+    }
 }

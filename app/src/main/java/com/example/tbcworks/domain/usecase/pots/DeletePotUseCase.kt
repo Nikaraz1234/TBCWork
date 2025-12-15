@@ -8,7 +8,7 @@ import javax.inject.Inject
 class DeletePotUseCase @Inject constructor(
     private val repository: PotRepository
 ) {
-    suspend operator fun invoke(potId: String): Flow<Resource<Unit>> {
-        return repository.deletePot(potId)
+    suspend operator fun invoke(userId: String, potId: String): Flow<Resource<Unit>> {
+        return repository.deletePot(userId, potId)
     }
 }

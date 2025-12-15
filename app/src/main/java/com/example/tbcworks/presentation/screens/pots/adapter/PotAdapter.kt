@@ -11,11 +11,16 @@ import com.example.tbcworks.presentation.screens.pots.model.PotModel
 class PotAdapter(
     private val onAddMoneyClick: (PotModel) -> Unit,
     private val onWithdrawClick: (PotModel) -> Unit,
-    private val onOptionsClick: (PotModel) -> Unit
+    private val onEditClick: (PotModel) -> Unit,
+    private val onDeleteClick: (PotModel) -> Unit
 ) : ListAdapter<PotModel, PotAdapter.PotViewHolder>(
     GenericDiffUtil(
         areItemsSame = { old, new -> old.id == new.id },
-        areContentsSame = { old, new -> old == new }
+        areContentsSame = { old, new ->
+            old.title == new.title &&
+                    old.balance == new.balance &&
+                    old.targetAmount == new.targetAmount
+        }
     )
 ) {
 
@@ -24,14 +29,15 @@ class PotAdapter(
 
         fun bind(pot: PotModel) = with(binding) {
             titleText.text = pot.title
-            amountText.text = DOLLAR_SIGN.plus(pot.amount)
+            amountText.text = DOLLAR_SIGN.plus(pot.balance)
             progressBar.progress = pot.progressPercent.toInt()
-            progressPercent.text = PERCENT_SIGN.plus(String.format("%.2f", pot.progressPercent))
+            progressPercent.text = PERCENT_SIGN.plus(pot.progressPercent.toInt().toString())
             progressTarget.text = TARGET_TEXT.plus(pot.targetAmount)
 
             addMoneyButton.setOnClickListener { onAddMoneyClick(pot) }
             withdrawButton.setOnClickListener { onWithdrawClick(pot) }
-            optionsIcon.setOnClickListener { onOptionsClick(pot) }
+            tvEdit.setOnClickListener { onEditClick(pot) }
+            tvDelete.setOnClickListener { onDeleteClick(pot) }
         }
     }
 

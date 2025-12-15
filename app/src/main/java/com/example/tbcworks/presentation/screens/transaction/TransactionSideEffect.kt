@@ -1,4 +1,5 @@
 package com.example.tbcworks.presentation.screens.transaction
 
-class TransactionSideEffect {
+sealed class TransactionSideEffect {
+    data class ShowSnackBar(val message: String) : TransactionSideEffect()
 }

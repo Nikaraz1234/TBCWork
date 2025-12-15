@@ -1,4 +1,5 @@
 package com.example.tbcworks.presentation.screens.home
 
-class HomeState {
-}
+data class HomeState(
+    val isLoading: Boolean = false
+)

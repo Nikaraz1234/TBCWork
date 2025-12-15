@@ -6,15 +6,12 @@ import com.example.tbcworks.presentation.screens.pots.model.PotModel
 fun Pot.toPresentation(): PotModel = PotModel(
     id = id,
     title = title,
-    amount = amount,
-    progressPercent = progressPercent,
+    balance = balance,
     targetAmount = targetAmount,
 )
-
 fun PotModel.toDomain(): Pot = Pot(
     id = id,
     title = title,
-    amount = amount,
-    progressPercent = progressPercent,
-    targetAmount = targetAmount,
+    balance = balance,
+    targetAmount = targetAmount
 )

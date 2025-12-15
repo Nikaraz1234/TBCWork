@@ -19,9 +19,9 @@ class TransactionAdapter :
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: TransactionModel) = with(binding) {
-            tvName.text = item.name
+            tvName.text = item.receiverEmail
             tvPurpose.text = item.purpose
-            tvValue.text = item.value
+            tvValue.text = item.value.toString()
             tvDate.text = item.date
 
             ivProfile.load(item.imageUrl) {

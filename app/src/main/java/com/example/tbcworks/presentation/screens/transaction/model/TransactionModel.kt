@@ -1,10 +1,12 @@
 package com.example.tbcworks.presentation.screens.transaction.model
 
+
 data class TransactionModel(
     val id: String,
-    val name: String,
+    val senderId: String,
+    val receiverEmail: String,
     val purpose: String,
-    val value: String,
+    val value: Double,
     val date: String,
-    val imageUrl: String? = null
+    val imageUrl: String?
 )

@@ -32,6 +32,8 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(
         val email = etEmail.text.toString().trim()
         val password = etPassword.text.toString().trim()
         viewModel.onEvent(SignUpEvent.OnSignUpClick(email, password))
+        etEmail.setText("")
+        etPassword.setText("")
     }
 
     override fun bind() {

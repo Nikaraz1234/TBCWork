@@ -1,4 +1,14 @@
 package com.example.tbcworks.domain.usecase.pots
 
-class WithdrawMoneyFromPotUseCase {
+import com.example.tbcworks.domain.Resource
+import com.example.tbcworks.domain.repository.PotRepository
+import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
+
+class WithdrawMoneyFromPotUseCase @Inject constructor(
+    private val repository: PotRepository
+) {
+    suspend operator fun invoke(userId: String, potId: String, amount: Double): Flow<Resource<Unit>> {
+        return repository.withdrawMoney(userId, potId, amount)
+    }
 }

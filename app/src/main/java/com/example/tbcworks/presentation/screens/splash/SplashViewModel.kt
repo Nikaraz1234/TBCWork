@@ -3,6 +3,7 @@ package com.example.tbcworks.presentation.screens.splash
 import androidx.lifecycle.viewModelScope
 import com.example.tbcworks.domain.usecase.datastore.GetTokenUseCase
 import com.example.tbcworks.presentation.common.BaseViewModel
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val getTokenUseCase: GetTokenUseCase
+    private val getTokenUseCase: GetTokenUseCase,
+    private val firebaseAuth: FirebaseAuth
 ) : BaseViewModel<SplashState, SplashSideEffect, SplashEvent>(
     initialState = SplashState()
 ) {
@@ -31,12 +33,13 @@ class SplashViewModel @Inject constructor(
         splashJob = viewModelScope.launch {
             delay(DELAY_DURATION)
 
-            val token = getTokenUseCase().first()
-            if (!token.isNullOrEmpty()) {
+            val currentUser = firebaseAuth.currentUser
+            if (currentUser != null) {
                 sendSideEffect(SplashSideEffect.ToHome)
             } else {
                 sendSideEffect(SplashSideEffect.ToLogin)
             }
+
         }
     }
 

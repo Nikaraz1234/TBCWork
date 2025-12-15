@@ -1,4 +1,6 @@
 package com.example.tbcworks.presentation
 
-class UserModel {
-}
+data class UserModel(
+    val email: String,
+    val balanceText: String
+)

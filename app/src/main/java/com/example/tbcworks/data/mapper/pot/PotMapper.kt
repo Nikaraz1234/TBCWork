@@ -7,31 +7,20 @@ import com.example.tbcworks.domain.model.Pot
 fun PotRequestDto.toDomain() = Pot(
     id = id,
     title = title,
-    amount = amount,
-    progressPercent = progressPercent,
-    targetAmount = targetAmount,
+    balance = amount,
+    targetAmount = targetAmount
 )
 
 fun Pot.toRequest() = PotRequestDto(
     id = id,
     title = title,
-    amount = amount,
-    progressPercent = progressPercent,
-    targetAmount = targetAmount,
+    amount = balance,
+    targetAmount = targetAmount
 )
-
 fun PotResponseDto.toDomain() = Pot(
     id = id,
     title = title,
-    amount = amount,
-    progressPercent = progressPercent,
-    targetAmount = targetAmount,
+    balance = amount,
+    targetAmount = targetAmount
 )
 
-fun Pot.toResponse() = PotResponseDto(
-    id = id,
-    title = title,
-    amount = amount,
-    progressPercent = progressPercent,
-    targetAmount = targetAmount,
-)

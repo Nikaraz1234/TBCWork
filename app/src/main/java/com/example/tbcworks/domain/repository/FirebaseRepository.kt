@@ -1,4 +1,5 @@
 package com.example.tbcworks.domain.repository
 
-class FirebaseRepository {
+interface FirebaseRepository {
+    fun getCurrentUserId(): String?
 }

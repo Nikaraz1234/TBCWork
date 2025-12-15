@@ -5,7 +5,10 @@ import com.example.tbcworks.domain.model.Pot
 import kotlinx.coroutines.flow.Flow
 
 interface PotRepository {
-    suspend fun addPot(pot: Pot): Flow<Resource<Unit>>
-    suspend fun getPots(): Flow<Resource<List<Pot>>>
-    suspend fun deletePot(potId: String): Flow<Resource<Unit>>
+    suspend fun addPot(userId: String, pot: Pot): Flow<Resource<Unit>>
+    suspend fun getPots(userId: String): Flow<Resource<List<Pot>>>
+    suspend fun deletePot(userId: String, potId: String): Flow<Resource<Unit>>
+    suspend fun editPot(userId: String, pot: Pot): Flow<Resource<Unit>>
+    suspend fun addMoney(userId: String, potId: String, amount: Double): Flow<Resource<Unit>>
+    suspend fun withdrawMoney(userId: String, potId: String, amount: Double): Flow<Resource<Unit>>
 }

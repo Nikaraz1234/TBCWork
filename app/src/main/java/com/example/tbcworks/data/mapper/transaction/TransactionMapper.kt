@@ -4,20 +4,24 @@ import com.example.tbcworks.data.model.transaction.TransactionRequestDto
 import com.example.tbcworks.data.model.transaction.TransactionResponseDto
 import com.example.tbcworks.domain.model.Transaction
 
-fun Transaction.toRequest(): TransactionRequestDto = TransactionRequestDto(
+
+fun Transaction.toRequestDto() = TransactionRequestDto(
     id = id,
-    name = name,
+    senderId = senderId,
+    receiverEmail = receiverEmail,
     purpose = purpose,
     value = value,
     date = date,
     imageUrl = imageUrl
 )
 
-fun TransactionResponseDto.toDomain(): Transaction = Transaction(
+
+fun TransactionResponseDto.toDomain() = Transaction(
     id = id,
-    name = name,
+    senderId = senderId,
+    receiverEmail = receiverEmail,
     purpose = purpose,
     value = value,
     date = date,
-    imageUrl = imageUrl
+    imageUrl = imageUrl,
 )

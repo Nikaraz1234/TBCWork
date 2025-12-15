@@ -1,4 +1,8 @@
 package com.example.tbcworks.presentation.screens.home
 
-class HomeEvent {
+sealed class HomeEvent {
+    object Logout : HomeEvent()
+    data class AddMoneyToUser(val amount: Double) : HomeEvent()
+    object LoadBalance : HomeEvent()
+
 }

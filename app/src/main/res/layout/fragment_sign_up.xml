@@ -62,28 +62,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/name"
-                app:layout_constraintTop_toBottomOf="@id/tvLoginTitle"
-                android:layout_marginTop="30dp"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="parent"/>
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/etName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/tvName"
-                android:background="@drawable/bg_et"
-                android:layout_marginTop="5dp"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/email"
-                app:layout_constraintTop_toBottomOf="@id/etName"
+                app:layout_constraintTop_toBottomOf="@id/tvLoginTitle"
                 android:layout_marginTop="30dp"
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"/>
@@ -110,7 +93,8 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/tvPassword"
                 android:background="@drawable/bg_et"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"
+                android:inputType="textPassword"/>
 
 
             <androidx.appcompat.widget.AppCompatButton

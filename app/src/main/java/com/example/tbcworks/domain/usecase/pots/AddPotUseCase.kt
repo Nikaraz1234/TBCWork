@@ -9,7 +9,5 @@ import javax.inject.Inject
 class AddPotUseCase @Inject constructor(
     private val repository: PotRepository
 ) {
-    suspend operator fun invoke(pot: Pot): Flow<Resource<Unit>> {
-        return repository.addPot(pot)
-    }
+    suspend operator fun invoke(userId: String, pot: Pot) = repository.addPot(userId, pot)
 }
