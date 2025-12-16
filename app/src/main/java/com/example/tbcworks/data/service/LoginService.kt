@@ -18,4 +18,8 @@ class LoginService @Inject constructor(
         val tokenResult = user.getIdToken(true).await()
         return tokenResult.token ?: throw Exception("Token is null")
     }
+
+    fun signOut() {
+        auth.signOut()
+    }
 }

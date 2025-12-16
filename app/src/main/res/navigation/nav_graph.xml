@@ -58,13 +58,11 @@
         android:label="fragment_transaction"
         tools:layout="@layout/fragment_transaction" />
     <fragment
-        android:id="@+id/billsFragment2"
-        android:name="com.example.tbcworks.BillsFragment"
-        android:label="fragment_bills"
-        tools:layout="@layout/fragment_bills" />
-    <fragment
-        android:id="@+id/budgetsFragment2"
-        android:name="com.example.tbcworks.BudgetsFragment"
-        android:label="fragment_budgets"
-        tools:layout="@layout/fragment_budgets" />
+        android:id="@+id/profileFragment"
+        android:name="com.example.tbcworks.presentation.screens.profile.ProfileFragment"
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 </navigation>

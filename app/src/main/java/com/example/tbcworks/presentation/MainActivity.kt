@@ -40,9 +40,8 @@ class MainActivity : AppCompatActivity() {
             binding.bottomNav.isVisible = destination.id in setOf(
                 R.id.homeFragment,
                 R.id.transactionFragment,
-                R.id.budgetsFragment2,
                 R.id.potsFragment,
-                R.id.billsFragment2
+                R.id.profileFragment
             )
         }
     }

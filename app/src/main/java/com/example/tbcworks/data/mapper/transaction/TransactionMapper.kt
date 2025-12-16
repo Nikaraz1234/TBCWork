@@ -25,3 +25,12 @@ fun TransactionResponseDto.toDomain() = Transaction(
     date = date,
     imageUrl = imageUrl,
 )
+fun TransactionRequestDto.toDomain() = Transaction(
+    id = id,
+    senderId = senderId,
+    receiverEmail = receiverEmail,
+    purpose = purpose,
+    value = value,
+    date = date,
+    imageUrl = imageUrl
+)

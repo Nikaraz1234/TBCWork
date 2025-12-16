@@ -9,4 +9,9 @@ data class TransactionModel(
     val value: Double,
     val date: String,
     val imageUrl: String?
-)
+) {
+    enum class SortField {
+        DATE,
+        AMOUNT
+    }
+}

@@ -4,7 +4,7 @@ import com.example.tbcworks.domain.model.Transaction
 import com.example.tbcworks.presentation.screens.transaction.model.TransactionModel
 
 
-fun Transaction.toPresentationModel(): TransactionModel {
+fun Transaction.toPresentation(): TransactionModel {
     return TransactionModel(
         id = id,
         senderId = senderId,

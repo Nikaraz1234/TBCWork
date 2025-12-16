@@ -125,7 +125,6 @@ class PotsViewModel @Inject constructor(
         }
     }
 
-    // --- Helper functions ---
 
     private fun handleUserNotLoggedIn() {
         setState { copy(isLoading = false) }

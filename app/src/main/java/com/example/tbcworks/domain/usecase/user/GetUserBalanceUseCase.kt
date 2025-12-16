@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetUserBalanceUseCase @Inject constructor(
     private val userRepository: UserRepositoryImpl
 ) {
-    suspend operator fun invoke(userId: String): Flow<Resource<Double>> {
-        return userRepository.getUserBalance(userId)
-    }
+    operator fun invoke(userId: String): Flow<Resource<Double>> =
+        userRepository.getUserBalance(userId)
+
 }

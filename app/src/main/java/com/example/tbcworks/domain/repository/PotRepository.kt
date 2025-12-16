@@ -11,4 +11,6 @@ interface PotRepository {
     suspend fun editPot(userId: String, pot: Pot): Flow<Resource<Unit>>
     suspend fun addMoney(userId: String, potId: String, amount: Double): Flow<Resource<Unit>>
     suspend fun withdrawMoney(userId: String, potId: String, amount: Double): Flow<Resource<Unit>>
+    suspend fun getUserPotsCount(userId: String): Flow<Resource<Int>>
+
 }

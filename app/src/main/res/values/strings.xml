@@ -25,4 +25,24 @@
     <string name="home">Home</string>
     <string name="delete"><u>Delete</u></string>
     <string name="edit"><u>Edit</u></string>
+    <string name="sort_by">Sort by</string>
+    <string name="sort_order">Sort order</string>
+    <string name="ascending">Ascending</string>
+    <string name="descending">Descending</string>
+    <string name="invalid_input">Enter valid email and amount</string>
+    <string name="amount">Amount</string>
+    <string name="date">Date</string>
+    <string name="enter_valid_email_amount">Enter valid email and amount</string>
+    <string name="profile">Profile</string>
+    <string name="change_password">Change Password</string>
+    <string name="logout">Logout</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="balance_format">Balance: $%1$.2f</string>
+    <string name="transactions_count">Transactions: %1$d</string>
+    <string name="pots_count">Pots: %1$d</string>
+    <string name="change_password_underlined"><u>Change Password</u></string>
+    <string name="confirm">Confirm</string>
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="repeat_password">Repeat Password</string>
 </resources>

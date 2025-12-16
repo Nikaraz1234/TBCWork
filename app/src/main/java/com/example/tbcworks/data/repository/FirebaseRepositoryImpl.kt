@@ -8,4 +8,7 @@ class FirebaseRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) : FirebaseRepository {
     override fun getCurrentUserId(): String? = firebaseAuth.currentUser?.uid
+    override fun getCurrentUserEmail(): String? {
+        return firebaseAuth.currentUser?.email
+    }
 }

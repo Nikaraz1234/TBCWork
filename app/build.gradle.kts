@@ -118,8 +118,6 @@ dependencies {
     // Coil
     implementation("io.coil-kt:coil:2.6.0")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
-
     implementation(platform("com.google.firebase:firebase-bom:32.2.2"))
 
     // Firebase libraries you need
@@ -129,5 +127,6 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
 
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0")
 
 }

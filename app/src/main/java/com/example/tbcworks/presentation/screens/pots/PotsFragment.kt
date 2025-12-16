@@ -1,5 +1,6 @@
 package com.example.tbcworks.presentation.screens.pots
 
+import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
@@ -44,17 +45,18 @@ class PotsFragment : BaseFragment<FragmentPotsBinding>(FragmentPotsBinding::infl
         binding.rvPots.adapter = potAdapter
     }
 
-    private fun observeViewModel() {
+    private fun observeViewModel() = with(binding){
         collectFlow(viewModel.sideEffect) { effect ->
             when (effect) {
-                is PotSideEffect.ShowSnackBar -> binding.root.showSnackBar(effect.message)
+                is PotSideEffect.ShowSnackBar -> root.showSnackBar(effect.message)
             }
         }
 
         collectStateFlow(viewModel.uiState) { state ->
-            binding.rvPots.isVisible = state.pots.isNotEmpty()
+            rvPots.isVisible = state.pots.isNotEmpty()
+            progressAddMoney.visibility = if (state.isLoading) View.VISIBLE else View.GONE
             potAdapter.submitList(state.pots)
-            state.error?.let { binding.root.showSnackBar(it) }
+            state.error?.let { root.showSnackBar(it) }
         }
     }
 

@@ -9,6 +9,7 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.tbcworks.R
 import com.example.tbcworks.databinding.ItemTransactionLayoutBinding
+import com.example.tbcworks.presentation.extension.toDate
 import com.example.tbcworks.presentation.screens.transaction.model.TransactionModel
 
 class TransactionAdapter :
@@ -21,14 +22,13 @@ class TransactionAdapter :
         fun bind(item: TransactionModel) = with(binding) {
             tvName.text = item.receiverEmail
             tvPurpose.text = item.purpose
-            tvValue.text = item.value.toString()
-            tvDate.text = item.date
+            tvValue.text = DOLLAR_SIGN.plus(item.value.toString())
+            tvDate.text = item.date.toLong().toDate()
 
             ivProfile.load(item.imageUrl) {
                 crossfade(true)
-                placeholder(R.drawable.shape_circle)
-                error(R.drawable.shape_circle)
-                transformations(CircleCropTransformation())
+                placeholder(R.drawable.ic_profile)
+                error(R.drawable.ic_profile)
             }
         }
     }
@@ -52,5 +52,8 @@ class TransactionAdapter :
 
         override fun areContentsTheSame(oldItem: TransactionModel, newItem: TransactionModel): Boolean =
             oldItem == newItem
+    }
+    companion object{
+        const val DOLLAR_SIGN = "$"
     }
 }

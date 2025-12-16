@@ -22,4 +22,8 @@ class LoginRepositoryImpl @Inject constructor(
 
         user
     }
+
+    override fun logout() {
+        loginService.signOut()
+    }
 }
