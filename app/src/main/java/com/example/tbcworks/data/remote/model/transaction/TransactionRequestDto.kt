@@ -1,4 +1,4 @@
-package com.example.tbcworks.data.model.transaction
+package com.example.tbcworks.data.remote.model.transaction
 
 data class TransactionRequestDto(
     val id: String = "",

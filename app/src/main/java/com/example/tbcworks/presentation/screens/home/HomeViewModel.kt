@@ -16,7 +16,6 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getCurrentUserIdUseCase: GetCurrentUserIdUseCase,
     private val addMoneyToUserUseCase: AddMoneyToUserUseCase,
-    private val withdrawMoneyFromUserUseCase: WithdrawMoneyFromUserUseCase,
     private val getUserBalanceUseCase: GetUserBalanceUseCase
 ) : BaseViewModel<HomeState, HomeSideEffect, HomeEvent>(initialState = HomeState()) {
 
@@ -26,7 +25,6 @@ class HomeViewModel @Inject constructor(
 
     fun onEvent(event: HomeEvent) {
         when (event) {
-            is HomeEvent.Logout -> logout()
             is HomeEvent.AddMoneyToUser -> addMoney(event.amount)
         }
     }
@@ -69,8 +67,4 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun logout() {
-        FirebaseAuth.getInstance().signOut()
-        sendSideEffect(HomeSideEffect.NavigateToLogin)
-    }
 }

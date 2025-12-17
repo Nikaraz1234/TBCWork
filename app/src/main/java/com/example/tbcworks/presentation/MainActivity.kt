@@ -9,8 +9,15 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import com.example.tbcworks.data.common.worker.SyncWorker
 import com.example.tbcworks.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -27,6 +34,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         setUpBottomNav()
+        scheduleSyncWorker()
     }
 
     private fun setUpBottomNav() {
@@ -44,5 +52,22 @@ class MainActivity : AppCompatActivity() {
                 R.id.profileFragment
             )
         }
+    }
+
+    private fun scheduleSyncWorker() {
+        val syncRequest = PeriodicWorkRequestBuilder<SyncWorker>(15, TimeUnit.MINUTES)
+            .setConstraints(
+                Constraints.Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .build()
+            )
+            .build()
+
+        WorkManager.getInstance(this)
+            .enqueueUniquePeriodicWork(
+                "SyncWorker",
+                ExistingPeriodicWorkPolicy.KEEP,
+                syncRequest
+            )
     }
 }

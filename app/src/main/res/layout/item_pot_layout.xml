@@ -22,7 +22,8 @@
             android:background="@drawable/shape_circle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:backgroundTint="@color/green"/>
+            android:backgroundTint="@color/green"
+            android:layout_marginTop="5dp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/titleText"

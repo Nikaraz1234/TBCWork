@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.tbcworks.domain.Resource
 import com.example.tbcworks.domain.usecase.firebase.GetCurrentUserIdUseCase
 import com.example.tbcworks.domain.usecase.transaction.GetTransactionsUseCase
+import com.example.tbcworks.domain.usecase.transaction.RefreshTransactionsUseCase
 import com.example.tbcworks.domain.usecase.transaction.SendTransactionUseCase
 import com.example.tbcworks.presentation.common.BaseViewModel
 import com.example.tbcworks.presentation.screens.transaction.mapper.toPresentation
@@ -18,7 +19,8 @@ class TransactionViewModel @Inject constructor(
     private val sendTransactionUseCase: SendTransactionUseCase,
     private val getTransactionsUseCase: GetTransactionsUseCase,
     private val getCurrentUserIdUseCase: GetCurrentUserIdUseCase,
-) : BaseViewModel<TransactionState, TransactionSideEffect, TransactionEvent>(
+    private val refreshTransactionsUseCase: RefreshTransactionsUseCase
+    ) : BaseViewModel<TransactionState, TransactionSideEffect, TransactionEvent>(
     initialState = TransactionState()
 ) {
 
@@ -80,16 +82,22 @@ class TransactionViewModel @Inject constructor(
     }
 
     private fun loadTransactions() {
-        viewModelScope.launch {
-            val userId = getCurrentUserIdUseCase() ?: run {
-                setState { copy(error = TransactionStrings.CURRENT_USER_NULL) }
-                sendSideEffect(TransactionSideEffect.ShowSnackBar(TransactionStrings.CURRENT_USER_NULL))
-                return@launch
-            }
+        val userId = getCurrentUserIdUseCase() ?: run {
+            setState { copy(error = TransactionStrings.CURRENT_USER_NULL) }
+            sendSideEffect(TransactionSideEffect.ShowSnackBar(TransactionStrings.CURRENT_USER_NULL))
+            return
+        }
 
+        viewModelScope.launch {
+            refreshTransactionsUseCase(userId)
+        }
+
+        viewModelScope.launch {
             getTransactionsUseCase(userId).collect { resource ->
                 when (resource) {
-                    is Resource.Loading -> setState { copy(isLoading = true, message = null, error = null) }
+                    is Resource.Loading ->
+                        setState { copy(isLoading = true, error = null) }
+
                     is Resource.Success -> {
                         val listModel = resource.data.map { it.toPresentation() }
                         setState {
@@ -101,6 +109,7 @@ class TransactionViewModel @Inject constructor(
                             )
                         }
                     }
+
                     is Resource.Error -> {
                         setState { copy(isLoading = false, error = resource.message) }
                         sendSideEffect(TransactionSideEffect.ShowSnackBar(resource.message))
@@ -109,6 +118,7 @@ class TransactionViewModel @Inject constructor(
             }
         }
     }
+
 
     private fun sortTransactions(field: TransactionModel.SortField, ascending: Boolean) {
         setState {

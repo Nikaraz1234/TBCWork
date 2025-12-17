@@ -72,25 +72,22 @@ class PotsViewModel @Inject constructor(
         val userId = getCurrentUserIdUseCase() ?: return handleUserNotLoggedIn()
 
         val newPot = Pot(
-            id = "",
+            id = UUID.randomUUID().toString(),
             title = event.title,
             balance = 0.0,
             targetAmount = event.targetAmount
         )
 
-        setState { copy(isLoading = true, error = null) }
-
         viewModelScope.launch {
             addPotUseCase(userId, newPot).collect { resource ->
                 when (resource) {
                     is Resource.Success -> {
-                        sendSideEffect(PotSideEffect.ShowSnackBar("Pot added successfully"))
-                        onEvent(PotEvent.LoadPots)
+                        sendSideEffect(
+                            PotSideEffect.ShowSnackBar("Pot added successfully")
+                        )
+                        loadPots()
                     }
-                    is Resource.Error -> {
-                        setState { copy(isLoading = false) }
-                        sendSideEffect(PotSideEffect.ShowSnackBar(resource.message ?: "Failed to add pot"))
-                    }
+                    is Resource.Error -> handleError(resource.message)
                     Resource.Loading -> setState { copy(isLoading = true) }
                 }
             }

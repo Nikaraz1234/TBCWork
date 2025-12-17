@@ -9,6 +9,7 @@ object FirestoreCollections {
 object FirestoreFields {
     const val BALANCE = "balance"
     const val AMOUNT = "amount"
+    const val UID = "uid"
     const val SENDER_ID = "senderId"
     const val EMAIL = "email"
     const val TARGET_AMOUNT = "targetAmount"

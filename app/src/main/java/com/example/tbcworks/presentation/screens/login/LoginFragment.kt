@@ -32,6 +32,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
 
     override fun bind() {
         observers()
+        setupResultListener()
     }
 
     private fun observers() {
@@ -73,6 +74,19 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
                     progressBar.isVisible = false
                 }
             }
+        }
+    }
+
+    private fun setupResultListener() {
+        parentFragmentManager.setFragmentResultListener(
+            "signup_result",
+            viewLifecycleOwner
+        ) { _, bundle ->
+            val email = bundle.getString("email", "")
+            val password = bundle.getString("password", "")
+
+            binding.etEmail.setText(email)
+            binding.etPassword.setText(password)
         }
     }
 }

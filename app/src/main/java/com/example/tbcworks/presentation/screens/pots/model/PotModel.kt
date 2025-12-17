@@ -3,6 +3,7 @@ package com.example.tbcworks.presentation.screens.pots.model
 data class PotModel(
     val id: String,
     val title: String,
+    val userId: String = "",
     val balance: Double,
     val targetAmount: Double,
 ){

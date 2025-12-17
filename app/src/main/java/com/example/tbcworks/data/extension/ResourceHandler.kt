@@ -13,4 +13,6 @@ inline fun <T, R> Resource<T>.asResource(transform: (T) -> R): Resource<R> {
     }
 }
 fun <T> Flow<Resource<T>>.toUnitResource(): Flow<Resource<Unit>> =
-    map { it.asResource { } }
+    map { resource ->
+        resource.asResource { _: T -> Unit }
+    }

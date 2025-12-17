@@ -1,4 +1,4 @@
-package com.example.tbcworks.data.service
+package com.example.tbcworks.data.remote.service
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser

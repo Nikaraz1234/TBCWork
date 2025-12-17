@@ -1,4 +1,4 @@
-package com.example.tbcworks.data.model.login
+package com.example.tbcworks.data.remote.model.login
 
 import kotlinx.serialization.Serializable
 

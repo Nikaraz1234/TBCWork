@@ -62,7 +62,7 @@ kotlin {
     }
 }
 
-val workVersion = "2.9.2"
+val work_version = "2.11.0"
 
 dependencies {
     // Core & UI
@@ -128,5 +128,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
 
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0")
+
+    implementation("androidx.work:work-runtime-ktx:${work_version}")
 
 }

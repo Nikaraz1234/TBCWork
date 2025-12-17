@@ -1,97 +1,72 @@
 package com.example.tbcworks.data.repository
 
+import com.example.tbcworks.data.common.network.NetworkHelper
 import com.example.tbcworks.data.common.resource.HandleResponse
-import com.example.tbcworks.data.extension.asResource
+import com.example.tbcworks.data.extension.toUnitResource
+import com.example.tbcworks.data.local.datasource.UserLocalDataSource
+import com.example.tbcworks.data.local.entity.UserEntity
+import com.example.tbcworks.data.remote.datasource.UserRemoteDataSource
 import com.example.tbcworks.domain.Resource
 import com.example.tbcworks.domain.repository.UserRepository
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
-import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class UserRepositoryImpl @Inject constructor(
-    private val firestore: FirebaseFirestore,
-    private val handleResponse: HandleResponse,
-    private val firebaseAuth: FirebaseAuth
-) : UserRepository{
+    private val localDataSource: UserLocalDataSource,
+    private val remoteDataSource: UserRemoteDataSource,
+    private val networkHelper: NetworkHelper,
+    private val handleResponse: HandleResponse
+) : UserRepository {
 
-    override fun getUserBalance(userId: String): Flow<Resource<Double>> = flow {
-        emit(Resource.Loading)
-        val listenerFlow = callbackFlow<Double> {
-            val listener = firestore.collection("users").document(userId)
-                .addSnapshotListener { snapshot, error ->
-                    if (error != null) return@addSnapshotListener
-                    val balance = snapshot?.getDouble("balance") ?: 0.0
-                    trySend(balance)
-                }
-            awaitClose { listener.remove() }
-        }
+    override fun getUserBalance(userId: String): Flow<Resource<Double>> =
+        localDataSource.getUser(userId)
+            .map { it?.balance ?: 0.0 }
+            .map { Resource.Success(it) as Resource<Double> }
 
-        listenerFlow.collect { balance ->
-            emit(Resource.Success(balance))
-        }
-    }
-
-    override suspend fun addMoneyToUser(userId: String, amount: Double): Flow<Resource<Unit>> {
-        return handleResponse.safeApiCall {
-            val userRef = firestore.collection("users").document(userId)
-
-            firestore.runTransaction { transaction ->
-                val snapshot = transaction.get(userRef)
-                val currentBalance = snapshot.getDouble("balance") ?: 0.0
-                transaction.set(userRef, mapOf("balance" to (currentBalance + amount)), SetOptions.merge())
-            }.await()
-        }.map { it.asResource { } }
-    }
-
-    override suspend fun withdrawMoneyFromUser(userId: String, amount: Double): Flow<Resource<Unit>> {
-        return handleResponse.safeApiCall {
-            val userRef = firestore.collection("users").document(userId)
-
-            firestore.runTransaction { transaction ->
-                val snapshot = transaction.get(userRef)
-                val currentBalance = snapshot.getDouble("balance") ?: 0.0
-                if (currentBalance < amount) throw IllegalArgumentException("Insufficient balance")
-                transaction.set(userRef, mapOf("balance" to (currentBalance - amount)), SetOptions.merge())
-            }.await()
-        }.map { it.asResource { } }
-    }
-
-    override suspend fun deleteAccount(): Flow<Resource<Unit>> = handleResponse.safeApiCall {
-        val currentUser = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser
-            ?: throw Exception("No logged in user")
-        val userId = currentUser.uid
-
-        firestore.runTransaction { transaction ->
-            val userRef = firestore.collection("users").document(userId)
-            transaction.delete(userRef)
-        }.await()
-
-        currentUser.delete().await()
-    }.map { it.asResource { } }
-
-
-    override suspend fun changePassword(currentPassword: String, newPassword: String): Flow<Resource<Unit>> =
+    override suspend fun addMoneyToUser(userId: String, amount: Double) =
         handleResponse.safeApiCall {
-            val user = firebaseAuth.currentUser
-                ?: throw Exception("No logged in user")
+            val localUser = localDataSource.getUser(userId).first()
+            localUser?.let {
+                localDataSource.addOrUpdateUser(it.copy(balance = it.balance + amount))
+            }
 
-            val email = user.email ?: throw Exception("User email not found")
+            if (networkHelper.isNetworkAvailable()) {
+                remoteDataSource.addMoney(userId, amount)
+            }
+        }.toUnitResource()
 
-            val credential = com.google.firebase.auth.EmailAuthProvider.getCredential(email, currentPassword)
-            user.reauthenticate(credential).await()
+    override suspend fun withdrawMoneyFromUser(userId: String, amount: Double) =
+        handleResponse.safeApiCall {
+            val localUser = localDataSource.getUser(userId).first()
+            localUser?.let {
+                localDataSource.addOrUpdateUser(it.copy(balance = it.balance - amount))
+            }
 
-            user.updatePassword(newPassword).await()
-        }.map { it.asResource { } }
+            if (networkHelper.isNetworkAvailable()) {
+                remoteDataSource.withdrawMoney(userId, amount)
+            }
+        }.toUnitResource()
 
 
+    override suspend fun deleteAccount(currentPassword: String) =
+        handleResponse.safeApiCall {
+            val userId = remoteDataSource.getCurrentUserId()
+            localDataSource.deleteUser(userId)
 
+            if (networkHelper.isNetworkAvailable()) {
+                remoteDataSource.deleteUser(userId, currentPassword)
+            }
+        }.toUnitResource()
 
-
+    override suspend fun changePassword(currentPassword: String, newPassword: String) =
+        handleResponse.safeApiCall {
+            if (networkHelper.isNetworkAvailable()) {
+                val userId = remoteDataSource.getCurrentUserId()
+                remoteDataSource.changePassword(userId, currentPassword, newPassword)
+            }
+        }.toUnitResource()
 }

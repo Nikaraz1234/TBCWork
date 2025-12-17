@@ -14,5 +14,7 @@ interface TransactionRepository {
     ): Flow<Resource<Unit>>
 
     suspend fun getTransactions(userId: String): Flow<Resource<List<Transaction>>>
+
+    suspend fun refreshTransactions(userId: String)
 }
 

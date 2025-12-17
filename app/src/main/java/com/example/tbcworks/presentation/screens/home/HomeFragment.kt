@@ -18,9 +18,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
     private val viewModel: HomeViewModel by viewModels()
 
     override fun listeners() = with(binding) {
-        btnLogout.setOnClickListener {
-            viewModel.onEvent(HomeEvent.Logout)
-        }
         btnAddMoney.setOnClickListener {
             val amount = etAddMoney.text.toString().toDoubleOrNull() ?: 0.0
             viewModel.onEvent(HomeEvent.AddMoneyToUser(amount))
@@ -34,11 +31,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
     private fun observeViewModel() = with(binding) {
         collectFlow(viewModel.sideEffect) { effect ->
             when (effect) {
-                is HomeSideEffect.NavigateToLogin -> {
-                    findNavController().navigate(
-                        HomeFragmentDirections.actionHomeFragmentToLoginFragment()
-                    )
-                }
                 is HomeSideEffect.ShowSnackBar -> {
                     root.showSnackBar(effect.message)
                 }

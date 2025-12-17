@@ -8,7 +8,7 @@ interface UserRepository {
     suspend fun addMoneyToUser(userId: String, amount: Double): Flow<Resource<Unit>>
     suspend fun withdrawMoneyFromUser(userId: String, amount: Double): Flow<Resource<Unit>>
 
-    suspend fun deleteAccount(): Flow<Resource<Unit>>
+    suspend fun deleteAccount(currentPassword: String): Flow<Resource<Unit>>
     suspend fun changePassword(currentPassword: String, newPassword: String): Flow<Resource<Unit>>
 
 

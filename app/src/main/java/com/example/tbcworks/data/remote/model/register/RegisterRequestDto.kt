@@ -1,4 +1,4 @@
-package com.example.tbcworks.data.model.register
+package com.example.tbcworks.data.remote.model.register
 
 data class RegisterRequestDto(
     val name: String,

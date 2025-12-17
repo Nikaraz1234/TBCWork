@@ -19,19 +19,6 @@
         android:layout_margin="15dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_btn"
-        android:text="Logout"
-        android:textAllCaps="false"
-        android:textSize="15sp"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="15dp" />
-
-    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnAddMoney"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

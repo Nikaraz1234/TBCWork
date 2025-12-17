@@ -13,8 +13,10 @@ import com.example.tbcworks.domain.usecase.user.GetUserBalanceUseCase
 import com.example.tbcworks.presentation.common.BaseViewModel
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.log
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
@@ -29,13 +31,19 @@ class ProfileViewModel @Inject constructor(
 ) : BaseViewModel<ProfileState, ProfileSideEffect, ProfileEvent>(
     ProfileState()
 ) {
+    private var balanceJob: Job? = null
+    private var transactionsJob: Job? = null
+    private var potsJob: Job? = null
 
-    fun onEvent(event: ProfileEvent) {
+
+     fun onEvent(event: ProfileEvent) {
         when (event) {
             ProfileEvent.LoadProfileData -> loadProfileData()
-            ProfileEvent.Logout -> logout()
-            ProfileEvent.DeleteAccount -> deleteAccount()
+            ProfileEvent.Logout -> viewModelScope.launch {
+                logout()
+            }
             is ProfileEvent.ChangePassword -> changePassword(event.current, event.newPassword)
+            is ProfileEvent.DeleteAccount -> deleteAccount(event.current)
         }
     }
 
@@ -51,15 +59,12 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun observeBalance(userId: String) {
-        viewModelScope.launch {
+        balanceJob?.cancel()
+        balanceJob = viewModelScope.launch {
             getUserBalanceUseCase(userId).collect { resource ->
                 when (resource) {
-                    is Resource.Success -> {
-                        setState { copy(balance = resource.data) }
-                    }
-                    is Resource.Error -> {
-                        setState { copy(error = resource.message) }
-                    }
+                    is Resource.Success -> setState { copy(balance = resource.data) }
+                    is Resource.Error -> setState { copy(error = resource.message) }
                     Resource.Loading -> Unit
                 }
             }
@@ -67,15 +72,12 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun observeTransactions(userId: String) {
-        viewModelScope.launch {
+        transactionsJob?.cancel()
+        transactionsJob = viewModelScope.launch {
             getTransactionsUseCase(userId).collect { resource ->
                 when (resource) {
-                    is Resource.Success -> {
-                        setState { copy(transactionsCount = resource.data.size) }
-                    }
-                    is Resource.Error -> {
-                        setState { copy(error = resource.message) }
-                    }
+                    is Resource.Success -> setState { copy(transactionsCount = resource.data.size) }
+                    is Resource.Error -> setState { copy(error = resource.message) }
                     Resource.Loading -> Unit
                 }
             }
@@ -83,42 +85,33 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun observePotsCount(userId: String) {
-        viewModelScope.launch {
+        potsJob?.cancel()
+        potsJob = viewModelScope.launch {
             getUserPotsCountUseCase(userId).collect { resource ->
                 when (resource) {
-                    is Resource.Success -> {
-                        setState {
-                            copy(
-                                potsCount = resource.data,
-                                isLoading = false
-                            )
-                        }
-                    }
-                    is Resource.Error -> {
-                        setState {
-                            copy(
-                                error = resource.message,
-                                isLoading = false
-                            )
-                        }
-                    }
+                    is Resource.Success -> setState { copy(potsCount = resource.data, isLoading = false) }
+                    is Resource.Error -> setState { copy(error = resource.message, isLoading = false) }
                     Resource.Loading -> Unit
                 }
             }
         }
     }
 
-    private fun logout() {
+
+    private suspend fun logout() {
         logoutUseCase()
         sendSideEffect(ProfileSideEffect.NavigateToLogin)
     }
 
-    private fun deleteAccount() {
+    private fun deleteAccount(currentPassword: String) {
+        cancelAllObservers()
         viewModelScope.launch {
-            deleteAccountUseCase().collect { result ->
+            deleteAccountUseCase(currentPassword).collect { result ->
                 when (result) {
                     is Resource.Success -> sendSideEffect(ProfileSideEffect.NavigateToLogin)
-                    is Resource.Error -> sendSideEffect(ProfileSideEffect.ShowSnackBar(result.message ?: "Error deleting account"))
+                    is Resource.Error -> sendSideEffect(
+                        ProfileSideEffect.ShowSnackBar(result.message ?: "Error deleting account")
+                    )
                     Resource.Loading -> setState { copy(isLoading = true) }
                 }
             }
@@ -144,6 +137,12 @@ class ProfileViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun cancelAllObservers() {
+        balanceJob?.cancel()
+        transactionsJob?.cancel()
+        potsJob?.cancel()
     }
 
 }
