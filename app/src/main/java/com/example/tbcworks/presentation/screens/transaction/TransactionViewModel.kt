@@ -9,7 +9,6 @@ import com.example.tbcworks.domain.usecase.transaction.SendTransactionUseCase
 import com.example.tbcworks.presentation.common.BaseViewModel
 import com.example.tbcworks.presentation.screens.transaction.mapper.toPresentation
 import com.example.tbcworks.presentation.screens.transaction.model.TransactionModel
-import com.example.tbcworks.presentation.screens.transaction.strings.TransactionStrings
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,7 +19,7 @@ class TransactionViewModel @Inject constructor(
     private val getTransactionsUseCase: GetTransactionsUseCase,
     private val getCurrentUserIdUseCase: GetCurrentUserIdUseCase,
     private val refreshTransactionsUseCase: RefreshTransactionsUseCase
-    ) : BaseViewModel<TransactionState, TransactionSideEffect, TransactionEvent>(
+) : BaseViewModel<TransactionState, TransactionSideEffect, TransactionEvent>(
     initialState = TransactionState()
 ) {
 
@@ -29,9 +28,7 @@ class TransactionViewModel @Inject constructor(
             is TransactionEvent.SendTransaction -> sendTransaction(event)
             is TransactionEvent.LoadTransactions -> loadTransactions()
             is TransactionEvent.SearchTransactions -> filterTransactions(event.query)
-            is TransactionEvent.SortTransactions -> {
-                sortTransactions(event.field, event.ascending)
-            }
+            is TransactionEvent.SortTransactions -> sortTransactions(event.field, event.ascending)
         }
     }
 
@@ -53,8 +50,8 @@ class TransactionViewModel @Inject constructor(
     private fun sendTransaction(event: TransactionEvent.SendTransaction) {
         viewModelScope.launch {
             val senderId = getCurrentUserIdUseCase() ?: run {
-                setState { copy(error = TransactionStrings.CURRENT_USER_NULL) }
-                sendSideEffect(TransactionSideEffect.ShowSnackBar(TransactionStrings.CURRENT_USER_NULL))
+                setState { copy(error = CURRENT_USER_NULL) }
+                sendSideEffect(TransactionSideEffect.ShowSnackBar(CURRENT_USER_NULL))
                 return@launch
             }
 
@@ -68,13 +65,13 @@ class TransactionViewModel @Inject constructor(
                 when (resource) {
                     is Resource.Loading -> setState { copy(isLoading = true, message = null, error = null) }
                     is Resource.Success -> {
-                        setState { copy(isLoading = false, message = TransactionStrings.TRANSACTION_COMPLETED, error = null) }
-                        sendSideEffect(TransactionSideEffect.ShowSnackBar(TransactionStrings.TRANSACTION_COMPLETED))
+                        setState { copy(isLoading = false, message = TRANSACTION_COMPLETED, error = null) }
+                        sendSideEffect(TransactionSideEffect.ShowSnackBar(TRANSACTION_COMPLETED))
                         onEvent(TransactionEvent.LoadTransactions)
                     }
                     is Resource.Error -> {
-                        setState { copy(isLoading = false, message = null, error = resource.message ?: TransactionStrings.UNKNOWN_ERROR) }
-                        sendSideEffect(TransactionSideEffect.ShowSnackBar(resource.message ?: TransactionStrings.UNKNOWN_ERROR))
+                        setState { copy(isLoading = false, message = null, error = resource.message ?: UNKNOWN_ERROR) }
+                        sendSideEffect(TransactionSideEffect.ShowSnackBar(resource.message ?: UNKNOWN_ERROR))
                     }
                 }
             }
@@ -83,20 +80,17 @@ class TransactionViewModel @Inject constructor(
 
     private fun loadTransactions() {
         val userId = getCurrentUserIdUseCase() ?: run {
-            setState { copy(error = TransactionStrings.CURRENT_USER_NULL) }
-            sendSideEffect(TransactionSideEffect.ShowSnackBar(TransactionStrings.CURRENT_USER_NULL))
+            setState { copy(error = CURRENT_USER_NULL) }
+            sendSideEffect(TransactionSideEffect.ShowSnackBar(CURRENT_USER_NULL))
             return
         }
 
-        viewModelScope.launch {
-            refreshTransactionsUseCase(userId)
-        }
+        viewModelScope.launch { refreshTransactionsUseCase(userId) }
 
         viewModelScope.launch {
             getTransactionsUseCase(userId).collect { resource ->
                 when (resource) {
-                    is Resource.Loading ->
-                        setState { copy(isLoading = true, error = null) }
+                    is Resource.Loading -> setState { copy(isLoading = true, error = null) }
 
                     is Resource.Success -> {
                         val listModel = resource.data.map { it.toPresentation() }
@@ -119,7 +113,6 @@ class TransactionViewModel @Inject constructor(
         }
     }
 
-
     private fun sortTransactions(field: TransactionModel.SortField, ascending: Boolean) {
         setState {
             copy(
@@ -135,15 +128,16 @@ class TransactionViewModel @Inject constructor(
         field: TransactionModel.SortField,
         ascending: Boolean
     ): List<TransactionModel> {
-
         val sorted = when (field) {
-            TransactionModel.SortField.DATE ->
-                list.sortedBy { it.date }
-
-            TransactionModel.SortField.AMOUNT ->
-                list.sortedBy { it.value }
+            TransactionModel.SortField.DATE -> list.sortedBy { it.date }
+            TransactionModel.SortField.AMOUNT -> list.sortedBy { it.value }
         }
-
         return if (ascending) sorted else sorted.reversed()
+    }
+
+    companion object {
+        const val CURRENT_USER_NULL = "Current user not found"
+        const val TRANSACTION_COMPLETED = "Transaction completed successfully"
+        const val UNKNOWN_ERROR = "Unknown error occurred"
     }
 }
