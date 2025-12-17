@@ -38,3 +38,11 @@ PersonalFinanceApp/
     mapper/       # DTO ↔ Domain mapping
   domain/          # Business logic and use cases
   presentation/    # Activities, Fragments, ViewModels
+
+```
+
+---
+## Contact
+- Name: Nikoloz Razmadze
+- Email: Nika.razmadze68@gmail.com
+- GitHub: https://github.com/Nikaraz1234
