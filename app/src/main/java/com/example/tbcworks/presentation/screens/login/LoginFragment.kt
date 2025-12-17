@@ -5,6 +5,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.tbcworks.databinding.FragmentLoginBinding
 import com.example.tbcworks.presentation.common.BaseFragment
+import com.example.tbcworks.presentation.common.FragmentKeys
 import com.example.tbcworks.presentation.extension.SnackBarHelper.showSnackBar
 import com.example.tbcworks.presentation.extension.collectFlow
 import com.example.tbcworks.presentation.extension.collectStateFlow
@@ -79,11 +80,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
 
     private fun setupResultListener() {
         parentFragmentManager.setFragmentResultListener(
-            "signup_result",
+            FragmentKeys.SIGNUP_RESULT,
             viewLifecycleOwner
         ) { _, bundle ->
-            val email = bundle.getString("email", "")
-            val password = bundle.getString("password", "")
+            val email = bundle.getString(FragmentKeys.EMAIL, "")
+            val password = bundle.getString(FragmentKeys.PASSWORD, "")
 
             binding.etEmail.setText(email)
             binding.etPassword.setText(password)

@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.tbcworks.databinding.FragmentSignUpBinding
 import com.example.tbcworks.presentation.common.BaseFragment
+import com.example.tbcworks.presentation.common.FragmentKeys
 import com.example.tbcworks.presentation.extension.SnackBarHelper.showSnackBar
 import com.example.tbcworks.presentation.extension.collectFlow
 import com.example.tbcworks.presentation.extension.collectStateFlow
@@ -60,10 +61,11 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(
 
     private fun sendCredentialsToLogin(email: String, password: String) {
         val bundle = Bundle().apply {
-            putString("email", email)
-            putString("password", password)
+            putString(FragmentKeys.EMAIL, email)
+            putString(FragmentKeys.PASSWORD, password)
         }
-        parentFragmentManager.setFragmentResult("signup_result", bundle)
+        parentFragmentManager.setFragmentResult(FragmentKeys.SIGNUP_RESULT, bundle)
         findNavController().popBackStack()
     }
+
 }
