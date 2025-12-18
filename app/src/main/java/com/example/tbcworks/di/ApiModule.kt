@@ -19,7 +19,6 @@ import com.example.tbcworks.BuildConfig
 @InstallIn(SingletonComponent::class)
 object ApiModule {
 
-    private const val BASE_URL = "https://reqres.in/api/"
 
     @Provides
     @Singleton
