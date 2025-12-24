@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".FiltersBottomSheet">
+    android:layout_height="wrap_content">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Filter Events"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
 
-</FrameLayout>
+    <CheckBox
+        android:id="@+id/cbOnline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Online Events" />
+
+    <CheckBox
+        android:id="@+id/cbOffline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Offline Events" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnApplyFilters"
+        android:layout_width="match_parent"
+        android:background="@drawable/shape_btn"
+        android:textColor="@color/white"
+        android:layout_height="wrap_content"
+        android:text="Apply"
+        android:layout_marginTop="16dp"/>
+</LinearLayout>

@@ -1,4 +1,4 @@
-package com.example.tbcworks.data.model
+package com.example.tbcworks.data.model.event
 
 data class NotificationsDto(
     val registerConfirmation: Boolean,

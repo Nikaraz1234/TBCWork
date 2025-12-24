@@ -1,6 +1,8 @@
-package com.example.tbcworks.data.model
+package com.example.tbcworks.data.model.event
 
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class EventResponseDto(
     val id: String,
     val title: String,

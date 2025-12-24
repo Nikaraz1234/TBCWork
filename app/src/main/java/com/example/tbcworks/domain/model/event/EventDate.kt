@@ -1,4 +1,4 @@
-package com.example.tbcworks.domain.model
+package com.example.tbcworks.domain.model.event
 
 import kotlinx.datetime.LocalDateTime
 

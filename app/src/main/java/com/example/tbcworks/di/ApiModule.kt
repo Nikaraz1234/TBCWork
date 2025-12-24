@@ -14,6 +14,9 @@ import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import com.example.tbcworks.BuildConfig
+import com.example.tbcworks.data.service.EventService
+import com.example.tbcworks.data.service.SignInService
+import com.example.tbcworks.data.service.SignUpService
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -73,6 +76,29 @@ object ApiModule {
             .client(okHttpClient)
             .addConverterFactory(json.asConverterFactory(contentType))
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideEventService(
+        retrofit: Retrofit
+    ): EventService {
+        return retrofit.create(EventService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSignUpService(
+        retrofit: Retrofit
+    ): SignUpService {
+        return retrofit.create(SignUpService::class.java)
+    }
+    @Provides
+    @Singleton
+    fun provideSignInService(
+        retrofit: Retrofit
+    ): SignInService {
+        return retrofit.create(SignInService::class.java)
     }
 
 }

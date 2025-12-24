@@ -1,7 +1,6 @@
-package com.example.tbcworks.presentation.screen.model
+package com.example.tbcworks.presentation.screen.home.model
 
 data class CategoryModel(
     val category: String,
     val eventCount: Int,
-    val iconRes: Int
 )

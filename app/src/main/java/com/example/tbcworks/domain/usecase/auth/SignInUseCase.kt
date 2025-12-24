@@ -11,7 +11,7 @@ class SignInUseCase @Inject constructor(
     private val repository: SignInRepository
 ) {
 
-    suspend operator fun invoke(params: SignIn): Flow<Resource<AuthToken>> {
+     operator fun invoke(params: SignIn): Flow<Resource<AuthToken>> {
         return repository.signIn(params)
     }
 }

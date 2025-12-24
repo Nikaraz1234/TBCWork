@@ -1,4 +1,4 @@
-package com.example.tbcworks.data.model.auth
+package com.example.tbcworks.data.model.auth.sign_up
 
 data class SignUpRequestDto(
     val firstName: String,

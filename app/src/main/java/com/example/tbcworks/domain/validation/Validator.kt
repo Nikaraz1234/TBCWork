@@ -1,4 +1,5 @@
 package com.example.tbcworks.domain.validation
 
-interface Validator {
+interface Validator<T> {
+    fun validate(value: T): ValidationResult
 }

@@ -1,4 +1,4 @@
-package com.example.tbcworks.presentation.screen.model
+package com.example.tbcworks.presentation.screen.home.model
 
 data class Section(
     val title: String,

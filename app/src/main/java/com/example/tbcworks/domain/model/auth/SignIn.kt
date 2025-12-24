@@ -1,4 +1,3 @@
 package com.example.tbcworks.domain.model.auth
 
-class SignIn {
-}
+data class SignIn(val email: String, val password: String)

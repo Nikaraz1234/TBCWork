@@ -1,19 +1,22 @@
 package com.example.tbcworks.domain.usecase.validation
 
 import com.example.tbcworks.domain.validation.ValidationResult
+import com.example.tbcworks.domain.validation.Validator
+import javax.inject.Inject
 
-class ValidatePasswordUseCase(
-    private val minLength: Int = 8
-) {
+class ValidatePasswordLengthUseCase @Inject constructor() : Validator<String> {
 
-    fun execute(password: String): ValidationResult {
-        return if (password.length < minLength) {
-            ValidationResult(
-                isValid = false,
-                errorMessage = "Password must be at least $minLength characters"
+    private val minLength = 8
+
+    override fun validate(value: String): ValidationResult {
+        return if (value.length < minLength) {
+            ValidationResult.Error(
+                "Password must be at least $minLength characters"
             )
         } else {
-            ValidationResult(isValid = true)
+            ValidationResult.Success
         }
     }
 }
+
+

@@ -1,4 +1,4 @@
-package com.example.tbcworks.presentation.screen.model
+package com.example.tbcworks.presentation.model
 
 data class OrganizerModel(
     val fullName: String,

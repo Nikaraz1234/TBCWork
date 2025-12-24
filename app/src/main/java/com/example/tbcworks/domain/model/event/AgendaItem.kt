@@ -1,4 +1,4 @@
-package com.example.tbcworks.domain.model
+package com.example.tbcworks.domain.model.event
 
 import kotlinx.datetime.LocalDateTime
 
@@ -10,5 +10,4 @@ data class AgendaItem(
     val description: String,
     val activityType: String,
     val activityLocation: String,
-    val additionalInfo: List<AgendaAdditionalInfo>
 )

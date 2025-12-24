@@ -1,4 +1,4 @@
-package com.example.tbcworks.domain.model.validation
+package com.example.tbcworks.domain.validation
 
 sealed class ValidationResult {
     object Success : ValidationResult()

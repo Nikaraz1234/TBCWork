@@ -34,11 +34,11 @@ android {
             )
         }
         getByName("debug") {
-            buildConfigField("String", "BASE_URL", "\"https://mocki.io/v1/\"")
+            buildConfigField("String", "BASE_URL", "\"http://35.158.140.93/api/\"")
         }
 
         getByName("release") {
-            buildConfigField("String", "BASE_URL", "\"https://mocki.io/v1/\"")
+            buildConfigField("String", "BASE_URL", "\"http://35.158.140.93/api/\"")
         }
 
     }
@@ -106,4 +106,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.1")
+
+    implementation("io.coil-kt:coil:2.7.0")
+
 }

@@ -1,4 +1,4 @@
-package com.example.tbcworks.presentation.screen.adapter
+package com.example.tbcworks.presentation.screen.home.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,15 +8,14 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tbcworks.databinding.ItemSectionBinding
 import com.example.tbcworks.presentation.common.GenericDiffCallback
-import com.example.tbcworks.presentation.screen.model.CategoryModel
-import com.example.tbcworks.presentation.screen.model.EventModel
-import com.example.tbcworks.presentation.screen.model.Section
+import com.example.tbcworks.presentation.screen.home.model.CategoryModel
+import com.example.tbcworks.presentation.model.EventModel
+import com.example.tbcworks.presentation.screen.home.model.QaItem
+import com.example.tbcworks.presentation.screen.home.model.Section
 
-import com.example.tbcworks.presentation.screen.model.*
-
-class ParentAdapter(
+class   ParentAdapter(
     private val onUpcomingClick: (EventModel) -> Unit,
-    private val onCategoryClick: (CategoryModel) -> Unit,
+    private val onCategoryClick: (String) -> Unit,
     private val onTrendingClick: (EventModel) -> Unit
 ) : ListAdapter<Section, ParentAdapter.SectionViewHolder>(
     GenericDiffCallback(
@@ -50,8 +49,6 @@ class ParentAdapter(
                 )
                 rvSectionItems.adapter = adapter
             }
-
-            // Submit list with safe type filtering
             when (section.type) {
                 Section.SectionType.UPCOMING ->
                     (adapter as UpcomingAdapter).submitList(

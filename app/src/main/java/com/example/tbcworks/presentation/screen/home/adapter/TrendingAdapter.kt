@@ -1,4 +1,4 @@
-package com.example.tbcworks.presentation.screen.adapter
+package com.example.tbcworks.presentation.screen.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,8 @@ import coil.load
 import com.example.tbcworks.R
 import com.example.tbcworks.databinding.ItemTrendingEventBinding
 import com.example.tbcworks.presentation.common.GenericDiffCallback
-import com.example.tbcworks.presentation.screen.model.EventModel
+import com.example.tbcworks.presentation.model.EventModel
+import com.example.tbcworks.presentation.screen.home.mapper.toDisplayDate
 
 class TrendingAdapter(
     private val onEventClick: (EventModel) -> Unit
@@ -45,7 +46,7 @@ class TrendingAdapter(
 
             tvEventTitle.text = event.title
 
-            tvEventDate.text = event.date.toString()
+            tvEventDate.text = event.date.toDisplayDate()
 
             ivEventImage.load(event.imgUrl) {
                 placeholder(R.drawable.shape_btn)

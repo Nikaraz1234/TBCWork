@@ -1,4 +1,4 @@
-package com.example.tbcworks.domain.model
+package com.example.tbcworks.domain.model.event
 
 data class Speaker(
     val fullName: String,

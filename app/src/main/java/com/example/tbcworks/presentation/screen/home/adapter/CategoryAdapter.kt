@@ -1,4 +1,4 @@
-package com.example.tbcworks.presentation.screen.adapter
+package com.example.tbcworks.presentation.screen.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tbcworks.databinding.ItemEventCategoryBinding
 import com.example.tbcworks.presentation.common.GenericDiffCallback
-import com.example.tbcworks.presentation.screen.model.CategoryModel
+import com.example.tbcworks.presentation.screen.home.model.CategoryModel
 
 class CategoryAdapter(
     private val onClick: (String) -> Unit
@@ -39,7 +39,7 @@ class CategoryAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: CategoryModel) = with(binding) {
-            ivLogo.setImageResource(item.iconRes)
+            //ivLogo.setImageResource(item.iconRes)
             tvCategory.text = item.category
             tvCount.text = "${item.eventCount} Events"
 

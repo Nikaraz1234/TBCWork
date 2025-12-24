@@ -1,6 +1,7 @@
-package com.example.tbcworks.presentation.screen.mapper
+package com.example.tbcworks.presentation.screen.home.mapper
 
-import com.example.tbcworks.domain.model.EventDate
+import com.example.tbcworks.domain.model.event.EventDate
+import com.example.tbcworks.presentation.model.EventDateModel
 import kotlinx.datetime.LocalDateTime
 import java.util.Locale
 
@@ -29,3 +30,35 @@ fun LocalDateTime.toFormattedTime(): String {
 fun EventDate.registerDeadlineString(): String {
     return "${registerDeadline.dayOfMonth} ${registerDeadline.month.name.take(3).uppercase(Locale.getDefault())}, ${registerDeadline.year}, ${registerDeadline.toFormattedTime()}"
 }
+// Month short name: "JAN", "FEB"
+fun EventDateModel.monthShort(): String {
+    return startDate.month.name.take(3).uppercase(Locale.getDefault())
+}
+
+// Day of month
+fun EventDateModel.day(): String = startDate.dayOfMonth.toString()
+
+// Time range: "08:00 AM - 05:00 PM"
+fun EventDateModel.toTimeRange(): String {
+    return "${startDate.toFormattedTime()} - ${endDate.toFormattedTime()}"
+}
+
+// Optional: formatted register deadline
+fun EventDateModel.registerDeadlineString(): String {
+    return "${registerDeadline.dayOfMonth} ${registerDeadline.month.name.take(3).uppercase(Locale.getDefault())}, ${registerDeadline.year}, ${registerDeadline.toFormattedTime()}"
+}
+
+fun EventDate.toDisplayDate(): String {
+    val month = startDate.month.name.take(3).capitalize(Locale.getDefault())
+    val day = startDate.dayOfMonth
+    val year = startDate.year
+    return "$month $day, $year"
+}
+
+fun EventDateModel.toDisplayDate(): String {
+    val month = startDate.month.name.take(3).capitalize(Locale.getDefault())
+    val day = startDate.dayOfMonth
+    val year = startDate.year
+    return "$month $day, $year"
+}
+

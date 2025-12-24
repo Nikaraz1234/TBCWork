@@ -1,4 +1,3 @@
 package com.example.tbcworks.domain.model.auth
 
-class Token {
-}
+data class AuthToken(val token: String)

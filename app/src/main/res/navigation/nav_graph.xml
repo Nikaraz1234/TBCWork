@@ -1,6 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/eventHubFragment">
 
+    <fragment
+        android:id="@+id/eventHubFragment"
+        android:name="com.example.tbcworks.presentation.screen.home.EventHubFragment"
+        android:label="fragment_event_hub"
+        tools:layout="@layout/fragment_event_hub" >
+        <action
+            android:id="@+id/action_eventHubFragment_to_eventDetailsFragment"
+            app:destination="@id/eventDetailsFragment" />
+        <action
+            android:id="@+id/action_eventHubFragment_to_browseByCategoryFragment"
+            app:destination="@id/browseByCategoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventDetailsFragment"
+        android:name="com.example.tbcworks.presentation.screen.event_detail.EventDetailsFragment"
+        android:label="fragment_event_details"
+        tools:layout="@layout/fragment_event_details">
+        <argument
+            android:name="eventId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.example.tbcworks.presentation.screen.sign_in.SignInFragment"
+        android:label="SignInFragment" >
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_eventHubFragment"
+            app:destination="@id/eventHubFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.tbcworks.presentation.screen.register.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/browseEventFragment2"
+        android:name="com.example.tbcworks.presentation.screen.browse_event.BrowseEventFragment"
+        android:label="fragment_browse_event"
+        tools:layout="@layout/fragment_browse_event" />
+    <fragment
+        android:id="@+id/browseByCategoryFragment"
+        android:name="com.example.tbcworks.presentation.screen.browse_by_category.BrowseByCategoryFragment"
+        android:label="fragment_browse_by_category"
+        tools:layout="@layout/fragment_browse_by_category" />
 </navigation>

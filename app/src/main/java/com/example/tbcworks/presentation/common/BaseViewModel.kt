@@ -3,6 +3,7 @@ package com.example.tbcworks.presentation.common
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.tbcworks.domain.Resource
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -26,4 +27,27 @@ abstract class BaseViewModel<State : Any, SideEffect : Any, Intent : Any>(
             _sideEffect.send(effect)
         }
     }
+    protected fun <T : Any> handleResponse(
+        apiCall: () -> Flow<Resource<T>>,
+        onSuccess: (T) -> Unit,
+        onError: ((String) -> Unit)? = null,
+        onLoading: (Resource.Loading) -> Unit,
+    ) {
+        viewModelScope.launch {
+            apiCall.invoke().collect { resource ->
+                when (resource) {
+                    is Resource.Success -> {
+                        onSuccess(resource.data)
+                    }
+                    is Resource.Error -> {
+                        onError?.invoke(resource.message)
+                    }
+                    is Resource.Loading -> {
+                        onLoading(resource)
+                    }
+                }
+            }
+        }
+    }
+
 }

@@ -1,6 +1,8 @@
-package com.example.tbcworks.data.model
+package com.example.tbcworks.data.model.event
 
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class AgendaItemDto(
     val startTime: String,
     val duration: String,
@@ -8,5 +10,4 @@ data class AgendaItemDto(
     val description: String,
     val activityType: String,
     val activityLocation: String,
-    val additionalInfo: List<AgendaAdditionalInfoDto>
 )
