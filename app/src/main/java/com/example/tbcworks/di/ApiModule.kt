@@ -14,6 +14,7 @@ import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import com.example.tbcworks.BuildConfig
+import com.example.tbcworks.data.service.CategoryService
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -71,6 +72,11 @@ object ApiModule {
             .client(okHttpClient)
             .addConverterFactory(json.asConverterFactory(contentType))
             .build()
+    }
+    @Provides
+    @Singleton
+    fun provideCategoryService(retrofit: Retrofit): CategoryService {
+        return retrofit.create(CategoryService::class.java)
     }
 
 }
