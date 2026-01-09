@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
     id("com.google.protobuf") version "0.9.4"
+    id("com.google.gms.google-services")
 }
 android {
     namespace = "com.example.tbcworks"
@@ -84,7 +85,6 @@ dependencies {
     // Datastore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
-
     // Desugaring
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
 
@@ -100,6 +100,11 @@ dependencies {
 
     implementation("androidx.datastore:datastore-core:1.1.1")
     implementation("com.google.protobuf:protobuf-javalite:3.18.0")
+
+    implementation(platform("com.google.firebase:firebase-bom:34.7.0"))
+    implementation("com.google.firebase:firebase-analytics")
+
+    implementation("com.google.firebase:firebase-messaging")
 }
 
 protobuf {

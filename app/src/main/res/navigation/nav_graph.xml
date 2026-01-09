@@ -89,6 +89,8 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true"/>
+        <deepLink app:uri="myapp://home" />
+        <deepLink app:uri="myapp://chat" />
     </fragment>
     <fragment
         android:id="@+id/userInfoFragment"

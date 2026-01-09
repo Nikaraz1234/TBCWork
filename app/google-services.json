@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "287557768376",
+    "project_id": "notifications-a7bf6",
+    "storage_bucket": "notifications-a7bf6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:287557768376:android:e20c3895ca485a138d504d",
+        "android_client_info": {
+          "package_name": "com.example.tbcworks"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKMyr_2NJWbG8MHNskNzTKkOh-NV7QIFg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
