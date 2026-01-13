@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/bottom_sheet_background">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnTakePicture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/take_picture"
+        android:background="@drawable/bg_btn"
+        android:textColor="@color/white"
+        android:drawableStart="@drawable/ic_camera"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="5dp"
+        android:layout_marginBottom="8dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnChooseGallery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_btn"
+        android:textColor="@color/white"
+        android:paddingHorizontal="20dp"
+        android:drawableStart="@drawable/ic_gallery"
+        android:text="@string/choose_from_gallery"
+        android:paddingVertical="5dp"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

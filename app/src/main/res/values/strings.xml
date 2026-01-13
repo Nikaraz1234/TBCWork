@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">TBCWorks</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="choose_from_gallery">Choose from Gallery</string>
+    <string name="take_picture">Take Picture</string>
+    <string name="gallery">Gallery</string>
+    <string name="upload">Upload</string>
+    <string name="camera_permission_denied">Camera permission denied</string>
+    <string name="clicked_image">Clicked: %1$d</string>
+    <string name="image_mime_type">image/*</string>
+    <string name="file_provider_authority">%1$s.fileprovider</string>
+    <string name="photo_file_name">photo_%1$d.jpg</string>
+    <string name="image_bottom_sheet_tag">imageSheet</string>
 </resources>
