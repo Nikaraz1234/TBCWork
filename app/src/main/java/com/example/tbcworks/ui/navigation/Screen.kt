@@ -1,0 +1,8 @@
+package com.example.tbcworks.ui.navigation
+
+sealed class Screen(val route: String) {
+    object Welcome : Screen("welcome")
+    object Login : Screen("login")
+    object RegisterFirst : Screen("register_first")
+    object RegisterSecond : Screen("register_second")
+}

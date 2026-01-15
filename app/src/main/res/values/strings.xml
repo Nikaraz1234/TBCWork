@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">TBCWorks</string>
+    <string name="register_title">Register</string>
+    <string name="nickname_label">Nickname</string>
+    <string name="nickname_placeholder">example@gmail.com</string>
+    <string name="sign_up_button">SIGN UP</string>
+    <string name="terms_text">By signing up, you agree to Photo’s <u>Terms of Service</u> and <u>Privacy Policy</u>.</string>
+    <string name="back_button_desc">Back</string>
+    <string name="email_label">Email</string>
+    <string name="email_placeholder">example@gmail.com</string>
+    <string name="password_label">Password</string>
+    <string name="next_button">NEXT</string>
+    <string name="login_button">Login</string>
+    <string name="register_button">Register</string>
+    <string name="login_title">Login</string>
+</resources>
