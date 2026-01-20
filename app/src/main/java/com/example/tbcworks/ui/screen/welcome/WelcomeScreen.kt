@@ -24,12 +24,27 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.tbcworks.R
 import com.example.tbcworks.ui.navigation.Screen
 
 @Composable
-fun WelcomeScreen(navController: NavHostController){
+fun WelcomeScreen(
+    navController: NavHostController
+) {
+    WelcomeContent(
+        onLoginClick = {
+            navController.navigate(Screen.Login.route)
+        },
+        onRegisterClick = {
+            navController.navigate(Screen.RegisterFirst.route)
+        }
+    )
+}
+@Composable
+fun WelcomeContent(
+    onLoginClick: () -> Unit,
+    onRegisterClick: () -> Unit
+) {
     val buttonShape = RoundedCornerShape(6.dp)
 
     Box(
@@ -59,7 +74,7 @@ fun WelcomeScreen(navController: NavHostController){
 
             OutlinedButton(
                 modifier = Modifier.weight(1f),
-                onClick = { navController.navigate(Screen.Login.route) },
+                onClick = onLoginClick,
                 shape = buttonShape,
                 border = BorderStroke(2.dp, Color.Black),
                 colors = ButtonDefaults.outlinedButtonColors(
@@ -72,7 +87,7 @@ fun WelcomeScreen(navController: NavHostController){
 
             Button(
                 modifier = Modifier.weight(1f),
-                onClick = { navController.navigate(Screen.RegisterFirst.route) },
+                onClick = onRegisterClick,
                 shape = buttonShape,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Black,
@@ -85,12 +100,11 @@ fun WelcomeScreen(navController: NavHostController){
     }
 }
 
-@Preview(
-    showBackground = true,
-    showSystemUi = true
-)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun WelcomeScreenPreview() {
-    val navController = rememberNavController()
-    WelcomeScreen(navController)
+fun WelcomeContentPreview() {
+    WelcomeContent(
+        onLoginClick = {},
+        onRegisterClick = {}
+    )
 }

@@ -4,7 +4,9 @@ object RegisterFirstContract {
 
     data class State(
         val email: String = "",
-        val password: String = ""
+        val password: String = "",
+        val isLoading : Boolean = false,
+        val error: String? = ""
     )
 
     sealed class Event {
@@ -14,7 +16,7 @@ object RegisterFirstContract {
     }
 
     sealed class SideEffect {
-        object NavigateToRegisterSecond : SideEffect()
+        object NavigateToLogin : SideEffect()
         data class ShowError(val message: String) : SideEffect()
     }
 }

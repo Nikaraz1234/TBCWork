@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -60,4 +63,27 @@ dependencies {
     val nav_version = "2.9.6"
 
     implementation("androidx.navigation:navigation-compose:$nav_version")
+
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
+
+    implementation(platform("com.google.firebase:firebase-bom:34.8.0"))
+
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-analytics")
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
+
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
+    implementation("io.coil-kt:coil-compose:2.4.0")
+
+
+
+
+
 }
