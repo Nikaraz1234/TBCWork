@@ -1,9 +1,9 @@
 package com.example.composeapp.domain.repository
 
 import com.example.composeapp.domain.Resource
-import com.example.composeapp.domain.model.Order
+import com.example.composeapp.domain.model.Chat
 import kotlinx.coroutines.flow.Flow
 
-interface OrderRepository {
-    fun getOrders(): Flow<Resource<List<Order>>>
+interface ChatRepository {
+    fun getUsers(): Flow<Resource<List<Chat>>>
 }

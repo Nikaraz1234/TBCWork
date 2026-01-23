@@ -12,4 +12,6 @@
     <string name="delivered">Delivered</string>
     <string name="canceled">Canceled</string>
     <string name="order_number">Order #%1$s</string>
+    <string name="voice_message">Sent a voice message</string>
+    <string name="file_message">Sent an attachment</string>
 </resources>

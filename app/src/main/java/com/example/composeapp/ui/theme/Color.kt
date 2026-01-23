@@ -16,6 +16,12 @@ val White = Color(0xFFFFFFFF)
 val Black = Color(0xFF000000)
 val Transparent = Color(0x00000000)
 
-val pending = Color(0xFFFF8C00)
+val yellow = Color(0xFFFF8C00)
 val delivered = Color(0xFF4CAF50)
 val canceled = Color(0xFFF44336)
+
+val appBg = Color(0xFF22343C)
+val etBg = Color(0xFF1A282F)
+val searchBtn = Color(0xFF40DF9F)
+val lightGray = Color(0xFFD3D3D3)
+val gray = Color(0xFF808080)

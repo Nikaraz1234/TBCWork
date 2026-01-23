@@ -1,7 +1,7 @@
 package com.example.composeapp.di
 
 import com.example.composeapp.BuildConfig
-import com.example.composeapp.data.service.OrderService
+import com.example.composeapp.data.service.ChatService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -77,7 +77,7 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun provideOrderService(retrofit: Retrofit): OrderService {
-        return retrofit.create(OrderService::class.java)
+    fun provideOrderService(retrofit: Retrofit): ChatService {
+        return retrofit.create(ChatService::class.java)
     }
 }
