@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">ComposeApp</string>
+    <string name="title">My Orders</string>
+    <string name="menu">Menu</string>
+    <string name="notifications">Notifications</string>
+    <string name="tracking_number">Tracking number: </string>
+    <string name="quantity">Quantity:</string>
+    <string name="subtotal">Subtotal:</string>
+    <string name="details">Details</string>
+    <string name="current_status">Current status: %1$s</string>
+    <string name="change_status_to">Change status to:</string>
+    <string name="delivered">Delivered</string>
+    <string name="canceled">Canceled</string>
+    <string name="order_number">Order #%1$s</string>
+</resources>
