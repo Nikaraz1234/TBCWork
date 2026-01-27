@@ -1,5 +1,6 @@
 package com.example.composeapp.ui.screen.dashboard
 
+import android.content.res.Resources
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,16 +15,20 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -40,6 +45,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -49,10 +55,13 @@ import com.example.composeapp.R
 import com.example.composeapp.ui.components.Loader
 import com.example.composeapp.ui.screen.dashboard.model.OrderModel
 import com.example.composeapp.ui.screen.dashboard.model.OrderStatus
+import com.example.composeapp.ui.theme.AppTypography
 import com.example.composeapp.ui.theme.Black
+import com.example.composeapp.ui.theme.ComposeAppTheme
 import com.example.composeapp.ui.theme.Radius
 import com.example.composeapp.ui.theme.Spacer
 import com.example.composeapp.ui.theme.Transparent
+import com.example.composeapp.ui.theme.Typography
 import com.example.composeapp.ui.theme.White
 import com.example.composeapp.ui.theme.canceled
 import com.example.composeapp.ui.theme.delivered
@@ -73,40 +82,44 @@ fun DashboardScreen(
 
     LaunchedEffect(Unit) {
         viewModel.onEvent(DashboardContract.Event.LoadOrders)
+        viewModel.onEvent(DashboardContract.Event.GetTheme)
     }
     LaunchedEffect(state) {
         Log.d("DashboardScreen", "State: $state")
     }
 
-    DashboardContent(
-        state = state,
-        onEvent = viewModel::onEvent,
-        onOrderDetailsClick = { order ->
-            if (order.status == OrderStatus.PENDING) {
-                viewModel.onEvent(DashboardContract.Event.SelectOrder(order))
-                coroutineScope.launch { bottomSheetState.show() }
+    ComposeAppTheme(darkTheme = state.isDarkTheme){
+        DashboardContent(
+            state = state,
+            onEvent = viewModel::onEvent,
+            onOrderDetailsClick = { order ->
+                if (order.status == OrderStatus.PENDING) {
+                    viewModel.onEvent(DashboardContract.Event.SelectOrder(order))
+                    coroutineScope.launch { bottomSheetState.show() }
+                }
             }
-        }
-    )
+        )
 
-    state.selectedOrder?.let { selectedOrder ->
-        ModalBottomSheet(
-            onDismissRequest = {
-                coroutineScope.launch { bottomSheetState.hide() }
-                viewModel.onEvent(DashboardContract.Event.SelectOrder(null))
-            },
-            sheetState = bottomSheetState
-        ) {
-            StatusBottomSheetContent(
-                order = selectedOrder,
-                onStatusChange = { newStatus ->
-                    viewModel.onEvent(DashboardContract.Event.UpdateOrderStatus(selectedOrder.id, newStatus))
+        state.selectedOrder?.let { selectedOrder ->
+            ModalBottomSheet(
+                onDismissRequest = {
                     coroutineScope.launch { bottomSheetState.hide() }
                     viewModel.onEvent(DashboardContract.Event.SelectOrder(null))
-                }
-            )
+                },
+                sheetState = bottomSheetState
+            ) {
+                StatusBottomSheetContent(
+                    order = selectedOrder,
+                    onStatusChange = { newStatus ->
+                        viewModel.onEvent(DashboardContract.Event.UpdateOrderStatus(selectedOrder.id, newStatus))
+                        coroutineScope.launch { bottomSheetState.hide() }
+                        viewModel.onEvent(DashboardContract.Event.SelectOrder(null))
+                    }
+                )
+            }
         }
     }
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -114,25 +127,39 @@ fun DashboardScreen(
 fun DashboardContent(
     state: DashboardContract.State,
     onEvent: (DashboardContract.Event) -> Unit,
-    onOrderDetailsClick: (OrderModel) -> Unit
+    onOrderDetailsClick: (OrderModel) -> Unit,
 ) {
     Column(
-        modifier = Modifier.fillMaxSize().background(White)
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .systemBarsPadding()
     ) {
         Box(
-            modifier = Modifier.fillMaxWidth().height(60.dp).padding(horizontal = Spacer.spacer18)
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(60.dp)
+                .padding(horizontal = Spacer.spacer18)
         ) {
             IconButton(
-                onClick = { },
+                onClick = { onEvent(DashboardContract.Event.ToggleTheme) },
                 modifier = Modifier.align(Alignment.CenterStart)
             ) {
-                Icon(Icons.Default.Menu, contentDescription = stringResource(R.string.menu))
+                Icon(
+                    painter = painterResource(R.drawable.ic_theme),
+                    contentDescription = stringResource(R.string.theme),
+                    tint = MaterialTheme.colorScheme.onBackground,
+                    modifier = Modifier
+                        .height(25.dp)
+                        .width(25.dp)
+                )
             }
 
             Text(
                 text = stringResource(R.string.title),
                 modifier = Modifier.align(Alignment.Center),
-                style = MaterialTheme.typography.titleMedium
+                style = AppTypography.titleMedium,
+                color = MaterialTheme.colorScheme.onBackground
             )
 
             IconButton(
@@ -141,7 +168,8 @@ fun DashboardContent(
             ) {
                 Icon(
                     imageVector = Icons.Default.Notifications,
-                    contentDescription = stringResource(R.string.notifications)
+                    contentDescription = stringResource(R.string.notifications),
+                    tint = MaterialTheme.colorScheme.onBackground
                 )
             }
         }
@@ -164,6 +192,7 @@ fun DashboardContent(
         if (state.isLoading) {
             Loader()
         }
+
         PullToRefreshBox(
             isRefreshing = state.isLoading,
             onRefresh = { onEvent(DashboardContract.Event.Refresh) },
@@ -177,11 +206,7 @@ fun DashboardContent(
                 items(state.filteredOrders, key = { it.id }) { order ->
                     OrderItem(
                         order = order,
-                        onDetailsClick = {
-                            if(order.status == OrderStatus.PENDING){
-                                onOrderDetailsClick(order)
-                            }
-                        },
+                        onDetailsClick = { if (order.status == OrderStatus.PENDING) onOrderDetailsClick(order) }
                     )
                 }
             }
@@ -195,17 +220,18 @@ private fun CategoryItem(
     isSelected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
-){
-    val backgroundColor = if (isSelected) selectedCategory else Transparent
-    val textColor = if (isSelected) White else Black
+) {
+    val backgroundColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface
+    val textColor = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
+
     Box(
-        modifier = modifier.background(color = backgroundColor,
-            shape = RoundedCornerShape(16.dp))
+        modifier = modifier
+            .background(color = backgroundColor, shape = RoundedCornerShape(16.dp))
             .padding(horizontal = Spacer.spacer16, vertical = Spacer.spacer8)
             .clickable { onClick() },
         contentAlignment = Alignment.Center
     ) {
-        Text(text = text, style = MaterialTheme.typography.bodyMedium, color = textColor)
+        Text(text = text, style = Typography.bodyMedium, color = textColor)
     }
 }
 
@@ -218,40 +244,37 @@ private fun OrderItem(
         modifier = Modifier.fillMaxWidth().wrapContentHeight(),
         shape = Radius.radius16,
         elevation = CardDefaults.cardElevation(8.dp),
-        colors = CardDefaults.cardColors(containerColor = White)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
         Column(modifier = Modifier.padding(Spacer.spacer16)) {
+            val textColor = MaterialTheme.colorScheme.onSurface
             Row(modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween) {
-                Text(text = stringResource(R.string.order_number, order.orderNumber),
-                    style = MaterialTheme.typography.bodyLarge, color = Black)
-                Text(text = order.date,
-                    style = MaterialTheme.typography.bodySmall, color = Black)
+                Text(
+                    text = stringResource(R.string.order_number, order.orderNumber),
+                    style = AppTypography.bodyLarge,
+                    color = textColor
+                )
+                Text(text = order.date, style = AppTypography.bodySmall, color = textColor)
             }
 
             Spacer(modifier = Modifier.height(Spacer.spacer8))
 
             Row(modifier = Modifier.fillMaxWidth()) {
-                Text(text = stringResource(R.string.tracking_number),
-                    style = MaterialTheme.typography.bodyMedium, color = Black)
-                Text(text = order.trackingNumber,
-                    style = MaterialTheme.typography.bodyMedium, color = Black)
+                Text(text = stringResource(R.string.tracking_number), style = AppTypography.bodyMedium, color = textColor)
+                Text(text = order.trackingNumber, style = AppTypography.bodyMedium, color = textColor)
             }
 
             Spacer(modifier = Modifier.height(Spacer.spacer8))
 
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Row {
-                    Text(text = stringResource(R.string.quantity),
-                        style = MaterialTheme.typography.bodyMedium, color = Black)
-                    Text(text = order.quantity.toString(),
-                        style = MaterialTheme.typography.bodyMedium, color = Black)
+                    Text(text = stringResource(R.string.quantity), style = AppTypography.bodyMedium, color = textColor)
+                    Text(text = order.quantity.toString(), style = AppTypography.bodyMedium, color = textColor)
                 }
                 Row {
-                    Text(text = stringResource(R.string.subtotal),
-                        style = MaterialTheme.typography.bodyMedium, color = Black)
-                    Text(text = "$${order.subtotal}",
-                        style = MaterialTheme.typography.bodyMedium, color = Black)
+                    Text(text = stringResource(R.string.subtotal), style = AppTypography.bodyMedium, color = textColor)
+                    Text(text = "$${order.subtotal}", style = AppTypography.bodyMedium, color = textColor)
                 }
             }
 
@@ -260,19 +283,17 @@ private fun OrderItem(
             Row(modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    text = order.status.name,
-                    color = when (order.status) {
-                        OrderStatus.PENDING -> pending
-                        OrderStatus.DELIVERED -> delivered
-                        OrderStatus.CANCELED -> canceled
-                    },
-                    style = MaterialTheme.typography.bodyMedium
-                )
+
+                val statusColor = when(order.status) {
+                    OrderStatus.PENDING -> pending
+                    OrderStatus.DELIVERED -> delivered
+                    OrderStatus.CANCELED -> canceled
+                }
+
+                Text(text = order.status.name, color = statusColor, style = AppTypography.bodyMedium)
 
                 OutlinedButton(onClick = onDetailsClick) {
-                    Text(text = stringResource(R.string.details),
-                        color = Black)
+                    Text(text = stringResource(R.string.details), color = textColor)
                 }
             }
         }
@@ -287,17 +308,17 @@ fun StatusBottomSheetContent(
     Column(modifier = Modifier.fillMaxWidth().padding(Spacer.spacer16)) {
 
         Text(text = stringResource(R.string.order_number, order.orderNumber),
-            style = MaterialTheme.typography.titleMedium)
+            style = Typography.titleMedium)
 
         Spacer(modifier = Modifier.height(Spacer.spacer8))
 
         Text(text = stringResource(R.string.current_status, order.status.name),
-            style = MaterialTheme.typography.bodyMedium)
+            style = Typography.bodyMedium)
 
         Spacer(modifier = Modifier.height(Spacer.spacer16))
 
         Text(text = stringResource(R.string.change_status_to),
-            style = MaterialTheme.typography.bodyMedium)
+            style = Typography.bodyMedium)
 
         Spacer(modifier = Modifier.height(Spacer.spacer8))
 
