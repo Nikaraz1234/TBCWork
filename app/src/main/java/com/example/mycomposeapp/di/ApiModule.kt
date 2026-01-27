@@ -1,6 +1,7 @@
 package com.example.mycomposeapp.di
 
 import com.example.mycomposeapp.BuildConfig
+import com.example.mycomposeapp.data.service.LocationService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -72,6 +73,12 @@ object ApiModule {
             .client(okHttpClient)
             .addConverterFactory(json.asConverterFactory(contentType))
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideLocationService(retrofit: Retrofit): LocationService {
+        return retrofit.create(LocationService::class.java)
     }
 
 }

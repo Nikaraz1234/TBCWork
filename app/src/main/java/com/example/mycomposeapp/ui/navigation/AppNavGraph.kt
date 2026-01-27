@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.mycomposeapp.ui.screen.dashboard.DashboardScreen
 
 @Composable
 fun AppNavGraph(
@@ -22,7 +23,7 @@ fun AppNavGraph(
         modifier = Modifier.padding(paddingValues)
     ) {
         composable(Screen.Dashboard.route) {
-
+            DashboardScreen(navController)
         }
     }
 }
