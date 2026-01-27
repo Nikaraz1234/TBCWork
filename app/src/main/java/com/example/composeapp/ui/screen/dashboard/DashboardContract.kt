@@ -12,6 +12,7 @@ object DashboardContract {
         val selectedCategory: OrderStatus = OrderStatus.PENDING,
         val errorMessage: String? = null,
         val selectedOrder: OrderModel? = null,
+        val isDarkTheme: Boolean = false
     )
     sealed class SideEffect {
         data class ShowError(val message: String) : SideEffect()
@@ -23,6 +24,9 @@ object DashboardContract {
         object Refresh : Event()
         data class SelectOrder(val order: OrderModel?) : Event()
         data class UpdateOrderStatus(val orderId: Int, val status: OrderStatus) : Event()
+        object ToggleTheme : Event()
+        object GetTheme: Event()
+
 
     }
 

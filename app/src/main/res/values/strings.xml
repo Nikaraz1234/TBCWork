@@ -12,4 +12,5 @@
     <string name="delivered">Delivered</string>
     <string name="canceled">Canceled</string>
     <string name="order_number">Order #%1$s</string>
+    <string name="theme">Toggle Theme</string>
 </resources>
