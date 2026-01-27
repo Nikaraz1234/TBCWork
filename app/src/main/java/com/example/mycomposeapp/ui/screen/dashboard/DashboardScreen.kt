@@ -18,6 +18,9 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PageSize
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -30,12 +33,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.lerp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
@@ -46,6 +52,7 @@ import com.example.mycomposeapp.ui.theme.Spacer
 import com.example.mycomposeapp.ui.theme.Typography
 import com.example.mycomposeapp.ui.theme.White
 import kotlinx.coroutines.flow.collectLatest
+import kotlin.math.absoluteValue
 
 
 @Composable
@@ -98,7 +105,7 @@ fun DashboardContent(
             contentAlignment = Alignment.CenterStart
         ) {
             Text(
-                text = "Statistics",
+                text = stringResource(R.string.statistics),
                 style = Typography.titleMedium,
                 color = MaterialTheme.colorScheme.onBackground
             )
@@ -120,28 +127,63 @@ fun DashboardContent(
 
         Spacer(Modifier.height(Spacer.spacer16))
 
-        StatisticsCarousel(locations = state.locations)
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            StatisticsCarousel(
+                locations = state.locations,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(600.dp)
+            )
+        }
 
         Spacer(Modifier.height(Spacer.spacer18))
 
 
     }
 }
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun StatisticsCarousel(
     locations: List<LocationModel>,
     modifier: Modifier = Modifier
 ) {
-    LazyRow(
-        modifier = modifier.fillMaxWidth(),
-        contentPadding = PaddingValues(horizontal = Spacer.spacer18),
-        horizontalArrangement = Arrangement.spacedBy(Spacer.spacer16)
-    ) {
-        items(
-            items = locations,
-            key = { it.id }
-        ) { item ->
-            LocationCard(item)
+    val pagerState = rememberPagerState(pageCount = { locations.size })
+
+    HorizontalPager(
+        state = pagerState,
+        modifier = modifier
+            .fillMaxWidth()
+            .height(600.dp),
+        contentPadding = PaddingValues(horizontal = Spacer.spacer32),
+        pageSpacing = Spacer.spacer18,
+        pageSize = PageSize.Fixed(300.dp)
+    ) { page ->
+
+        val pageOffset = (
+                (pagerState.currentPage - page) + pagerState.currentPageOffsetFraction
+                ).absoluteValue
+
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            LocationCard(
+                item = locations[page],
+                modifier = Modifier
+                    .width(300.dp)
+                    .graphicsLayer {
+                        val scale = lerp(
+                            start = 0.85f,
+                            stop = 1f,
+                            fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                        )
+                        scaleX = 1f
+                        scaleY = scale
+                    }
+            )
         }
     }
 }
@@ -153,7 +195,6 @@ fun LocationCard(
 ) {
     Column(
         modifier = modifier
-            .width(300.dp)
             .clip(RoundedCornerShape(20.dp))
             .background(MaterialTheme.colorScheme.surface)
     ) {

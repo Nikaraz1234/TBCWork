@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MyComposeApp</string>
     <string name="theme">Theme</string>
+    <string name="statistics">Statistics</string>
 </resources>
