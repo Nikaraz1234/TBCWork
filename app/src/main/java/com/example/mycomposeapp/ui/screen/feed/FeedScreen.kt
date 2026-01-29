@@ -37,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -297,7 +298,7 @@ private fun CommentInputRow(
                     decorationBox = { innerTextField ->
                         if (commentText.isEmpty()) {
                             Text(
-                                text = "Write comment...",
+                                text = stringResource(R.string.feed_write_comment),
                                 style = MyTheme.typography.bodyMedium,
                                 color = DarkTextSecondary
                             )
@@ -333,18 +334,19 @@ private fun PostActions(
 
         ActionItem(
             iconRes = R.drawable.ic_comment,
-            text = "$commentsCount Comments"
+            text = stringResource(R.string.feed_comments_count, commentsCount)
         )
 
         ActionItem(
             iconRes = R.drawable.ic_like,
-            text = "$likesCount Likes"
+            text = stringResource(R.string.feed_likes_count, likesCount)
         )
 
         ActionItem(
             iconRes = R.drawable.ic_share,
-            text = "Share"
+            text = stringResource(R.string.feed_share)
         )
+
     }
 }
 

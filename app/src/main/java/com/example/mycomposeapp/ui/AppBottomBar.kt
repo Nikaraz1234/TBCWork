@@ -23,10 +23,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.mycomposeapp.R
 import com.example.mycomposeapp.ui.navigation.Comments
-import com.example.mycomposeapp.ui.navigation.Feed
 import com.example.mycomposeapp.ui.navigation.Likes
 import com.example.mycomposeapp.ui.navigation.Notifications
+import com.example.mycomposeapp.ui.screen.feed.navigation.Feed
 import com.example.mycomposeapp.ui.theme.MyTheme
+import com.example.mycomposeapp.ui.theme.Radius
+import com.example.mycomposeapp.ui.theme.Spacer
 
 @Composable
 fun AppBottomBar(
@@ -35,17 +37,11 @@ fun AppBottomBar(
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
 
-    val shape = RoundedCornerShape(
-        topStart = 26.dp,
-        topEnd = 26.dp,
-        bottomStart = 0.dp,
-        bottomEnd = 0.dp
-    )
 
     Surface(
         modifier = Modifier
             .navigationBarsPadding()
-            .clip(shape),
+            .clip(Radius.bottomBarRadius),
         color = MyTheme.colorScheme.secondary,
         shadowElevation = 10.dp,
         tonalElevation = 0.dp
@@ -133,6 +129,6 @@ private fun RowScope.BottomBarItem(
             selectedTextColor = MyTheme.colorScheme.primary,
             unselectedTextColor = MyTheme.colorScheme.outline
         ),
-        modifier = Modifier.padding(bottom = 20.dp)
+        modifier = Modifier.padding(bottom = Spacer.spacer20)
     )
 }

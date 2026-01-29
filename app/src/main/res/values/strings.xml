@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MyComposeApp</string>
+    <string name="feed_write_comment">Write comment…</string>
+    <string name="feed_share">Share</string>
+
+    <string name="feed_comments_count">%1$d Comments</string>
+    <string name="feed_likes_count">%1$d Likes</string>
 </resources>

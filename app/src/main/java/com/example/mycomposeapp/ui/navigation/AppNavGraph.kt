@@ -8,13 +8,12 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.example.mycomposeapp.ui.screen.feed.FeedScreen
+import com.example.mycomposeapp.ui.screen.feed.navigation.Feed
+import com.example.mycomposeapp.ui.screen.feed.navigation.feedGraph
 import kotlinx.serialization.Serializable
 
 
-@Serializable
-data object Feed
+
 
 @Serializable
 data object Likes
@@ -36,12 +35,9 @@ fun AppNavGraph(
         startDestination = Feed,
         modifier = Modifier.padding(paddingValues)
     ) {
-        composable<Feed> {
-            FeedScreen(
-                navController = navController,
-                snackBarHostState = snackBarHostState
-            )
-        }
+
+        feedGraph(navController = navController, snackBarHostState = snackBarHostState)
+
         composable<Likes> { }
         composable<Comments> { }
         composable<Notifications> { }
