@@ -5,6 +5,7 @@ import androidx.compose.ui.unit.dp
 object Spacer {
     val spacer5 = 5.dp
     val spacer8 = 8.dp
+    val spacer12 = 12.dp
     val spacer16 = 16.dp
     val spacer18 = 18.dp
     val spacer20 = 20.dp

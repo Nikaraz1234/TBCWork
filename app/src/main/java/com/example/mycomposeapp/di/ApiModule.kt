@@ -1,6 +1,8 @@
 package com.example.mycomposeapp.di
 
 import com.example.mycomposeapp.BuildConfig
+import com.example.mycomposeapp.data.service.PostService
+import com.example.mycomposeapp.data.service.StoryService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -74,4 +76,14 @@ object ApiModule {
             .build()
     }
 
+    @Provides
+    @Singleton
+    fun provideStoryService(retrofit: Retrofit): StoryService {
+        return retrofit.create(StoryService::class.java)
+    }
+    @Provides
+    @Singleton
+    fun providePostService(retrofit: Retrofit): PostService {
+        return retrofit.create(PostService::class.java)
+    }
 }

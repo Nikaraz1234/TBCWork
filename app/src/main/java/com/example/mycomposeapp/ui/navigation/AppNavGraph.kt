@@ -5,24 +5,45 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.mycomposeapp.ui.screen.feed.FeedScreen
+import kotlinx.serialization.Serializable
+
+
+@Serializable
+data object Feed
+
+@Serializable
+data object Likes
+
+@Serializable
+data object Comments
+
+@Serializable
+data object Notifications
 
 @Composable
 fun AppNavGraph(
+    navController: NavHostController,
     paddingValues: PaddingValues,
     snackBarHostState: SnackbarHostState
 ) {
-    val navController = rememberNavController()
-
     NavHost(
         navController = navController,
-        startDestination = Screen.Dashboard.route,
+        startDestination = Feed,
         modifier = Modifier.padding(paddingValues)
     ) {
-        composable(Screen.Dashboard.route) {
-
+        composable<Feed> {
+            FeedScreen(
+                navController = navController,
+                snackBarHostState = snackBarHostState
+            )
         }
+        composable<Likes> { }
+        composable<Comments> { }
+        composable<Notifications> { }
     }
 }

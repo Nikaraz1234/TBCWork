@@ -75,8 +75,9 @@ dependencies {
     implementation(libs.datastore.preferences)
     implementation(libs.androidx.navigation.compose)
     implementation("androidx.compose.material3:material3")
-    testImplementation("org.mockito:mockito-core:5.3.1")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:5.1.0")
+    testImplementation("io.mockk:mockk:1.13.10")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.1")
+
 
 }
