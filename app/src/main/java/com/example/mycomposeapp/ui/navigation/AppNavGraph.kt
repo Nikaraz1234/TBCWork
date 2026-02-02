@@ -5,24 +5,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import com.example.mycomposeapp.ui.screen.form.navigation.Form
+import com.example.mycomposeapp.ui.screen.form.navigation.formGraph
 
 @Composable
 fun AppNavGraph(
+    navController: NavHostController,
     paddingValues: PaddingValues,
     snackBarHostState: SnackbarHostState
 ) {
-    val navController = rememberNavController()
-
     NavHost(
         navController = navController,
-        startDestination = Screen.Dashboard.route,
+        startDestination = Form,
         modifier = Modifier.padding(paddingValues)
     ) {
-        composable(Screen.Dashboard.route) {
-
-        }
+        formGraph(snackBarHostState = snackBarHostState)
     }
 }

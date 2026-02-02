@@ -9,7 +9,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.remember
+import androidx.navigation.compose.rememberNavController
 import com.example.mycomposeapp.ui.navigation.AppNavGraph
+import com.example.mycomposeapp.ui.theme.MyComposeAppTheme
+import com.example.mycomposeapp.ui.theme.MyTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,11 +21,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MaterialTheme {
+            MyComposeAppTheme {
 
                 val snackBarHostState = remember { SnackbarHostState() }
+                val navController = rememberNavController()
 
                 Scaffold(
+                    containerColor = MyTheme.colorScheme.background,
                     snackbarHost = {
                         SnackbarHost(hostState = snackBarHostState)
                     }
@@ -30,7 +35,8 @@ class MainActivity : ComponentActivity() {
 
                     AppNavGraph(
                         paddingValues = paddingValues,
-                        snackBarHostState = snackBarHostState
+                        snackBarHostState = snackBarHostState,
+                        navController = navController
                     )
                 }
             }

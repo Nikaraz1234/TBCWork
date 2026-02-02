@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">MyComposeApp</string>
+    <string name="input">input</string>
+    <string name="chooser">chooser</string>
+    <string name="register">Register</string>
+    <string name="title">E AUTH</string>
+    <string name="number">number</string>
+    <string name="phone">phone</string>
+    <string name="email">email</string>
+
 </resources>

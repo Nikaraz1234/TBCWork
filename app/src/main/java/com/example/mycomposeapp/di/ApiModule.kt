@@ -1,6 +1,7 @@
 package com.example.mycomposeapp.di
 
 import com.example.mycomposeapp.BuildConfig
+import com.example.mycomposeapp.data.service.FormService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -73,5 +74,9 @@ object ApiModule {
             .addConverterFactory(json.asConverterFactory(contentType))
             .build()
     }
-
+    @Provides
+    @Singleton
+    fun provideFormService(retrofit: Retrofit): FormService {
+        return retrofit.create(FormService::class.java)
+    }
 }
