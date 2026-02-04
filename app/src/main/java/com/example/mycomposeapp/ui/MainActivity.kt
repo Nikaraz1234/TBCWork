@@ -4,15 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.remember
 import androidx.navigation.compose.rememberNavController
 import com.example.mycomposeapp.ui.navigation.AppNavGraph
-import com.example.mycomposeapp.ui.theme.MyComposeAppTheme
-import com.example.mycomposeapp.ui.theme.MyTheme
+import com.example.ui.theme.MyComposeAppTheme
+import com.example.ui.theme.MyTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

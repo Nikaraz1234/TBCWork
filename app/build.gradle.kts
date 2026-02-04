@@ -81,4 +81,13 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
     testImplementation("app.cash.turbine:turbine:1.1.0")
 
+    implementation(projects.core.data)
+    implementation(projects.core.ui)
+    implementation(projects.core.domain)
+    implementation(projects.feature.form.ui)
+    implementation(projects.feature.form.data)
+    implementation(projects.feature.form.domain)
+
+
+
 }

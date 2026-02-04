@@ -1,7 +1,7 @@
 package com.example.mycomposeapp.ui.screen.form
 
 import com.example.mycomposeapp.MainDispatcherRule
-import com.example.mycomposeapp.domain.Resource
+import com.example.domain.Resource
 import com.example.mycomposeapp.domain.model.Form
 import com.example.mycomposeapp.domain.usecase.form.GetFormUseCase
 import com.example.mycomposeapp.domain.usecase.validation.EmptyFieldUseCase

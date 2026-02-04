@@ -7,8 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.example.mycomposeapp.ui.screen.form.navigation.Form
-import com.example.mycomposeapp.ui.screen.form.navigation.formGraph
+import com.example.ui.screen.form.navigation.Form
+import com.example.ui.screen.form.navigation.formGraph
 
 @Composable
 fun AppNavGraph(
